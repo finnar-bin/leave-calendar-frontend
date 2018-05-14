@@ -1,0 +1,9 @@
+.nav__wrapper {
+  background-image: url(../assets/img/nav_bg.jpg);
+  height: 150px;
+  padding: 35px;
+}
+
+.card {
+  border: 1px solid rgba(0,0,0,0)
+}

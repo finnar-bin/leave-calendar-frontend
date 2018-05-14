@@ -1,0 +1,14 @@
+.rbc-toolbar .rbc-toolbar-label {
+  text-align: right;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.rbc-today {
+  background-color: #D7CEC7;
+}
+
+.rbc-header {
+  padding: 3px;
+  font-size: 1.1em;
+}
