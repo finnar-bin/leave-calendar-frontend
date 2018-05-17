@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Calendar from '../Calendar/Calendar'
 import Search from '../Search/Search'
 import Navbar from '../Navbar/Navbar'
+import AdminLogin from '../Admin/AdminLogin';
+import Admin from '../Admin/Admin';
+import PrivateRoute from '../common/PrivateRoutes/PrivateRoute';
 import './App.css'
 
 let styles = {}
@@ -30,6 +33,8 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Calendar} />
                 <Route path="/search/:name" component={Search} />
+                <Route path="/admin/signin" component={AdminLogin} />
+                <PrivateRoute path="/admin" component={Admin} />
               </Switch>
             </div>
           </Fragment>
