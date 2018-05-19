@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
+import propTypes from 'prop-types';
 
 import Error from '../../common/Alerts/Error';
 import { authenticate } from '../../__utils/Authenticate';
@@ -23,6 +24,7 @@ class LoginForm extends Component {
     }).then((response) => {
       localStorage.setItem('token', response.data.token);
       authenticate.authenticate();
+      this.props.history.push("/admin");
     }).catch(error => this.setState({
       error: error.response.data.errorStack,
       loginError: true
@@ -51,6 +53,10 @@ class LoginForm extends Component {
       </Fragment>
     );
   }
+}
+
+LoginForm.propTypes = {
+  history: propTypes.object
 }
 
 export default LoginForm;
