@@ -1,0 +1,30 @@
+.alert {
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  position: fixed !important;
+  top: 15%;
+  right: 43%;
+  opacity: 1;
+  animation: slideDown 300ms ease-in-out;
+}
+
+@keyframes slideDown {
+  0% {
+    display: none;
+    opacity: 0;
+    top: 0;
+  }
+
+  1% {
+    display: flex;
+    opacity: 0;
+    top: 0;
+  }
+
+  100% {
+    top: 15%;
+    opacity: 1;
+  }
+}

@@ -2,10 +2,13 @@ import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 
 import Modal from './Modal';
+import Success from '../../../common/Alerts/Floating/Success';
 
 class Table extends Component {
   state = {
     triggerModal: false,
+    triggerSuccess: false,
+    successMessage: '',
     toEdit: [],
   }
 
@@ -20,8 +23,16 @@ class Table extends Component {
     console.log('Remove', userid);
   }
 
-  onClose = (bool) => {
-    this.setState({ triggerModal: bool })
+  onClose = () => {
+    this.setState({ triggerModal: false })
+  }
+
+  isSuccess = (message) => {
+    this.setState({
+      triggerSuccess: true,
+      successMessage: message
+    });
+    this.props.refetch();
   }
 
   render() {
@@ -61,14 +72,16 @@ class Table extends Component {
           </tbody>
         </table>
 
-        {this.state.triggerModal && <Modal handleClose={() => this.onClose()} userInfo={this.state.toEdit}/>}
+        {this.state.triggerModal && <Modal handleClose={() => this.onClose()} userInfo={this.state.toEdit} onSuccess={() => this.isSuccess()}/>}
+        {this.state.triggerSuccess && <Success message={this.state.successMessage} />}
       </Fragment>
     );
   }
-};
+}
 
 Table.propTypes = {
-  users: propTypes.array
+  users: propTypes.array,
+  refetch: propTypes.func
 }
 
 export default Table;

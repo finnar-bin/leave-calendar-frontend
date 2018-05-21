@@ -10,10 +10,6 @@ class Modal extends Component {
     leaveCredits: Math.ceil(this.props.userInfo.leaveCredits*100)/100
   }
 
-  modalClose = () => {
-    this.props.handleClose(true);
-  }
-
   handleNameChange = (e) => {
     this.setState({ fullName: e.target.value })
   }
@@ -30,8 +26,10 @@ class Modal extends Component {
       headers: {
         'x-auth': localStorage.getItem('token')
       }
-    }).then(response => console.log(response.data))
-    .catch(error => console.log(error.response.data.errorStack));
+    }).then((response) => {
+      this.props.onSuccess(response.message);
+      this.props.handleClose();
+    }).catch(error => console.log(error.response.data.errorStack));
   }
   
   render() {
@@ -67,7 +65,7 @@ class Modal extends Component {
             </div>
             <div className="text-center">
               <button className="btn btn-primary mx-1" onClick={this.handleSubmit}>Submit</button>
-              <button className="btn btn-warning mx-1" onClick={this.modalClose}>Close</button>
+              <button className="btn btn-warning mx-1" onClick={this.props.handleClose}>Close</button>
             </div>
           </div>
         </div>
@@ -78,6 +76,7 @@ class Modal extends Component {
 
 Modal.propTypes = {
   handleClose: propTypes.func,
-  userInfo: propTypes.object
+  userInfo: propTypes.object,
+  onSuccess: propTypes.func
 }
 export default Modal;

@@ -31,7 +31,7 @@ class Users extends Component {
     return (
       <Fragment>
         {this.state.triggerLoading && <Loader />}
-        {this.state.triggerLoading === false && this.state.users.length !== 0 && <Table users={this.state.users}/>}
+        {this.state.triggerLoading === false && this.state.users.length !== 0 && <Table users={this.state.users} refetch={this.fetchUsers}/>}
         {this.state.triggerLoading === false && this.state.users.length === 0 && "No result."}
       </Fragment>
     );
