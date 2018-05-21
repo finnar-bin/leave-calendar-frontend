@@ -11,10 +11,12 @@ const Admin = (props) => {
       <Router>
         <Fragment>
           <AdminNavbar {...props}/>
-          <Switch>
-            <Route path="/users" component={Users} />
-            <Route path="/new" component={New} />
-          </Switch>
+          <div className="my-3">
+            <Switch>
+              <Route path="/users" component={Users} />
+              <Route path="/new" component={New} />
+            </Switch>
+          </div>
         </Fragment>
 
       </Router>

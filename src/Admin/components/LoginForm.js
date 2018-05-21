@@ -18,7 +18,7 @@ class LoginForm extends Component {
     let username = this.username.value;
     let password = this.password.value;
     
-    axios.post('http://localhost:4300/admin/signin', {
+    axios.post(`${process.env.REACT_APP_API_GATEWAY}/admin/signin`, {
       userName: username,
       password
     }).then((response) => {
