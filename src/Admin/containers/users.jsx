@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 
-import Table from './users/Table';
-import Loader from '../../common/Loader/Loader';
+import Table from './table';
+import Loader from '../../common/loader';
 
 class Users extends Component {
   state = {

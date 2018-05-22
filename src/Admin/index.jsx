@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import AdminNavbar from './components/AdminNavbar';
-import Users from './components/Users';
-import New from './components/New';
+import MiniNav from './components/mininav';
+import Users from './containers/users';
+import New from './components/new';
 
 const Admin = (props) => {
   return (
     <div className="container">
       <Router>
         <Fragment>
-          <AdminNavbar {...props}/>
+          <MiniNav {...props}/>
           <div className="my-3">
             <Switch>
               <Route path="/users" component={Users} />

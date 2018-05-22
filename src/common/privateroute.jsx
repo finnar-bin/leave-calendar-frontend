@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import propTypes from 'prop-types';
 
-import { authenticate } from '../../__utils/Authenticate';
+import { authenticate } from '../__utils/auth';
 
 const PrivateRoute = ({ component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
-    authenticate.authenticate() === true
+    authenticate() === true
     ? <Component {...props} />
     : <Redirect to='/admin/signin' /> 
   )} />

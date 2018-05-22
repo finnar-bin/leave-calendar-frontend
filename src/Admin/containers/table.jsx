@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 
-import Update from './Modals/Update';
-import Delete from './Modals/Delete';
-import Success from '../../../common/Alerts/Floating/Success';
-import Error from '../../../common/Alerts/Floating/Error';
+import Update from './update';
+import Delete from '../components/delete';
+import Success from '../../common/floating/success';
+import Error from '../../common/floating/error';
 
 class Table extends Component {
   state = {

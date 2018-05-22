@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import propTypes from 'prop-types';
 
-import { authenticate } from '../../__utils/Authenticate';
+import { signout } from '../../__utils/auth';
 
 let styles = {}
 
@@ -16,9 +16,9 @@ styles.button__navItem = {
   color: '#495057',
 }
 
-const AdminNavbar = (props) => {
+const MiniNav = (props) => {
   const onLogout = () => {
-    authenticate.signout();
+    signout();
     props.history.push('/admin/signin');
   }
 
@@ -37,8 +37,8 @@ const AdminNavbar = (props) => {
   );
 }
 
-AdminNavbar.propTypes = {
+MiniNav.propTypes = {
   history: propTypes.object
 }
 
-export default AdminNavbar;
+export default MiniNav;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 
-import { updateUser } from '../../../../api';
+import { updateUser } from '../../api';
 
 class Update extends Component {
   state = {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 
-class NavForm extends Component {
+class Search extends Component {
   state = {
     formValue: ''
   }
@@ -36,4 +36,4 @@ class NavForm extends Component {
   }
 }
 
-export default NavForm;
+export default Search;

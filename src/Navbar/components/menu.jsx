@@ -7,7 +7,7 @@ styles.navbar__url = {
   color: '#D7CEC7'
 };
 
-const NavUrl = () => {
+const Menu = () => {
   return (
     <ul className="navbar-nav mr-auto">
       <li className="nav-item">
@@ -20,4 +20,4 @@ const NavUrl = () => {
   );
 };
 
-export default NavUrl;
+export default Menu;

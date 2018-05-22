@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Calendar from '../Calendar/Calendar'
-import Search from '../Search/Search'
-import Navbar from '../Navbar/Navbar'
-import AdminLogin from '../Admin/AdminLogin';
-import Admin from '../Admin/Admin';
-import PrivateRoute from '../common/PrivateRoutes/PrivateRoute';
+import Calendar from '../Calendar'
+import Search from '../Search';
+import Navbar from '../Navbar';
+import Login from '../Login';
+import Admin from '../Admin';
+import PrivateRoute from '../common/privateroute';
 import './App.css'
 
 let styles = {}
@@ -33,7 +33,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Calendar} />
                 <Route path="/search/:name" component={Search} />
-                <Route path="/admin/signin" component={AdminLogin} />
+                <Route path="/admin/signin" component={Login} />
                 <PrivateRoute path="/admin" component={Admin} />
               </Switch>
             </div>

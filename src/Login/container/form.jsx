@@ -2,10 +2,8 @@ import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import propTypes from 'prop-types';
 
-import Error from '../../common/Alerts/Error';
-import { authenticate } from '../../__utils/Authenticate';
-
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+import Error from '../../common/alerts/error';
+import { authenticate } from '../../__utils/auth';
 
 class LoginForm extends Component {
   state = {
@@ -23,7 +21,7 @@ class LoginForm extends Component {
       password
     }).then((response) => {
       localStorage.setItem('token', response.data.token);
-      authenticate.authenticate();
+      authenticate();
       this.props.history.push("/admin");
     }).catch(error => this.setState({
       error: error.response.data.errorStack,

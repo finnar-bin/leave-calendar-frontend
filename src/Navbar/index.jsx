@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import NavForm from './components/NavForm';
-import NavUrl from './components/NavUrl';
+import Search from './containers/search';
+import Menu from './components/menu';
 
 let styles = {}
 styles.navbar__brand = {
@@ -18,8 +18,8 @@ const Navbar = () => (
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarNav">
-      <NavUrl />
-      <NavForm />
+      <Menu />
+      <Search />
     </div>
   </nav>
 );
