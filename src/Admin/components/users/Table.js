@@ -1,33 +1,39 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 
-import Modal from './Modal';
+import Update from './Modals/Update';
+import Delete from './Modals/Delete';
 import Success from '../../../common/Alerts/Floating/Success';
 import Error from '../../../common/Alerts/Floating/Error';
 
 class Table extends Component {
   state = {
-    triggerModal: false,
+    triggerUpdateModal: false,
+    triggerDeleteModal: false,
     triggerSuccess: false,
     triggerError: false,
     successMessage: '',
     errorMessage: '',
     toEdit: [],
+    toDelete: '',
   }
 
   onEdit = (userdata) => {
     this.setState({
-      triggerModal: true,
+      triggerUpdateModal: true,
       toEdit: userdata
     });
   }
 
   onRemove = (userid) => {
-    console.log('Remove', userid);
+    this.setState({
+      triggerDeleteModal: true,
+      toDelete: userid
+    });
   }
 
   onClose = () => {
-    this.setState({ triggerModal: false })
+    this.setState({ triggerUpdateModal: false })
   }
 
   onAlertClose = () => {
@@ -89,7 +95,8 @@ class Table extends Component {
           </tbody>
         </table>
 
-        {this.state.triggerModal && <Modal handleClose={this.onClose} userInfo={this.state.toEdit} onSuccess={this.isSuccess} onError={this.isError} />}
+        {this.state.triggerUpdateModal && <Update handleClose={this.onClose} userInfo={this.state.toEdit} onSuccess={this.isSuccess} onError={this.isError} />}
+        {this.state.triggerDeleteModal && <Delete handleClose={this.onClose} userId={this.state.toDelete} />}
         {this.state.triggerSuccess && <Success message={this.state.successMessage} handleClose={this.onAlertClose} />}
         {this.state.triggerError && <Error message={this.state.errorMessage} handleClose={this.onAlertClose} />}
       </Fragment>

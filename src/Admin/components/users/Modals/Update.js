@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
-import axios from 'axios';
 
-import './Modal.css';
+import { updateUser } from '../../../../api';
 
-class Modal extends Component {
+class Update extends Component {
   state = {
     fullName: this.props.userInfo.fullName,
     leaveCredits: Math.ceil(this.props.userInfo.leaveCredits*100)/100
@@ -19,27 +18,18 @@ class Modal extends Component {
   }
 
 
-  handleSubmit = () => {
-    axios.patch(`${process.env.REACT_APP_API_GATEWAY}/user/${this.props.userInfo._id}`, {
-      fullName: this.state.fullName,
-      leaveCredits: this.state.leaveCredits
-    }, {
-      headers: {
-        'x-auth': localStorage.getItem('token')
-      }
-    }).then((response) => {
-      console.log(response);
-      this.props.onSuccess(response.data.message);
+  handleSubmit = async () => {
+    let user = await updateUser(this.props.userInfo._id, this.state.fullName, this.state.leaveCredits);
+    if (user.error) {
+      this.props.onError(user.error.data.message);
       this.props.handleClose();
-    }).catch((error) => {
-      // console.log(error.response.data.message);
-      this.props.onError(error.response.data.message);
+    } else {
+      this.props.onSuccess(user.data.message);
       this.props.handleClose();
-    });
+    }
   }
   
   render() {
-    console.log(this.props);
     return (
       <div className="modal__overlay">
         <div className="card p-3" style={{ minHeight: '10vh' }}>
@@ -80,10 +70,10 @@ class Modal extends Component {
   }
 }
 
-Modal.propTypes = {
+Update.propTypes = {
   handleClose: propTypes.func,
   userInfo: propTypes.object,
   onSuccess: propTypes.func,
   onError: propTypes.func
 }
-export default Modal;
+export default Update;
