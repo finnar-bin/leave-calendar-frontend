@@ -6,7 +6,7 @@ import Search from '../Search';
 import Navbar from '../Navbar';
 import Login from '../Login';
 import Admin from '../Admin';
-import PrivateRoute from '../common/privateroute';
+import PrivateRoute from '../common/private-route';
 import './App.css'
 
 let styles = {}

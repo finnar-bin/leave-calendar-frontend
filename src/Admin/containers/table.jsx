@@ -3,8 +3,8 @@ import propTypes from 'prop-types';
 
 import Update from './update';
 import Delete from '../components/delete';
-import Success from '../../common/floating/success';
-import Error from '../../common/floating/error';
+import SuccessFloating from '../../common/floating/success-floating';
+import ErrorFloating from '../../common/floating/error-floating';
 
 class Table extends Component {
   state = {
@@ -97,8 +97,8 @@ class Table extends Component {
 
         {this.state.triggerUpdateModal && <Update handleClose={this.onClose} userInfo={this.state.toEdit} onSuccess={this.isSuccess} onError={this.isError} />}
         {this.state.triggerDeleteModal && <Delete handleClose={this.onClose} userId={this.state.toDelete} />}
-        {this.state.triggerSuccess && <Success message={this.state.successMessage} handleClose={this.onAlertClose} />}
-        {this.state.triggerError && <Error message={this.state.errorMessage} handleClose={this.onAlertClose} />}
+        {this.state.triggerSuccess && <SuccessFloating message={this.state.successMessage} handleClose={this.onAlertClose} />}
+        {this.state.triggerError && <ErrorFloating message={this.state.errorMessage} handleClose={this.onAlertClose} />}
       </Fragment>
     );
   }

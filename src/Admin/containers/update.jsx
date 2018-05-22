@@ -17,7 +17,6 @@ class Update extends Component {
     this.setState({ leaveCredits: e.target.value })
   }
 
-
   handleSubmit = async () => {
     let user = await updateUser(this.props.userInfo._id, this.state.fullName, this.state.leaveCredits);
     if (user.error) {

@@ -1,12 +1,12 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-import './FloatingStyles.css';
+import './floating-styles.css';
 
-const Success = (props) => {
+const ErrorFloating = (props) => {
   return (
-    <div className="alert alert-success alert-dismissible fade show" role="alert">
-      <span><strong>Awww yeah! </strong> {props.message}.</span>
+    <div className="alert alert-danger alert-floating alert-dismissible fade show" role="alert">
+      <span><strong>Something went wrong, Cap!</strong> {props.message}.</span>
       <button type="button" className="close" onClick={props.handleClose} aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -14,9 +14,9 @@ const Success = (props) => {
   );
 };
 
-Success.propTypes = {
+ErrorFloating.propTypes = {
   message: propTypes.string,
   handleClose: propTypes.func
 }
 
-export default Success;
+export default ErrorFloating;

@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 
-const Error = (props) => {
+const ErrorAlert = (props) => {
   return (
     <div className="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Something went wrong, Cap!</strong>
@@ -14,8 +14,8 @@ const Error = (props) => {
   );
 };
 
-Error.propTypes = {
+ErrorAlert.propTypes = {
   message: propTypes.string
 }
 
-export default Error;
+export default ErrorAlert;

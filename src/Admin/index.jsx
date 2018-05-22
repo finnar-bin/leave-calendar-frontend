@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import MiniNav from './components/mininav';
+import MiniNav from './components/mini-nav';
 import Users from './containers/users';
 import New from './components/new';
 

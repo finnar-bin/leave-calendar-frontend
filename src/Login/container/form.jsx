@@ -1,38 +1,47 @@
 import React, { Component, Fragment } from 'react';
-import axios from 'axios';
 import propTypes from 'prop-types';
 
-import Error from '../../common/alerts/error';
+import ErrorAlert from '../../common/alerts/error-alert';
 import { authenticate } from '../../__utils/auth';
+import { loginAdmin } from '../../api';
 
 class LoginForm extends Component {
   state = {
-    loginError: false,
-    error: ''
+    triggerError: false,
+    errorMessage: ''
   }
 
-  onLogin = (e) => {
-    e.preventDefault();
-    let username = this.username.value;
-    let password = this.password.value;
-    
-    axios.post(`${process.env.REACT_APP_API_GATEWAY}/admin/signin`, {
-      userName: username,
-      password
-    }).then((response) => {
-      localStorage.setItem('token', response.data.token);
+  onLogin = async (e) => {
+    e.preventDefault();  
+    let admin = await loginAdmin(this.username.value, this.password.value);
+    if (admin.error) {
+      console.log(admin.error);
+      this.setState({
+        triggerError: true,
+        errorMessage: admin.error.data.errorStack
+      });
+    } else {
+      localStorage.setItem('token', admin.data.token);
       authenticate();
       this.props.history.push("/admin");
-    }).catch(error => this.setState({
-      error: error.response.data.errorStack,
-      loginError: true
-    }));
+    }
+    // axios.post(`${process.env.REACT_APP_API_GATEWAY}/admin/signin`, {
+    //   userName: username,
+    //   password
+    // }).then((response) => {
+    //   localStorage.setItem('token', response.data.token);
+    //   authenticate();
+    //   this.props.history.push("/admin");
+    // }).catch(error => this.setState({
+    //   error: error.response.data.errorStack,
+    //   loginError: true
+    // }));
   }
 
   render() {
     return (
       <Fragment>
-        {this.state.loginError && <Error message={this.state.error}/>}
+        {this.state.triggerError && <ErrorAlert message={this.state.errorMessage}/>}
         <form onSubmit={this.onLogin}>
           <div className="input-group input-group-lg mb-3">
             <div className="input-group-prepend">
