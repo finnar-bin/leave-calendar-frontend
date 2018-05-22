@@ -70,8 +70,8 @@ class Modal extends Component {
               />
             </div>
             <div className="text-center">
+              <button className="btn btn-secondary mx-1" onClick={this.props.handleClose}>Close</button>
               <button className="btn btn-primary mx-1" onClick={this.handleSubmit}>Submit</button>
-              <button className="btn btn-warning mx-1" onClick={this.props.handleClose}>Close</button>
             </div>
           </div>
         </div>

@@ -30,6 +30,13 @@ class Table extends Component {
     this.setState({ triggerModal: false })
   }
 
+  onAlertClose = () => {
+    this.setState({
+      triggerError: false,
+      triggerSuccess: false
+    })
+  }
+
   isSuccess = (message) => {
     this.setState({
       triggerSuccess: true,
@@ -83,8 +90,8 @@ class Table extends Component {
         </table>
 
         {this.state.triggerModal && <Modal handleClose={this.onClose} userInfo={this.state.toEdit} onSuccess={this.isSuccess} onError={this.isError} />}
-        {this.state.triggerSuccess && <Success message={this.state.successMessage} />}
-        {this.state.triggerError && <Error message={this.state.errorMessage} />}
+        {this.state.triggerSuccess && <Success message={this.state.successMessage} handleClose={this.onAlertClose} />}
+        {this.state.triggerError && <Error message={this.state.errorMessage} handleClose={this.onAlertClose} />}
       </Fragment>
     );
   }
