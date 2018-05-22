@@ -18,6 +18,7 @@ class Modal extends Component {
     this.setState({ leaveCredits: e.target.value })
   }
 
+
   handleSubmit = () => {
     axios.patch(`${process.env.REACT_APP_API_GATEWAY}/user/${this.props.userInfo._id}`, {
       fullName: this.state.fullName,
@@ -27,13 +28,18 @@ class Modal extends Component {
         'x-auth': localStorage.getItem('token')
       }
     }).then((response) => {
-      this.props.onSuccess(response.message);
+      console.log(response);
+      this.props.onSuccess(response.data.message);
       this.props.handleClose();
-    }).catch(error => console.log(error.response.data.errorStack));
+    }).catch((error) => {
+      // console.log(error.response.data.message);
+      this.props.onError(error.response.data.message);
+      this.props.handleClose();
+    });
   }
   
   render() {
-    console.log(this.props.userInfo);
+    console.log(this.props);
     return (
       <div className="modal__overlay">
         <div className="card p-3" style={{ minHeight: '10vh' }}>
@@ -77,6 +83,7 @@ class Modal extends Component {
 Modal.propTypes = {
   handleClose: propTypes.func,
   userInfo: propTypes.object,
-  onSuccess: propTypes.func
+  onSuccess: propTypes.func,
+  onError: propTypes.func
 }
 export default Modal;

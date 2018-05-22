@@ -3,12 +3,15 @@ import propTypes from 'prop-types';
 
 import Modal from './Modal';
 import Success from '../../../common/Alerts/Floating/Success';
+import Error from '../../../common/Alerts/Floating/Error';
 
 class Table extends Component {
   state = {
     triggerModal: false,
     triggerSuccess: false,
+    triggerError: false,
     successMessage: '',
+    errorMessage: '',
     toEdit: [],
   }
 
@@ -33,6 +36,13 @@ class Table extends Component {
       successMessage: message
     });
     this.props.refetch();
+  }
+
+  isError = (message) => {
+    this.setState({
+      triggerError: true,
+      errorMessage: message
+    });
   }
 
   render() {
@@ -72,8 +82,9 @@ class Table extends Component {
           </tbody>
         </table>
 
-        {this.state.triggerModal && <Modal handleClose={() => this.onClose()} userInfo={this.state.toEdit} onSuccess={() => this.isSuccess()}/>}
+        {this.state.triggerModal && <Modal handleClose={this.onClose} userInfo={this.state.toEdit} onSuccess={this.isSuccess} onError={this.isError} />}
         {this.state.triggerSuccess && <Success message={this.state.successMessage} />}
+        {this.state.triggerError && <Error message={this.state.errorMessage} />}
       </Fragment>
     );
   }
