@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const Alert = ({dismissible, floating, kind, message, clickAction}) => {
   let toDismiss = dismissible ? 'alert-dismissible' : '';
   let toFloat = floating ? 'alert-floating' : '';
-  let vanityMessage = ''
+  let vanityMessage;
   
   switch (kind) {
     case 'danger':

@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Button = ({text, kind, otherClasses, clickAction, outline, size}) => {
-  let style = '';
-  let btnSize = '';
+  let style, btnSize;
 
   if (outline) {
     style=`btn-outline-${kind}`;

@@ -3,18 +3,29 @@ import PropTypes from 'prop-types';
 
 import Alert from '../components/Alert';
 import Button from '../components/Button';
+import InputGroup from '../components/InputGroup';
 import { authenticate } from '../utils/auth';
 import { loginAdmin } from '../api';
 
 class AdminLoginForm extends Component {
   state = {
     triggerError: false,
-    errorMessage: ''
+    errorMessage: '',
+    username: '',
+    password: ''
+  }
+
+  handleUsername = (e) => {
+    this.setState({ username: e.target.value });
+  }
+
+  handlePassword = (e) => {
+    this.setState({ password: e.target.value });
   }
 
   onLogin = async (e) => {
     e.preventDefault();  
-    let admin = await loginAdmin(this.username.value, this.password.value);
+    let admin = await loginAdmin(this.state.username, this.state.password);
     if (admin.error) {
       console.log(admin.error);
       this.setState({
@@ -33,18 +44,21 @@ class AdminLoginForm extends Component {
       <Fragment>
         {this.state.triggerError && <Alert kind="danger" dismissible={false} message={this.state.errorMessage}/>}
         <form onSubmit={this.onLogin}>
-          <div className="input-group input-group-lg mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text" id="username">Username</span>
-            </div>
-            <input ref={(u) => { this.username = u; }} type="text" className="form-control" aria-describedby="username" />
-          </div>
-          <div className="input-group input-group-lg mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text" id="password">Password</span>
-            </div>
-            <input ref={(p) => { this.password = p; }} type="password" className="form-control" aria-describedby="password" />
-          </div>
+          <InputGroup
+            prependText="Username"
+            size="large"
+            type="text"
+            otherClasses="mb-3"
+            changeAction={this.handleUsername}
+            focus
+          />
+          <InputGroup
+            prependText="Password"
+            size="large"
+            type="password"
+            otherClasses="mb-3"
+            changeAction={this.handlePassword}
+          />
           <Button text="Submit" />
         </form>
       </Fragment>
