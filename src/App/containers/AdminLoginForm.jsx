@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import propTypes from 'prop-types';
 
-import AlertError from '../components/Alert/Error';
+import Alert from '../components/Alert';
 import { authenticate } from '../utils/auth';
 import { loginAdmin } from '../api';
 
@@ -30,7 +30,7 @@ class AdminLoginForm extends Component {
   render() {
     return (
       <Fragment>
-        {this.state.triggerError && <AlertError message={this.state.errorMessage}/>}
+        {this.state.triggerError && <Alert type="danger" dismissible={false} message={this.state.errorMessage}/>}
         <form onSubmit={this.onLogin}>
           <div className="input-group input-group-lg mb-3">
             <div className="input-group-prepend">

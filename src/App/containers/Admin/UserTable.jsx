@@ -3,10 +3,9 @@ import propTypes from 'prop-types';
 
 import AdminUpdate from './AdminUpdate';
 import AdminDelete from './AdminDelete';
-import FloatingSuccess from '../../components/Floaters/FloatingSuccess';
-import FloatingError from '../../components/Floaters/FloatingError';
+import Alert from '../../components/Alert';
 
-class AdminTable extends Component {
+class UserTable extends Component {
   state = {
     triggerUpdateModal: false,
     triggerDeleteModal: false,
@@ -100,16 +99,16 @@ class AdminTable extends Component {
 
         {this.state.triggerUpdateModal && <AdminUpdate handleClose={this.onClose} userInfo={this.state.toEdit} onSuccess={this.isSuccess} onError={this.isError} />}
         {this.state.triggerDeleteModal && <AdminDelete handleClose={this.onClose} userId={this.state.toDelete} />}
-        {this.state.triggerSuccess && <FloatingSuccess message={this.state.successMessage} handleClose={this.onAlertClose} />}
-        {this.state.triggerError && <FloatingError message={this.state.errorMessage} handleClose={this.onAlertClose} />}
+        {this.state.triggerSuccess && <Alert floating={true} message={this.state.successMessage} clickAction={this.onAlertClose} />}
+        {this.state.triggerError && <Alert floating={true} type="danger" message={this.state.errorMessage} clickAction={this.onAlertClose} />}
       </Fragment>
     );
   }
 }
 
-AdminTable.propTypes = {
+UserTable.propTypes = {
   users: propTypes.array,
   refetch: propTypes.func
 }
 
-export default AdminTable;
+export default UserTable;

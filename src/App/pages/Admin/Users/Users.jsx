@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 
-import AdminTable from '../../../containers/Admin/AdminTable';
+import UserTable from '../../../containers/Admin/UserTable';
 import Loader from '../../../components/Loader';
 
 class Users extends Component {
@@ -31,7 +31,7 @@ class Users extends Component {
     return (
       <Fragment>
         {this.state.triggerLoading && <Loader />}
-        {this.state.triggerLoading === false && this.state.users.length !== 0 && <AdminTable users={this.state.users} refetch={this.fetchUsers}/>}
+        {this.state.triggerLoading === false && this.state.users.length !== 0 && <UserTable users={this.state.users} refetch={this.fetchUsers}/>}
         {this.state.triggerLoading === false && this.state.users.length === 0 && "No result."}
       </Fragment>
     );

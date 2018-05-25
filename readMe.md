@@ -5,5 +5,7 @@ Leave management calendar's front-end powered by React.js
 - [x] Floating error handler
 - [ ] Add user
 - [ ] Remove user
-- [ ] Add leaves on calendar
+- [ ] Add capability to add leaves on the calendar
 - [x] Restructure code
+- [ ] Add animation and transitions
+- [ ] Make ui elements reusable and composable

@@ -36,7 +36,7 @@ class AdminUpdate extends Component {
           <div className="card-body">
             <div className="input-group mb-3">
               <div className="input-group-prepend">
-                <span className="input-group-text" id="fullname">Full Name</span>
+                <span className="input-group-text">Full Name</span>
               </div>
               <input
                 className="form-control"
@@ -48,7 +48,7 @@ class AdminUpdate extends Component {
             </div>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
-                <span className="input-group-text" id="leaveCredits">Leave Credits</span>
+                <span className="input-group-text">Leave Credits</span>
               </div>
               <input
                 className="form-control"
