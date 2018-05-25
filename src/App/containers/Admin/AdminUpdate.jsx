@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 import { updateUser } from '../../api';
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
+import InputGroup from '../../components/InputGroup';
 
 class AdminUpdate extends Component {
   state = {
@@ -33,30 +34,20 @@ class AdminUpdate extends Component {
   render() {
     return (
       <Modal header="Update User">
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Full Name</span>
-          </div>
-          <input
-            className="form-control"
-            type="text"
-            aria-describedby="username"
-            value={this.state.fullName}
-            onChange={this.handleNameChange}
-          />
-        </div>
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">Leave Credits</span>
-          </div>
-          <input
-            className="form-control"
-            type="number"
-            aria-describedby="leaveCredits"
-            value={this.state.leaveCredits}
-            onChange={this.handleCreditsChange}
-          />
-        </div>
+        <InputGroup
+          prependText="Full Name"
+          type="text"
+          otherClasses="mb-3"
+          value={this.state.fullName}
+          changeAction={this.handleNameChange}
+        />
+        <InputGroup
+          prependText="Leave Credits"
+          type="number"
+          otherClasses="mb-3"
+          value={this.state.leaveCredits}
+          changeAction={this.handleCreditsChange}
+        />
         <div className="text-center">
           <Button
             text="Close"

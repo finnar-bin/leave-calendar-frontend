@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const InputGroup = ({prependText, size, type, otherClasses, changeAction, focus}) => {
+const InputGroup = ({prependText, size, type, otherClasses, changeAction, focus, value}) => {
   let inputSize, toFocus;
   switch (size) {
     case 'large':
@@ -26,7 +26,7 @@ const InputGroup = ({prependText, size, type, otherClasses, changeAction, focus}
       <div className="input-group-prepend">
         <span className="input-group-text">{prependText}</span>
       </div>
-      <input onChange={changeAction} type={type} className="form-control" autofocus={toFocus}/>
+      <input onChange={changeAction} type={type} value={value} className="form-control" autofocus={toFocus}/>
     </div>
   );
 };
