@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import axios from 'axios';
 
 import UserTable from '../../../containers/Admin/UserTable';
 import Loader from '../../../components/Loader';
+import { getUsers } from '../../../api';
 
 class Users extends Component {
   state = {
@@ -16,15 +16,16 @@ class Users extends Component {
    * Fetch list of users from database
    * @returns {array} list of all users
    */
-  fetchUsers = () => {
-    axios.get(`${process.env.REACT_APP_API_GATEWAY}/user`)
-      .then((response) => {
-        this.setState({
-          users: response.data.data,
-          triggerLoading: false
-        });
-      })
-      .catch(error => console.log(error.response));
+  fetchUsers = async () => {
+    let users = await getUsers();
+    if (users.error) {
+      console.log(users.error.data.message);
+    } else {
+      this.setState({
+        users: users.data.data,
+        triggerLoading: false
+      });
+    }
   }
 
   render() {

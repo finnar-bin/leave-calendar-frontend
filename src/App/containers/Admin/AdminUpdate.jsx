@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 
 import { updateUser } from '../../api';
+import Modal from '../../components/Modal';
+import Button from '../../components/Button';
 
 class AdminUpdate extends Component {
   state = {
@@ -30,41 +32,45 @@ class AdminUpdate extends Component {
   
   render() {
     return (
-      <div className="modal__overlay">
-        <div className="card p-3" style={{ minHeight: '10vh' }}>
-          <h4 className="card-header">Edit User</h4>
-          <div className="card-body">
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text">Full Name</span>
-              </div>
-              <input
-                className="form-control"
-                type="text"
-                aria-describedby="username"
-                value={this.state.fullName}
-                onChange={this.handleNameChange}
-              />
-            </div>
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text">Leave Credits</span>
-              </div>
-              <input
-                className="form-control"
-                type="number"
-                aria-describedby="leaveCredits"
-                value={this.state.leaveCredits}
-                onChange={this.handleCreditsChange}
-              />
-            </div>
-            <div className="text-center">
-              <button className="btn btn-secondary mx-1" onClick={this.props.handleClose}>Close</button>
-              <button className="btn btn-primary mx-1" onClick={this.handleSubmit}>Submit</button>
-            </div>
+      <Modal header="Update User">
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Full Name</span>
           </div>
+          <input
+            className="form-control"
+            type="text"
+            aria-describedby="username"
+            value={this.state.fullName}
+            onChange={this.handleNameChange}
+          />
         </div>
-      </div>
+        <div className="input-group mb-3">
+          <div className="input-group-prepend">
+            <span className="input-group-text">Leave Credits</span>
+          </div>
+          <input
+            className="form-control"
+            type="number"
+            aria-describedby="leaveCredits"
+            value={this.state.leaveCredits}
+            onChange={this.handleCreditsChange}
+          />
+        </div>
+        <div className="text-center">
+          <Button
+            text="Close"
+            otherClasses="mx-1"
+            kind="secondary"
+            clickAction={this.props.handleClose}
+          />
+          <Button
+            text="Submit"
+            otherClasses="mx-1"
+            clickAction={this.handleSubmit}
+          />
+        </div>
+      </Modal> 
     );
   }
 }

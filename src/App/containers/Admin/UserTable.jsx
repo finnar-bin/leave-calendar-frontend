@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import AdminUpdate from './AdminUpdate';
 import AdminDelete from './AdminDelete';
 import Alert from '../../components/Alert';
+import Button from '../../components/Button';
 
 class UserTable extends Component {
   state = {
@@ -67,16 +68,22 @@ class UserTable extends Component {
           <td>{data.fullName}</td>
           <td>{Math.ceil(data.leaveCredits * 100)/100}</td>
           <td>
-            <button
-              className="btn btn-outline-success btn-sm mx-1"
-              onClick={() => this.onEdit(data)}>
-              Edit
-            </button>
-            <button
-              className="btn btn-outline-danger btn-sm mx-1"
-              onClick={() => this.onRemove(data._id)}>
-              Remove
-            </button>
+            <Button
+              text="Edit"
+              kind="success"
+              otherClasses="mx-1"
+              size="small"
+              outline={true}
+              clickAction={() => this.onEdit(data)}
+            />
+            <Button
+              text="Remove"
+              kind="danger"
+              otherClasses="mx-1"
+              size="small"
+              outline={true}
+              clickAction={() => this.onRemove(data._id)}
+            />
           </td>
         </tr>
       )
@@ -99,16 +106,16 @@ class UserTable extends Component {
 
         {this.state.triggerUpdateModal && <AdminUpdate handleClose={this.onClose} userInfo={this.state.toEdit} onSuccess={this.isSuccess} onError={this.isError} />}
         {this.state.triggerDeleteModal && <AdminDelete handleClose={this.onClose} userId={this.state.toDelete} />}
-        {this.state.triggerSuccess && <Alert floating={true} message={this.state.successMessage} clickAction={this.onAlertClose} />}
-        {this.state.triggerError && <Alert floating={true} type="danger" message={this.state.errorMessage} clickAction={this.onAlertClose} />}
+        {this.state.triggerSuccess && <Alert floating={true} kind="success" message={this.state.successMessage} clickAction={this.onAlertClose} />}
+        {this.state.triggerError && <Alert floating={true} kind="danger" message={this.state.errorMessage} clickAction={this.onAlertClose} />}
       </Fragment>
     );
   }
 }
 
 UserTable.propTypes = {
-  users: propTypes.array,
-  refetch: propTypes.func
+  users: PropTypes.array,
+  refetch: PropTypes.func
 }
 
 export default UserTable;

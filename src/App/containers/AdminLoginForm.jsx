@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import Alert from '../components/Alert';
+import Button from '../components/Button';
 import { authenticate } from '../utils/auth';
 import { loginAdmin } from '../api';
 
@@ -30,7 +31,7 @@ class AdminLoginForm extends Component {
   render() {
     return (
       <Fragment>
-        {this.state.triggerError && <Alert type="danger" dismissible={false} message={this.state.errorMessage}/>}
+        {this.state.triggerError && <Alert kind="danger" dismissible={false} message={this.state.errorMessage}/>}
         <form onSubmit={this.onLogin}>
           <div className="input-group input-group-lg mb-3">
             <div className="input-group-prepend">
@@ -44,7 +45,7 @@ class AdminLoginForm extends Component {
             </div>
             <input ref={(p) => { this.password = p; }} type="password" className="form-control" aria-describedby="password" />
           </div>
-          <button className="btn btn-primary" type="submit">Submit</button>
+          <Button text="Submit" />
         </form>
       </Fragment>
     );
@@ -52,7 +53,7 @@ class AdminLoginForm extends Component {
 }
 
 AdminLoginForm.propTypes = {
-  history: propTypes.object
+  history: PropTypes.object
 }
 
 export default AdminLoginForm;

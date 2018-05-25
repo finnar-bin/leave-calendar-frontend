@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import propTypes from 'prop-types';
 
 import { signout } from '../utils/auth';
+import Button from '../components/Button';
 
 let styles = {}
 
@@ -31,7 +32,13 @@ const AdminNav = (props) => {
         <NavLink style={styles.button__navItem} className="nav-link" activeClassName="active" to="/admin/new">Add New</NavLink>
       </li>
       <li className="nav-item" style={styles.button__logout}>
-        <a onClick={() => onLogout()} className="nav-link btn btn-danger btn-sm mx-1">Log Out</a>
+        <Button 
+          text="Log Out"
+          kind="danger"
+          clickAction={() => onLogout()}
+          size="small"
+          otherClasses="mx-1 nav-link"
+        />
       </li>
     </ul>
   );

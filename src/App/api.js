@@ -23,6 +23,17 @@ const resolve = async (promise) => {
 }
 
 /**
+ * Fetch list of users from database
+ * @returns {array} list of all users
+ */
+export const getUsers = async () => {
+  return await resolve(
+    axios.get(`${API_URI}/user`)
+    .then(response => response.data)
+  );
+}
+
+/**
  * Update user info
  * @param {string} id user id to be update
  * @param {string} fullName updated user full name
@@ -30,14 +41,16 @@ const resolve = async (promise) => {
  * @returns {object} result sent as promise
  */
 export const updateUser = async (id, fullName, leaveCredits) => {
-  return await resolve(axios.patch(`${API_URI}/user/${id}`, {
-    fullName,
-    leaveCredits
-  }, {
-    headers: {
-      'x-auth': localStorage.getItem('token')
-    }
-  }).then(response => response.data));
+  return await resolve(
+    axios.patch(`${API_URI}/user/${id}`, {
+      fullName,
+      leaveCredits
+    }, {
+      headers: {
+        'x-auth': localStorage.getItem('token')
+      }
+    }).then(response => response.data)
+  );
 }
 
 /**
@@ -47,8 +60,10 @@ export const updateUser = async (id, fullName, leaveCredits) => {
  * @returns {object} result sent as promise
  */
 export const loginAdmin = async (userName, password) => {
-  return await resolve(axios.post(`${API_URI}/admin/signin`, {
-    userName,
-    password
-  }).then(response => response.data));
+  return await resolve(
+    axios.post(`${API_URI}/admin/signin`, {
+      userName,
+      password
+    }).then(response => response.data)
+  );
 }

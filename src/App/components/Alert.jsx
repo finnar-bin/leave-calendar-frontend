@@ -1,12 +1,12 @@
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const Alert = ({dismissible, floating, type, message, clickAction}) => {
+const Alert = ({dismissible, floating, kind, message, clickAction}) => {
   let toDismiss = dismissible ? 'alert-dismissible' : '';
   let toFloat = floating ? 'alert-floating' : '';
   let vanityMessage = ''
   
-  switch (type) {
+  switch (kind) {
     case 'danger':
       vanityMessage = 'Something went wrong, Cap!';
       break;
@@ -20,7 +20,7 @@ const Alert = ({dismissible, floating, type, message, clickAction}) => {
   }
 
   return (
-    <div className={`alert alert-${type} ${toFloat} ${toDismiss} fade show`} role="alert">
+    <div className={`alert alert-${kind} ${toFloat} ${toDismiss} fade show`} role="alert">
       <span><strong>{vanityMessage}</strong> {message}.</span>
       {
         dismissible &&
@@ -33,17 +33,17 @@ const Alert = ({dismissible, floating, type, message, clickAction}) => {
 };
 
 Alert.propTypes = {
-  dismissible: propTypes.bool,
-  floating: propTypes.bool,
-  type: propTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
-  message: propTypes.string,
-  clickAction: propTypes.func.isRequired
+  dismissible: PropTypes.bool,
+  floating: PropTypes.bool,
+  kind: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+  message: PropTypes.string,
+  clickAction: PropTypes.func.isRequired
 }
 
 Alert.defaultProps = {
   dismissible: true,
   floating: false,
-  type: 'primary'
+  kind: 'primary'
 }
 
 export default Alert;
