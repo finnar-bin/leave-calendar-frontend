@@ -1,5 +1,7 @@
 import React from 'react';
-import { MainRouter } from './Router';
+import { MainRouter, BaseRouter } from './Router';
+import { isUser } from './utils/user';
+
 
 let styles = {};
 
@@ -10,7 +12,7 @@ styles.main__wrapper = {
 
 const App = () => (
   <div className="card" style={styles.main__wrapper}>
-    <MainRouter />
+    <BaseRouter />
   </div>
 );
 

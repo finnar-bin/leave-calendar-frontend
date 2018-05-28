@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import HeaderNav from './HeaderNav';
 import HeaderForm from '../../containers/HeaderForm';
+import HeaderGreeting from './HeaderGreeting';
 
 let styles = {}
 styles.navbar__brand = {
@@ -19,6 +20,7 @@ const Header = () => (
     </button>
     <div className="collapse navbar-collapse" id="navbarNav">
       <HeaderNav />
+      <HeaderGreeting />
       <HeaderForm />
     </div>
   </nav>

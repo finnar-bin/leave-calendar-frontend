@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
 
@@ -7,6 +7,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 BigCalendar.momentLocalizer(moment);
 
 let styles = {}
+
 styles.calendarWrapper = {
   minHeight: '100vh'
 }
@@ -22,6 +23,7 @@ class Calendar extends Component {
         end: new Date(2018, 4, 17, 24),
       }
     ],
+    triggerModal: false
   }
 
   EventCalendar = ({ event }) => (
@@ -34,17 +36,19 @@ class Calendar extends Component {
 
   render() {
     return (
-        <BigCalendar
-          style={styles.calendarWrapper}
-          events={this.state.events}
-          defaultDate={new Date()}
-          selectable={true}
-          onSelectSlot={(slotInfo) => alert(slotInfo.end)}
-          views={['month']}
-          components={{
-            event: this.EventCalendar
-          }}
-        />
+        <Fragment>
+          <BigCalendar
+            style={styles.calendarWrapper}
+            events={this.state.events}
+            defaultDate={new Date()}
+            selectable={true}
+            onSelectSlot={(slotInfo) => alert(slotInfo.end)}
+            views={['month']}
+            components={{
+              event: this.EventCalendar
+            }}
+          />
+        </Fragment>
     );
   }
 }

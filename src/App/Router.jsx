@@ -2,9 +2,11 @@ import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import PrivateRoute from './components/PrivateRoute';
+import UserRoute from './components/UserRoute';
 import Header from './components/Header';
 import AdminNav from './components/AdminNav';
 
+import SelectUser from './pages/SelectUser';
 import Calendar from './pages/Calendar';
 import Search from './pages/Search';
 import AdminLogin from './pages/AdminLogin';
@@ -18,6 +20,12 @@ styles.body__wrapper = {
   padding: '2%'
 };
 
+export const BaseRouter = () => (
+  <Router>
+    <Route exact path="/" component={SelectUser} />
+  </Router>
+);
+
 export const MainRouter = () => (
   <Router>
     <Fragment>
@@ -26,9 +34,9 @@ export const MainRouter = () => (
       </div>
       <div style={styles.body__wrapper}>
         <Switch>
-          <Route exact path="/" component={Calendar} />
-          <Route path="/search/:name" component={Search} />
-          <Route path="/admin/signin" component={AdminLogin} />
+          <UserRoute exact path="/calendar" component={Calendar} />
+          <UserRoute exact path="/search/:name" component={Search} />
+          <UserRoute exact path="/admin/signin" component={AdminLogin} />
           <PrivateRoute path="/admin" component={Admin} />
         </Switch>
       </div>
@@ -43,8 +51,8 @@ export const AdminRouter = (props) => (
         <AdminNav {...props}/>
         <div className="my-3">
           <Switch>
-            <Route path="/admin/users" component={Users} />
-            <Route path="/admin/new" component={New} />
+            <Route exact path="/admin/users" component={Users} />
+            <Route exact path="/admin/new" component={New} />
           </Switch>
         </div>
       </Fragment>
