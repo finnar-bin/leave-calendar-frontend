@@ -67,3 +67,22 @@ export const loginAdmin = async (userName, password) => {
     }).then(response => response.data)
   );
 }
+
+/**
+ * Add new user
+ * @param {string} fullName new user full name
+ * @param {number} leaveCredits new user leave credits
+ * @returns {object} result setn as promise
+ */
+export const newUser = async (fullName, leaveCredits) => {
+  return await resolve(
+    axios.post(`${API_URI}/user`, {
+      fullName,
+      leaveCredits
+    }, {
+      headers: {
+        'x-auth': localStorage.getItem('token')
+      }
+    }).then(response => response.data)
+  );
+}
