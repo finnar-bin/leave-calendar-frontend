@@ -105,7 +105,7 @@ class UserTable extends Component {
         </table>
 
         {this.state.triggerUpdateModal && <AdminUpdate handleClose={this.onClose} userInfo={this.state.toEdit} onSuccess={this.isSuccess} onError={this.isError} />}
-        {this.state.triggerDeleteModal && <AdminDelete handleClose={this.onClose} userId={this.state.toDelete} />}
+        {this.state.triggerDeleteModal && <AdminDelete handleClose={this.onClose} userId={this.state.toDelete} onSuccess={this.isSuccess} onError={this.isError} />}
         {this.state.triggerSuccess && <Alert floating={true} kind="success" message={this.state.successMessage} clickAction={this.onAlertClose} />}
         {this.state.triggerError && <Alert floating={true} kind="danger" message={this.state.errorMessage} clickAction={this.onAlertClose} />}
       </Fragment>

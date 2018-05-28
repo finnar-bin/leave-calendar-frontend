@@ -3,12 +3,21 @@ import PropTypes from 'prop-types';
 
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
+import { removeUser } from '../../api';
 
-let handleSubmit = (id) => {
-  
-}
 
 const AdminDelete = (props) => {
+  let handleSubmit = async (id) => {
+    let user = await removeUser(id);
+    if (user.error) {
+      props.onError(user.error.data.message);
+      props.handleClose();
+    } else {
+      props.onSuccess(user.data.message);
+      props.handleClose();
+    }
+  }
+
   return (
     <Modal header="Delete User">
       <p>Are you sure you want to delete this user? There′s no going back from here.</p>
@@ -22,7 +31,7 @@ const AdminDelete = (props) => {
         <Button
           text="Submit"
           otherClasses="mx-1"
-          clickAction={handleSubmit(props.userId)}
+          clickAction={() => handleSubmit(props.userId)}
         />
       </div>
     </Modal>
@@ -31,7 +40,9 @@ const AdminDelete = (props) => {
 
 AdminDelete.propTypes = {
   userId: PropTypes.string,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  onError: PropTypes.func,
+  onSuccess: PropTypes.func
 }
 
 export default AdminDelete;

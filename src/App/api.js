@@ -86,3 +86,18 @@ export const newUser = async (fullName, leaveCredits) => {
     }).then(response => response.data)
   );
 }
+
+/**
+ * Delete user
+ * @param {string} id user id to be deleted
+ * @returns {object} result setn as promise
+ */
+export const removeUser = async (id) => {
+  return await resolve(
+    axios.delete(`${API_URI}/user/${id}`, {
+      headers: {
+        'x-auth': localStorage.getItem('token')
+      }
+    }).then(response => response.data)
+  );
+}
