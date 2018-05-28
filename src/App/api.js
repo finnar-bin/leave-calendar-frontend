@@ -4,8 +4,8 @@ const API_URI = process.env.REACT_APP_API_GATEWAY;
 
 /**
  * Helper function to properly resolve promises returned by axios
- * @param {object} promise
- * @returns {object} parsed promise result
+ * @param {Object} promise
+ * @returns {Object} parsed promise result
  */
 const resolve = async (promise) => {
   let result = {

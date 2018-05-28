@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 
 import { updateUser } from '../../api';
+import { clean } from '../../utils/clean';
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import InputGroup from '../../components/InputGroup';
@@ -21,7 +22,7 @@ class AdminUpdate extends Component {
   }
 
   handleSubmit = async () => {
-    let user = await updateUser(this.props.userInfo._id, this.state.fullName, this.state.leaveCredits);
+    let user = await updateUser(this.props.userInfo._id, clean(this.state.fullName), this.state.leaveCredits);
     if (user.error) {
       this.props.onError(user.error.data.message);
       this.props.handleClose();

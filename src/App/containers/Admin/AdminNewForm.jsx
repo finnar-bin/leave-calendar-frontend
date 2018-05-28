@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import InputGroup from '../../components/InputGroup';
 import Button from '../../components/Button';
-
+import { clean } from '../../utils/clean';
 import { newUser } from '../../api';
 
 class AdminNewForm extends Component {
@@ -21,7 +21,7 @@ class AdminNewForm extends Component {
   }
 
   handleSubmit = async () => {
-    let user = await newUser(this.state.fullName, this.state.leaveCredits);
+    let user = await newUser(clean(this.state.fullName), clean(this.state.leaveCredits));
     if (user.error) {
       this.props.onError(user.error.data.message);
     } else {

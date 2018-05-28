@@ -37,7 +37,10 @@ InputGroup.propTypes = {
   type: PropTypes.string,
   otherClasses: PropTypes.string,
   changeAction: PropTypes.func,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   focus: PropTypes.bool
 }
 
