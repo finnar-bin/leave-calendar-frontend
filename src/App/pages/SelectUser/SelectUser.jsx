@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { getUsers } from '../../api';
 import Button from '../../components/Button';
@@ -60,6 +61,7 @@ class SelectUser extends Component {
         <h1>Find your name below</h1>
         <hr/>
         <select className="form-control form-control-lg mb-3" onChange={this.setSelect} >
+          <option disabled selected>Choose here...</option>
           {userDropdown}
         </select>
         <Button
@@ -76,6 +78,10 @@ class SelectUser extends Component {
   componentDidMount() {
     this.fetchUsers();
   }
+}
+
+SelectUser.propTypes = {
+  history: PropTypes.obj
 }
 
 export default SelectUser;

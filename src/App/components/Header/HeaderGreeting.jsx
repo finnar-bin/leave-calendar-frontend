@@ -14,8 +14,6 @@ let greetings = [
 
 let randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
 
-let username = localStorage.getItem('name') || 'name_placeholder';
-
 let styles = {}
 
 styles.greeting__text = {
@@ -30,7 +28,8 @@ styles.greeting__link = {
 
 class HeaderGreeting extends Component {
   state = {
-    triggerRedirect: false
+    triggerRedirect: false,
+    username: 'name_placeholder'
   }
 
   handleChangeUser = () => {
@@ -42,14 +41,18 @@ class HeaderGreeting extends Component {
     return(
       <Fragment>
         <span className="text-center mx-3" style={styles.greeting__text}>
-          <span>{randomGreeting}, <strong>{username}</strong>!</span>
+          <span>{randomGreeting}, <strong>{this.state.username}</strong>!</span>
           <br/>
-          <a style={styles.greeting__link} onClick={() => this.handleChangeUser()}>Not $name_here?</a>
+          <a style={styles.greeting__link} onClick={() => this.handleChangeUser()}>Change User</a>
         </span>
 
         {this.state.triggerRedirect && <Redirect to='/' />}
       </Fragment>
     );
+  }
+
+  componentDidMount() {
+    this.setState({ username: localStorage.getItem('name') });
   }
 }
 

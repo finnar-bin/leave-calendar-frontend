@@ -14,7 +14,7 @@ styles.navbar__brand = {
 
 const Header = () => (
   <nav className="navbar navbar-expand-lg navbar-light">
-    <NavLink exact to="/" className="navbar-brand" style={styles.navbar__brand}>Leave Management Portal</NavLink>
+    <NavLink exact to="/calendar" className="navbar-brand" style={styles.navbar__brand}>Leave Management Portal</NavLink>
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
