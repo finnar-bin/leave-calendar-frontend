@@ -7,6 +7,8 @@ import HeaderWrapper from '../../components/Header';
 import CalendarAdd from '../../containers/Calendar/CalendarAdd';
 import CalendarRemove from '../../containers/Calendar/CalendarRemove';
 import Alert from '../../components/Alert';
+import Loader from '../../components/Loader';
+import { getLeaves } from '../../api';
 
 moment().utcOffset(12);
 BigCalendar.momentLocalizer(moment);
@@ -19,15 +21,8 @@ styles.calendarWrapper = {
 
 class Calendar extends Component {
   state = {
-    events: [
-      {
-        id: 0,
-        name: 'Mike Litoris',
-        type: 'Whole Day',
-        start: new Date('5/15/2018'),
-        end: new Date('5/16/2018 12:00'),
-      }
-    ],
+    events: [],
+    isLoading: true,
     triggerAlertSuccess: false,
     triggerAlertError: false,
     triggerAddModal: false,
@@ -44,6 +39,29 @@ class Calendar extends Component {
     </span>
   );
 
+  fetchLeaves = async () => {
+    let leaves = await getLeaves();
+    if (leaves.error) {
+      console.log(leaves.error.data.message);
+    } else {
+      let tempArray = [];
+      leaves.data.data.map((data) => {
+        let arr = {
+          id: data._id,
+          name: data.userId.fullName,
+          type: data.type,
+          start: new Date(`${data.start} 12:00`),
+          end: new Date(`${data.end} 12:00`)
+        }
+        tempArray.push(arr);
+      });
+      this.setState({
+        events: tempArray,
+        isLoading: false
+      });
+    }
+  }
+
   handleModalClose = () => {
     this.setState({
       triggerAddModal: false,
@@ -58,9 +76,10 @@ class Calendar extends Component {
     });
   }
 
-  setSuccess = () => {
+  setSuccess = (newLeaveArray) => {
     this.setState({
-      triggerAlertSuccess: true
+      triggerAlertSuccess: true,
+      events: [...this.state.events, newLeaveArray]
     });
   }
 
@@ -73,30 +92,41 @@ class Calendar extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <BigCalendar
-          style={styles.calendarWrapper}
-          events={this.state.events}
-          defaultDate={new Date(moment())}
-          selectable={true}
-          onSelectSlot={slotInfo =>
-            this.setState({
-              selectedDateFrom: slotInfo.start.toLocaleDateString(),
-              selectedDateTo: slotInfo.end.toLocaleDateString(),
-              triggerAddModal: true
-            })
-          }
-          views={['month']}
-          components={{
-            event: this.EventCalendar
-          }}
-          
-        />
+        {!this.state.isLoading &&
+          <BigCalendar
+            style={styles.calendarWrapper}
+            events={this.state.events}
+            defaultDate={new Date(moment())}
+            selectable={true}
+            onSelectSlot={slotInfo =>
+              this.setState({
+                selectedDateFrom: slotInfo.start.toLocaleDateString(),
+                selectedDateTo: slotInfo.end.toLocaleDateString(),
+                triggerAddModal: true
+              })
+            }
+            views={['month']}
+            components={{
+              event: this.EventCalendar
+            }} 
+          />
+        }
+        {this.state.isLoading && <Loader />}
         {this.state.triggerAddModal && <CalendarAdd closeModal={this.handleModalClose} from={this.state.selectedDateFrom} to={this.state.selectedDateTo} onSuccess={this.setSuccess} onError={this.setError} />}
         {this.state.triggerRemoveModal && <CalendarRemove closeModal={this.handleModalClose} />}
         {this.state.triggerAlertSuccess && <Alert floating={true} kind="success" message="Leave successfully added" clickAction={this.handleAlertClose} />}
         {this.state.triggerAlertError && <Alert floating={true} kind="danger" message="Failed to add the leave" clickAction={this.handleAlertClose} />}
       </HeaderWrapper>
     );
+  }
+
+  componentDidMount() {
+    this.fetchLeaves();
+  }
+
+  shouldComponentUpdate(nextState) {
+    const diffState = this.state.events !== nextState.events;
+    return diffState;
   }
 }
 

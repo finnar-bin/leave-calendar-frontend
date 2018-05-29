@@ -22,13 +22,21 @@ class CalendarAdd extends Component {
     this.setState({ type: e.target.value })
   }
 
-  handleSubmit = () => {
-    let leave = addLeave(localStorage.getItem('userId'), this.state.status, this.props.from, this.props.to, this.state.type);
+  handleSubmit = async () => {
+    let leave = await addLeave(localStorage.getItem('userId'), this.state.status, this.props.from, this.props.to, this.state.type);
     if (leave.error) {
       this.props.onError();
       this.props.closeModal();
     } else {
-      this.props.onSuccess();
+      console.log(leave);
+      let newLeave = {
+        id: leave.data.data._id,
+        name: localStorage.getItem('name'),
+        type: leave.data.data.type,
+        start: new Date(`${leave.data.data.start} 12:00`),
+        end: new Date(`${leave.data.data.end} 12:00`)
+      }
+      this.props.onSuccess(newLeave);
       this.props.closeModal();
     }
   }

@@ -119,5 +119,15 @@ export const addLeave = async (userId, status, start, end, type) => {
       end,
       type
     }).then(response => response.data)
-  )
+  );
+}
+
+/**
+ * Get all leaves
+ */
+export const getLeaves = async () => {
+  return await resolve(
+    axios.get(`${API_URI}/leave`)
+    .then(response => response.data)
+  );
 }
