@@ -57,7 +57,7 @@ class HeaderGreeting extends Component {
 }
 
 HeaderGreeting.propTypes = {
-  history: PropTypes.obj
+  history: PropTypes.func
 }
 
 export default HeaderGreeting;

@@ -101,3 +101,23 @@ export const removeUser = async (id) => {
     }).then(response => response.data)
   );
 }
+
+/**
+ * Add a leave
+ * @param {string} userId user id of person filing the leave
+ * @param {string} status status of leave
+ * @param {Date} start start of leave to be filed
+ * @param {Date} end end of leave to be filed
+ * @returns {object} result setn as promise
+ */
+export const addLeave = async (userId, status, start, end, type) => {
+  return await resolve(
+    axios.post(`${API_URI}/leave`, {
+      userId,
+      status,
+      start,
+      end,
+      type
+    }).then(response => response.data)
+  )
+}

@@ -17,7 +17,7 @@ class SelectUser extends Component {
   state = {
     users: [],
     selectedName: '',
-    selectedId: ''
+    selectedId: 'default'
   }
 
   fetchUsers = async () => {
@@ -60,8 +60,8 @@ class SelectUser extends Component {
       <div className="text-center" style={styles.select__wrapper}>
         <h1>Find your name below</h1>
         <hr/>
-        <select className="form-control form-control-lg mb-3" onChange={this.setSelect} >
-          <option disabled selected>Choose here...</option>
+        <select className="form-control form-control-lg mb-3" value={this.state.selectedId} onChange={this.setSelect} >
+          <option disabled value="default">Choose here...</option>
           {userDropdown}
         </select>
         <Button
@@ -81,7 +81,7 @@ class SelectUser extends Component {
 }
 
 SelectUser.propTypes = {
-  history: PropTypes.obj
+  history: PropTypes.object
 }
 
 export default SelectUser;

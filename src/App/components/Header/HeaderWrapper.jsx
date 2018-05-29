@@ -23,7 +23,7 @@ const HeaderWrapper = ({ children }) => {
 };
 
 HeaderWrapper.propTypes = {
-  children: PropTypes.object
+  children: PropTypes.array
 }
 
 export default HeaderWrapper;
