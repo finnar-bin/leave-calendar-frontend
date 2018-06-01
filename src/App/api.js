@@ -29,7 +29,7 @@ const resolve = async (promise) => {
 export const getUsers = async () => {
   return await resolve(
     axios.get(`${API_URI}/user`)
-    .then(response => response.data)
+      .then(response => response.data)
   );
 }
 
@@ -128,6 +128,16 @@ export const addLeave = async (userId, status, start, end, type) => {
 export const getLeaves = async () => {
   return await resolve(
     axios.get(`${API_URI}/leave`)
-    .then(response => response.data)
+      .then(response => response.data)
   );
+}
+
+/**
+ * Delete a leave
+ */
+export const deleteLeave = async (id) => {
+  return await resolve(
+    axios.delete(`${API_URI}/leave/${id}`)
+      .then(response => response.data)
+  )
 }

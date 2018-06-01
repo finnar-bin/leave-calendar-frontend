@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
+import _ from 'lodash';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import HeaderWrapper from '../../components/Header';
 import CalendarAdd from '../../containers/Calendar/CalendarAdd';
-import CalendarRemove from '../../containers/Calendar/CalendarRemove';
+import CalendarEvent from '../../containers/Calendar/CalendarEvent';
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
 import { getLeaves } from '../../api';
@@ -26,17 +27,19 @@ class Calendar extends Component {
     triggerAlertSuccess: false,
     triggerAlertError: false,
     triggerAddModal: false,
-    triggerRemoveModal: false,
+    triggerEventModal: false,
     selectedDateFrom: '',
     selectedDateTo: '',
+    messageError: '',
+    messageSuccess: '',
     toDisplayEvent: {},
   }
 
   EventCalendar = ({ event }) => (
-    <span>
-      <strong>{event.name}</strong>
-      :
-      <em> {event.type}</em>
+    <span className="text-center">
+      <strong>{event.name} </strong>
+      |
+      <em style={{ fontSize: '.7em'}}> {event.type === 'Whole Day' ? event.type : `${event.start.toLocaleTimeString()} - ${event.end.toLocaleTimeString()}`}</em>
     </span>
   );
 
@@ -54,7 +57,8 @@ class Calendar extends Component {
           name: data.userId.fullName,
           type: data.type,
           start: new Date(data.start),
-          end: new Date(data.end)
+          end: new Date(data.end),
+          status: data.status
         }
         tempArray.push(arr);
       });
@@ -68,7 +72,7 @@ class Calendar extends Component {
   handleModalClose = () => {
     this.setState({
       triggerAddModal: false,
-      triggerRemoveModal: false
+      triggerEventModal: false
     });
   }
 
@@ -79,16 +83,24 @@ class Calendar extends Component {
     });
   }
 
-  setSuccess = (newLeaveArray) => {
+  setSuccess = (message, newLeaveArray, type) => {
+    let newArray = [];
+    if (type === 'add') {
+      newArray = [...this.state.events, newLeaveArray]
+    } else {
+      newArray = _.pull(this.state.events, newLeaveArray)
+    }
     this.setState({
       triggerAlertSuccess: true,
-      events: [...this.state.events, newLeaveArray]
+      events: newArray,
+      messageSuccess: message
     });
   }
 
-  setError = () => {
+  setError = (message) => {
     this.setState({
-      triggerAlertError: true
+      triggerAlertError: true,
+      messageError: message
     });
   }
 
@@ -96,7 +108,9 @@ class Calendar extends Component {
     // eslint-disable-next-line
     this.state.events.map((event) => {
       if (eventId === event.id) {
-        return event;
+        this.setState({
+          toDisplayEvent: event
+        })
       }
     });
   }
@@ -110,6 +124,7 @@ class Calendar extends Component {
             events={this.state.events}
             defaultDate={new Date(moment())}
             selectable={true}
+            popup={true}
             onSelectSlot={slotInfo =>
               this.setState({
                 selectedDateFrom: slotInfo.start.toLocaleDateString(),
@@ -119,6 +134,7 @@ class Calendar extends Component {
             }
             onSelectEvent={event => {
               this.displayLeaveInfo(event.id);
+              this.setState({ triggerEventModal: true })
             }}
             views={['month']}
             components={{
@@ -127,10 +143,10 @@ class Calendar extends Component {
           />
         }
         {this.state.isLoading && <Loader />}
+        {this.state.triggerEventModal && <CalendarEvent event={this.state.toDisplayEvent} closeModal={this.handleModalClose} onSuccess={this.setSuccess} onError={this.setError} />}
         {this.state.triggerAddModal && <CalendarAdd closeModal={this.handleModalClose} from={this.state.selectedDateFrom} to={this.state.selectedDateTo} onSuccess={this.setSuccess} onError={this.setError} />}
-        {this.state.triggerRemoveModal && <CalendarRemove closeModal={this.handleModalClose} />}
-        {this.state.triggerAlertSuccess && <Alert floating={true} kind="success" message="Leave successfully added" clickAction={this.handleAlertClose} />}
-        {this.state.triggerAlertError && <Alert floating={true} kind="danger" message="Failed to add the leave" clickAction={this.handleAlertClose} />}
+        {this.state.triggerAlertSuccess && <Alert floating={true} kind="success" message={this.state.messageSuccess} clickAction={this.handleAlertClose} />}
+        {this.state.triggerAlertError && <Alert floating={true} kind="danger" message={this.state.messageError} clickAction={this.handleAlertClose} />}
       </HeaderWrapper>
     );
   }

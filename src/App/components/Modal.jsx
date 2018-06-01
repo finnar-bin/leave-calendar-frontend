@@ -8,8 +8,10 @@ import PropTypes from 'prop-types';
  */
 const Modal = ({header, children}) => (
   <div className="modal__overlay">
-    <div className="card p-3" style={{ minHeight: '10vh', minWidth: '22vw' }}>
-      <h1 className="card-header text-center">{header}</h1>
+    <div className="card" style={{ minHeight: '10vh', minWidth: '22vw' }}>
+      <div className="card-header text-center">
+        <p className="display-3">{header}</p>
+      </div>
       <div className="card-body">
         {children}
       </div>

@@ -37,18 +37,18 @@ class CalendarAdd extends Component {
     let to = `${this.props.to} ${this.state.timeTo}`;
     let leave = await addLeave(localStorage.getItem('userId'), this.state.status, from, to, this.state.type);
     if (leave.error) {
-      this.props.onError();
+      this.props.onError('Failed to add the leave');
       this.props.closeModal();
     } else {
-      console.log(leave);
       let newLeave = {
         id: leave.data.data._id,
         name: localStorage.getItem('name'),
         type: leave.data.data.type,
         start: new Date(leave.data.data.start),
-        end: new Date(leave.data.data.end)
+        end: new Date(leave.data.data.end),
+        status: leave.data.data.status
       }
-      this.props.onSuccess(newLeave);
+      this.props.onSuccess('Leave successfully added', newLeave, 'add');
       this.props.closeModal();
     }
   }
