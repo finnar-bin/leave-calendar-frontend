@@ -147,6 +147,7 @@ body {
   right: 43%;
   opacity: 1;
   animation: slideDown 300ms ease-in-out;
+  z-index: 10;
 }
 
 @keyframes slideDown {
