@@ -28,7 +28,8 @@ class Calendar extends Component {
     triggerAddModal: false,
     triggerRemoveModal: false,
     selectedDateFrom: '',
-    selectedDateTo: ''
+    selectedDateTo: '',
+    toDisplayEvent: {},
   }
 
   EventCalendar = ({ event }) => (
@@ -41,17 +42,19 @@ class Calendar extends Component {
 
   fetchLeaves = async () => {
     let leaves = await getLeaves();
+    console.log(leaves);
     if (leaves.error) {
       console.log(leaves.error.data.message);
     } else {
       let tempArray = [];
+      // eslint-disable-next-line
       leaves.data.data.map((data) => {
         let arr = {
           id: data._id,
           name: data.userId.fullName,
           type: data.type,
-          start: new Date(`${data.start} 12:00`),
-          end: new Date(`${data.end} 12:00`)
+          start: new Date(data.start),
+          end: new Date(data.end)
         }
         tempArray.push(arr);
       });
@@ -89,6 +92,15 @@ class Calendar extends Component {
     });
   }
 
+  displayLeaveInfo = (eventId) => {
+    // eslint-disable-next-line
+    this.state.events.map((event) => {
+      if (eventId === event.id) {
+        return event;
+      }
+    });
+  }
+
   render() {
     return (
       <HeaderWrapper>
@@ -105,6 +117,9 @@ class Calendar extends Component {
                 triggerAddModal: true
               })
             }
+            onSelectEvent={event => {
+              this.displayLeaveInfo(event.id);
+            }}
             views={['month']}
             components={{
               event: this.EventCalendar
