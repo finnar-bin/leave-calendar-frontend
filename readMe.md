@@ -6,7 +6,7 @@ Leave management calendar's front-end powered by React.js
 - [x] Add user
 - [x] Remove user
 - [x] Add capability to add leaves on the calendar
-- [ ] Remove leaves from calendar
+- [x] Remove leaves from calendar
 - [ ] Update leaves from calendar
 - [ ] Add error handler when can't connect to database
 - [ ] Logout current selected username if it's deleted by admin
