@@ -39,13 +39,13 @@ class Calendar extends Component {
     <span className="text-center">
       <strong>{event.name} </strong>
       |
-      <em style={{ fontSize: '.7em'}}> {event.type === 'Whole Day' ? event.type : `${event.start.toLocaleTimeString()} - ${event.end.toLocaleTimeString()}`}</em>
+      <em style={{ fontSize: '.7em'}}> {`${event.start.toLocaleTimeString()} - ${event.end.toLocaleTimeString()}`}</em>
     </span>
   );
 
   fetchLeaves = async () => {
     let leaves = await getLeaves();
-    console.log(leaves);
+    // console.log(leaves);
     if (leaves.error) {
       console.log(leaves.error.data.message);
     } else {
@@ -55,7 +55,6 @@ class Calendar extends Component {
         let arr = {
           id: data._id,
           name: data.userId.fullName,
-          type: data.type,
           start: new Date(data.start),
           end: new Date(data.end),
           status: data.status

@@ -31,10 +31,6 @@ class CalendarEvent extends Component {
           <h6 className="card-subtitle text-muted">INCLUSIVE DATES</h6>
         </div>
         <div className="mb-4 text-center">
-          <h2 className="card-title">{event.type}</h2>
-          <h6 className="card-subtitle text-muted">TYPE</h6>
-        </div>
-        <div className="mb-4 text-center">
           <h2 className="card-title">{event.status}</h2>
           <h6 className="card-subtitle text-muted">STATUS</h6>
         </div>

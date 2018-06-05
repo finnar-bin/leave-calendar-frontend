@@ -6,6 +6,7 @@ import Button from '../../components/Button';
 import RadioButton from '../../components/RadioButton';
 import { addLeave } from '../../api';
 import TimePicker from '../../components/TimePicker';
+import { computeCredit } from '../../utils/computeDays';
 
 class CalendarAdd extends Component {
   state = {
@@ -20,10 +21,6 @@ class CalendarAdd extends Component {
     this.setState({ status: e.target.value })
   }
 
-  handleTypeChange = (e) => {
-    this.setState({ type: e.target.value })
-  }
-
   handleTimeFrom = (e) => {
     this.setState({ timeFrom: e.target.value })
   }
@@ -35,7 +32,8 @@ class CalendarAdd extends Component {
   handleSubmit = async () => {
     let from = `${this.props.from} ${this.state.timeFrom}`;
     let to = `${this.props.to} ${this.state.timeTo}`;
-    let leave = await addLeave(localStorage.getItem('userId'), this.state.status, from, to, this.state.type);
+    let toDeduct = computeCredit(from, to);
+    let leave = await addLeave(localStorage.getItem('userId'), this.state.status, from, to, toDeduct);
     if (leave.error) {
       this.props.onError('Failed to add the leave');
       this.props.closeModal();
@@ -43,13 +41,14 @@ class CalendarAdd extends Component {
       let newLeave = {
         id: leave.data.data._id,
         name: localStorage.getItem('name'),
-        type: leave.data.data.type,
         start: new Date(leave.data.data.start),
         end: new Date(leave.data.data.end),
         status: leave.data.data.status
       }
       this.props.onSuccess('Leave successfully added', newLeave, 'add');
       this.props.closeModal();
+      // console.log(computeCredit(this.state.timeFrom, this.state.timeTo));
+      
     }
   }
 
@@ -65,27 +64,6 @@ class CalendarAdd extends Component {
             <span>To: <strong>{this.props.to}</strong></span>
           </div>
         </div>
-        <div className="mb-3">
-          <label>Type:</label>
-          <div className="ml-3">
-            <RadioButton
-              id="type-whole"
-              name="type"
-              text="Whole Day"
-              checked={this.state.type === 'Whole Day' ? true : false}
-              value="Whole Day"
-              changeAction={this.handleTypeChange}
-            />
-            <RadioButton
-              id="type-half"
-              name="type"
-              text="Half Day"
-              checked={this.state.type === 'Half Day' ? true : false}
-              value="Half Day"
-              changeAction={this.handleTypeChange}
-            />
-          </div>
-        </div>
         <div className="mb-4">
           <label>Time:</label>
           <form className="form-inline ml-3">
@@ -93,13 +71,11 @@ class CalendarAdd extends Component {
             <TimePicker
               changeAction={this.handleTimeFrom}
               value={this.state.timeFrom}
-              disabled={this.state.type === 'Whole Day' ? true : false}
             />
             <label className="mx-2">To</label>
             <TimePicker
               changeAction={this.handleTimeTo}
               value={this.state.timeTo}
-              disabled={this.state.type === 'Whole Day' ? true : false}
             />
           </form>
         </div>

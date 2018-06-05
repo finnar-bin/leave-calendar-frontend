@@ -110,14 +110,14 @@ export const removeUser = async (id) => {
  * @param {Date} end end of leave to be filed
  * @returns {object} result setn as promise
  */
-export const addLeave = async (userId, status, start, end, type) => {
+export const addLeave = async (userId, status, start, end, toDeduct) => {
   return await resolve(
     axios.post(`${API_URI}/leave`, {
       userId,
       status,
       start,
       end,
-      type
+      toDeduct
     }).then(response => response.data)
   );
 }

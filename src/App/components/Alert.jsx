@@ -54,7 +54,8 @@ Alert.propTypes = {
 Alert.defaultProps = {
   dismissible: true,
   floating: false,
-  kind: 'primary'
+  kind: 'primary',
+  clickAction: () => {}
 }
 
 export default Alert;
