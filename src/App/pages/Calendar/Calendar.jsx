@@ -10,6 +10,7 @@ import CalendarEvent from '../../containers/Calendar/CalendarEvent';
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
 import { getLeaves } from '../../api';
+import { isAfterToday } from '../../utils/checkDays';
 
 moment().utcOffset(12);
 BigCalendar.momentLocalizer(moment);
@@ -124,13 +125,17 @@ class Calendar extends Component {
             defaultDate={new Date(moment())}
             selectable={true}
             popup={true}
-            onSelectSlot={slotInfo =>
-              this.setState({
-                selectedDateFrom: slotInfo.start.toLocaleDateString(),
-                selectedDateTo: slotInfo.end.toLocaleDateString(),
-                triggerAddModal: true
-              })
-            }
+            onSelectSlot={slotInfo => {
+              if (isAfterToday(slotInfo.start)) {
+                this.setState({
+                  selectedDateFrom: slotInfo.start.toLocaleDateString(),
+                  selectedDateTo: slotInfo.end.toLocaleDateString(),
+                  triggerAddModal: true
+                });
+              } else {
+                this.setError('You can\'t file a leave on past dates');
+              }
+            }}
             onSelectEvent={event => {
               this.displayLeaveInfo(event.id);
               this.setState({ triggerEventModal: true })

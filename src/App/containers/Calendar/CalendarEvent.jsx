@@ -8,7 +8,6 @@ import { deleteLeave } from '../../api';
 class CalendarEvent extends Component {
   handleDelete = async (id) => {
     let leave = await deleteLeave(id);
-    console.log(leave);
     if (leave.error) {
       this.props.onError('Failed to remove event');
       this.props.closeModal();

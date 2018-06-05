@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 import RadioButton from '../../components/RadioButton';
 import { addLeave } from '../../api';
 import TimePicker from '../../components/TimePicker';
-import { computeCredit } from '../../utils/computeDays';
+import { computeCredit } from '../../utils/computeCredits';
 
 class CalendarAdd extends Component {
   state = {
