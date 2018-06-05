@@ -39,10 +39,35 @@ class Calendar extends Component {
   EventCalendar = ({ event }) => (
     <span className="text-center">
       <strong>{event.name} </strong>
-      |
-      <em style={{ fontSize: '.7em'}}> {`${event.start.toLocaleTimeString()} - ${event.end.toLocaleTimeString()}`}</em>
+      <em style={{ fontSize: '.8em'}}> {`${moment(event.start).format('h:mm A')} - ${moment(event.end).format('h:mm A')}`}</em>
     </span>
   );
+
+  CustomEventPropGetter = (event) => {
+    if (event.status === 'Approved') {
+      return {
+        style: {
+          backgroundColor: '#015249'
+        }
+      }
+    } else if (event.status === 'Pending') {
+      return {
+        style: {
+          backgroundColor: '#984B43'
+        }
+      }
+    }
+  }
+
+  CustomDayPropGetter = (date) => {
+    if (date.getDay() === 0 || date.getDay() === 6) {
+      return {
+        style: {
+          backgroundColor: '#f7edef'
+        }
+      }
+    }
+  }
 
   fetchLeaves = async () => {
     let leaves = await getLeaves();
@@ -120,9 +145,9 @@ class Calendar extends Component {
       <HeaderWrapper>
         {!this.state.isLoading &&
           <BigCalendar
+            defaultDate={new Date()}
             style={styles.calendarWrapper}
             events={this.state.events}
-            defaultDate={new Date(moment())}
             selectable={true}
             popup={true}
             onSelectSlot={slotInfo => {
@@ -143,7 +168,9 @@ class Calendar extends Component {
             views={['month']}
             components={{
               event: this.EventCalendar
-            }} 
+            }}
+            eventPropGetter={this.CustomEventPropGetter}
+            dayPropGetter={this.CustomDayPropGetter}
           />
         }
         {this.state.isLoading && <Loader />}
