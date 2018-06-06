@@ -9,7 +9,7 @@ import CalendarAdd from '../../containers/Calendar/CalendarAdd';
 import CalendarEvent from '../../containers/Calendar/CalendarEvent';
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
-import { getLeaves } from '../../api';
+import { getLeaves, getHolidays } from '../../api';
 import { isAfterToday } from '../../utils/checkDays';
 
 moment().utcOffset(12);
@@ -24,6 +24,7 @@ styles.calendarWrapper = {
 class Calendar extends Component {
   state = {
     events: [],
+    holidays: [],
     isLoading: true,
     triggerAlertSuccess: false,
     triggerAlertError: false,
@@ -36,12 +37,21 @@ class Calendar extends Component {
     toDisplayEvent: {},
   }
 
-  EventCalendar = ({ event }) => (
-    <span className="text-center">
-      <strong>{event.name} </strong>
-      <em style={{ fontSize: '.8em'}}> {`${moment(event.start).format('h:mm A')} - ${moment(event.end).format('h:mm A')}`}</em>
-    </span>
-  );
+  EventCalendar = ({ event }) => {
+    if (event.status === 'Holiday') {
+      return (
+        <span className="text-center">
+          <strong>{event.name} </strong>
+        </span>
+      );
+    }
+    return (
+      <span className="text-center">
+        <strong>{event.name} </strong>
+        <em style={{fontSize: '.8em'}}> {`${moment(event.start).format('h:mm A')} - ${moment(event.end).format('h:mm A')}`}</em>
+      </span>
+    );
+  }
 
   CustomEventPropGetter = (event) => {
     if (event.status === 'Approved') {
@@ -56,7 +66,7 @@ class Calendar extends Component {
           backgroundColor: '#984B43'
         }
       }
-    }
+    } else return {}
   }
 
   CustomDayPropGetter = (date) => {
@@ -69,24 +79,38 @@ class Calendar extends Component {
     }
   }
 
-  fetchLeaves = async () => {
+  fetchEvents = async () => {
     let leaves = await getLeaves();
-    // console.log(leaves);
+    let holidays = await getHolidays();
+
     if (leaves.error) {
-      console.log(leaves.error.data.message);
+      console.error(leaves.error.data.message);
+    } else if (holidays.error) {
+      console.error(holidays.error.data.error);
     } else {
       let tempArray = [];
-      // eslint-disable-next-line
-      leaves.data.data.map((data) => {
+      leaves.data.data.map((leave) => {
         let arr = {
-          id: data._id,
-          name: data.userId.fullName,
-          start: new Date(data.start),
-          end: new Date(data.end),
-          status: data.status
+          id: leave._id,
+          name: leave.userId.fullName,
+          start: new Date(leave.start),
+          end: new Date(leave.end),
+          status: leave.status
         }
-        tempArray.push(arr);
+        return tempArray.push(arr);
       });
+
+      holidays.data.items.map((holiday) => {
+        let arr = {
+          id: holiday.id,
+          name: holiday.summary,
+          start: new Date(`${holiday.start.date} 12:00 AM`),
+          end: new Date(`${holiday.end.date} 12:00 AM`),
+          status: 'Holiday'
+        }
+        return tempArray.push(arr);
+      });
+
       this.setState({
         events: tempArray,
         isLoading: false
@@ -162,8 +186,10 @@ class Calendar extends Component {
               }
             }}
             onSelectEvent={event => {
-              this.displayLeaveInfo(event.id);
-              this.setState({ triggerEventModal: true })
+              if (event.status !== 'Holiday') {
+                this.displayLeaveInfo(event.id);
+                this.setState({ triggerEventModal: true })
+              }
             }}
             views={['month']}
             components={{
@@ -183,7 +209,7 @@ class Calendar extends Component {
   }
 
   componentDidMount() {
-    this.fetchLeaves();
+    this.fetchEvents();
   }
 
   shouldComponentUpdate(nextState) {

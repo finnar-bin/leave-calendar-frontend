@@ -12,7 +12,7 @@ Leave management calendar's front-end powered by React.js
 - [ ] Logout current selected username if it's deleted by admin
 - [ ] Restructure for more cleaner code
 - [ ] Add animation and transitions
-- [ ] Add Holiday API integration
+- [x] Add Holiday API integration
 - [x] Add option to reduce leave credits when filing leaves
 - [x] Edit floating error so that it goes away after X seconds
 - [x] Make ui elements reusable and composable

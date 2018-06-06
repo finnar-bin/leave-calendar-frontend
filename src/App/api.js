@@ -1,6 +1,7 @@
 import axios from 'axios';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 const API_URI = process.env.REACT_APP_API_GATEWAY;
+const HOLIDAY_API_URI = `https://www.googleapis.com/calendar/v3/calendars/en.philippines%23holiday%40group.v.calendar.google.com/events?key=${process.env.REACT_APP_CALENDAR_API_KEY}`;
 
 /**
  * Helper function to properly resolve promises returned by axios
@@ -35,7 +36,7 @@ export const getUsers = async () => {
 
 /**
  * Update user info
- * @param {string} id user id to be update
+ * @param {string} id user id to be updated
  * @param {string} fullName updated user full name
  * @param {number} leaveCredits updated user leave credits
  * @returns {object} result sent as promise
@@ -124,6 +125,7 @@ export const addLeave = async (userId, status, start, end, toDeduct) => {
 
 /**
  * Get all leaves
+ * @returns {object} result setn as promise
  */
 export const getLeaves = async () => {
   return await resolve(
@@ -134,10 +136,22 @@ export const getLeaves = async () => {
 
 /**
  * Delete a leave
+ * @param {string} id leave id to be deleted
+ * @returns {object} result setn as promise
  */
 export const deleteLeave = async (id) => {
   return await resolve(
     axios.delete(`${API_URI}/leave/${id}`)
+      .then(response => response.data)
+  )
+}
+
+/**
+ * @returns {object} result setn as promise
+ */
+export const getHolidays = async () => {
+  return await resolve(
+    axios.get(HOLIDAY_API_URI)
       .then(response => response.data)
   )
 }
