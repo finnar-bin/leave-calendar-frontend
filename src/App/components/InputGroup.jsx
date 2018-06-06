@@ -26,7 +26,7 @@ const InputGroup = ({prependText, size, type, otherClasses, changeAction, focus,
       <div className="input-group-prepend">
         <span className="input-group-text">{prependText}</span>
       </div>
-      <input onChange={changeAction} type={type} value={value} className="form-control" autofocus={toFocus}/>
+      <input onChange={changeAction} type={type} value={value} className="form-control" autoFocus={toFocus}/>
     </div>
   );
 };
