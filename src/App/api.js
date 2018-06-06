@@ -139,10 +139,13 @@ export const getLeaves = async () => {
  * @param {string} id leave id to be deleted
  * @returns {object} result setn as promise
  */
-export const deleteLeave = async (id) => {
+export const deleteLeave = async (id, toAdd) => {
   return await resolve(
-    axios.delete(`${API_URI}/leave/${id}`)
-      .then(response => response.data)
+    axios.delete(`${API_URI}/leave/${id}`, {
+      data: {
+        toAdd
+      }
+    }).then(response => response.data)
   )
 }
 

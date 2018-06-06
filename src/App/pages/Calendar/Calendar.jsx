@@ -76,7 +76,7 @@ class Calendar extends Component {
           backgroundColor: '#f7edef'
         }
       }
-    }
+    } else return {}
   }
 
   fetchEvents = async () => {
@@ -167,7 +167,9 @@ class Calendar extends Component {
   render() {
     return (
       <HeaderWrapper>
-        {!this.state.isLoading &&
+        {
+          !this.state.isLoading
+          &&
           <BigCalendar
             defaultDate={new Date()}
             style={styles.calendarWrapper}

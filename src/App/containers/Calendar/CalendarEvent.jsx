@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 import { deleteLeave } from '../../api';
+import { isAfterToday } from '../../utils/checkDays';
+import { computeCredit } from '../../utils/computeCredits';
+
+const formatDate = (date) => (
+  moment(date).format('M/D/YYYY h:mm A')
+);
 
 class CalendarEvent extends Component {
   handleDelete = async (id) => {
-    let leave = await deleteLeave(id);
+    let { event } = this.props;
+    let toAdd = computeCredit(formatDate(event.start), formatDate(event.end));
+    let leave = await deleteLeave(id, toAdd);
     if (leave.error) {
       this.props.onError('Failed to remove event');
       this.props.closeModal();
@@ -40,12 +49,16 @@ class CalendarEvent extends Component {
             otherClasses="mx-1"
             clickAction={this.props.closeModal}
           />
-          <Button
-            text="Delete"
-            kind="danger"
-            otherClasses="mx-1"
-            clickAction={() => this.handleDelete(event.id)}
-          />
+          {
+            isAfterToday(event.start)
+            &&
+            <Button
+              text="Delete"
+              kind="danger"
+              otherClasses="mx-1"
+              clickAction={() => this.handleDelete(event.id)}
+            />
+          }
         </div>
       </Modal>
     );

@@ -2,11 +2,12 @@ import moment from 'moment';
 import _ from 'lodash';
 
 /** Helper functions */
-const roundToTwoDec = num => parseFloat(num).toPrecision(2);
+const roundToTwoDec = num => parseFloat(num).toPrecision(3);
 const toSeconds = date => moment(date).unix();
 
 /**
- * Compute leave credits to be deducted based on amount of hours of filed leave
+ * Compute the equivalent amount of leave credits either to add or deduct
+ * depending on the number of hours
  * @param {Date} start selected start date from calendar
  * @param {Date} end selected end date from calendar
  * @returns {number} leave credits to be deducted
@@ -39,9 +40,11 @@ export const computeCredit = (start, end) => {
     toHour = (eTime - toSeconds(`${eDateString} 9:00 AM`)) / secPerHour;
     
     // if end date has more than 3 hours of filed leaves, -1 hour due to unpaid lunchbreak
-    let newEDateTime = toHour;
+    let newEDateTime;
     if (toHour > 3) {
       newEDateTime = toHour - 1;
+    } else {
+      newEDateTime = toHour;
     }
     
     // return total number of hours filed
@@ -52,11 +55,10 @@ export const computeCredit = (start, end) => {
     toHour = diffTime / secPerHour;
     
     // if number of hours is more than 3, -1 due to unpaid lunchbreak
-    numOfHours = toHour;
-    console.log('Less than 3 hours', numOfHours);
     if (toHour > 3) {
       numOfHours = toHour - 1;
-      console.log('More than 3 hours', numOfHours);
+    } else {
+      numOfHours = toHour;
     }
   }
 

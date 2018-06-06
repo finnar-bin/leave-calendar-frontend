@@ -17,4 +17,4 @@ Leave management calendar's front-end powered by React.js
 - [x] Edit floating error so that it goes away after X seconds
 - [x] Make ui elements reusable and composable
 - [x] Block user from filing leaves on past dates
-- [ ] Refund leave credits once a previously filed leave is removed
+- [x] Refund leave credits once a previously filed leave is removed
