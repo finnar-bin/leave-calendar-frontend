@@ -51,7 +51,7 @@ class AdminUpdate extends Component {
         />
         <div className="text-center">
           <Button
-            text="Close"
+            text="Cancel"
             otherClasses="mx-1"
             kind="secondary"
             clickAction={this.props.handleClose}

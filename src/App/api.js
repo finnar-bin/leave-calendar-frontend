@@ -1,6 +1,7 @@
 import axios from 'axios';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 const API_URI = process.env.REACT_APP_API_GATEWAY;
+const HOLIDAY_API_URI = `https://www.googleapis.com/calendar/v3/calendars/en.philippines%23holiday%40group.v.calendar.google.com/events?key=${process.env.REACT_APP_CALENDAR_API_KEY}`;
 
 /**
  * Helper function to properly resolve promises returned by axios
@@ -29,13 +30,13 @@ const resolve = async (promise) => {
 export const getUsers = async () => {
   return await resolve(
     axios.get(`${API_URI}/user`)
-    .then(response => response.data)
+      .then(response => response.data)
   );
 }
 
 /**
  * Update user info
- * @param {string} id user id to be update
+ * @param {string} id user id to be updated
  * @param {string} fullName updated user full name
  * @param {number} leaveCredits updated user leave credits
  * @returns {object} result sent as promise
@@ -100,4 +101,60 @@ export const removeUser = async (id) => {
       }
     }).then(response => response.data)
   );
+}
+
+/**
+ * Add a leave
+ * @param {string} userId user id of person filing the leave
+ * @param {string} status status of leave
+ * @param {Date} start start of leave to be filed
+ * @param {Date} end end of leave to be filed
+ * @returns {object} result setn as promise
+ */
+export const addLeave = async (userId, status, start, end, toDeduct) => {
+  return await resolve(
+    axios.post(`${API_URI}/leave`, {
+      userId,
+      status,
+      start,
+      end,
+      toDeduct
+    }).then(response => response.data)
+  );
+}
+
+/**
+ * Get all leaves
+ * @returns {object} result setn as promise
+ */
+export const getLeaves = async () => {
+  return await resolve(
+    axios.get(`${API_URI}/leave`)
+      .then(response => response.data)
+  );
+}
+
+/**
+ * Delete a leave
+ * @param {string} id leave id to be deleted
+ * @returns {object} result setn as promise
+ */
+export const deleteLeave = async (id, toAdd) => {
+  return await resolve(
+    axios.delete(`${API_URI}/leave/${id}`, {
+      data: {
+        toAdd
+      }
+    }).then(response => response.data)
+  )
+}
+
+/**
+ * @returns {object} result setn as promise
+ */
+export const getHolidays = async () => {
+  return await resolve(
+    axios.get(HOLIDAY_API_URI)
+      .then(response => response.data)
+  )
 }

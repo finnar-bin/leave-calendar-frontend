@@ -144,9 +144,11 @@ body {
   justify-content: center;
   position: fixed !important;
   top: 15%;
-  right: 43%;
+  right: 40%;
+  /* transform: translate(-15%, -50%); */
   opacity: 1;
   animation: slideDown 300ms ease-in-out;
+  z-index: 10;
 }
 
 @keyframes slideDown {
@@ -170,7 +172,7 @@ body {
 
 /* Calendar */
 .rbc-toolbar .rbc-toolbar-label {
-  text-align: right;
+  text-align: right !important;
   font-weight: bold;
   font-size: 1.4em;
 }
@@ -182,4 +184,8 @@ body {
 .rbc-header {
   padding: 3px;
   font-size: 1.1em;
+}
+
+.rbc-event-content {
+  text-align: center;
 }

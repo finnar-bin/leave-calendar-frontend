@@ -5,6 +5,7 @@ let styles = {};
 styles.loader__body = {
   margin: '0 45%'
 }
+
 const Loader = () => {
   return (
     <div className="text-center mt-5">
@@ -19,7 +20,7 @@ const Loader = () => {
         <div></div>
         <div></div>
       </div>
-      <span>Loading...</span>
+      <span style={styles.loader__body}>Loading...</span>
     </div>
   );
 };

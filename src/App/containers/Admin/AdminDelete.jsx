@@ -23,13 +23,14 @@ const AdminDelete = (props) => {
       <p>Are you sure you want to delete this user? There′s no going back from here.</p>
       <div className="text-center">
         <Button
-          text="Close"
+          text="Cancel"
           otherClasses="mx-1"
           kind="secondary"
           clickAction={props.handleClose}
         />
         <Button
-          text="Submit"
+          text="Remove"
+          kind="danger"
           otherClasses="mx-1"
           clickAction={() => handleSubmit(props.userId)}
         />

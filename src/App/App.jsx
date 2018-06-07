@@ -1,6 +1,7 @@
 import React from 'react';
 import { MainRouter } from './Router';
 
+
 let styles = {};
 
 styles.main__wrapper = {
