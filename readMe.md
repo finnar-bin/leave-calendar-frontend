@@ -7,10 +7,10 @@ Leave management calendar's front-end powered by React.js
 - [x] Remove user
 - [x] Add capability to add leaves on the calendar
 - [x] Remove leaves from calendar
-- [ ] Update leaves from calendar
+- [ ] Update leave status
 - [ ] Add error handler when can't connect to database
 - [ ] Logout current selected username if it's deleted by admin
-- [ ] Restructure for more cleaner code
+- [x] Restructure for more cleaner code
 - [ ] Add animation and transitions
 - [ ] Add remaining number of leave credits on header
 - [x] Add Holiday API integration
