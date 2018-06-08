@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { getUsers } from '../../api';
-import Button from '../../components/Button';
+import { getUsers } from 'api';
+import Button from 'components/Button';
 
-let styles = {}
-
-styles.select__wrapper = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)'
+let styles = {
+  select__wrapper: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)'
+  }
 }
 
 class SelectUser extends Component {
@@ -20,6 +20,7 @@ class SelectUser extends Component {
     selectedId: 'default'
   }
 
+  /************* ACTIONS START **************/
   fetchUsers = async () => {
     let users = await getUsers();
     if (users.error) {
@@ -43,6 +44,7 @@ class SelectUser extends Component {
     localStorage.setItem('userId', this.state.selectedId);
     this.props.history.push('/calendar');
   }
+  /************* ACTIONS END **************/
 
   render() {
     let userDropdown = this.state.users.map((data) => {

@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import Header from './Header';
 
-let styles = {};
-
-styles.body__wrapper = {
-  padding: '2%'
+let styles = {
+  body__wrapper: {
+    padding: '2%'
+  }
 }
 
 const HeaderWrapper = ({ children }) => {

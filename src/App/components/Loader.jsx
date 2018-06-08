@@ -1,9 +1,9 @@
 import React from 'react';
 
-let styles = {};
-
-styles.loader__body = {
-  margin: '0 45%'
+let styles = {
+  loader__body: {
+    margin: '0 45%'
+  }
 }
 
 const Loader = () => {

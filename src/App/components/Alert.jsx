@@ -46,7 +46,15 @@ class Alert extends Component {
 Alert.propTypes = {
   dismissible: PropTypes.bool,
   floating: PropTypes.bool,
-  kind: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark']),
+  kind: PropTypes.oneOf([
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+    'light',
+    'dark']),
   message: PropTypes.string,
   clickAction: PropTypes.func.isRequired
 }

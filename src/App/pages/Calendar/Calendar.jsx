@@ -4,21 +4,24 @@ import BigCalendar from 'react-big-calendar';
 import _ from 'lodash';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import HeaderWrapper from '../../components/Header';
-import CalendarAdd from '../../containers/Calendar/CalendarAdd';
-import CalendarEvent from '../../containers/Calendar/CalendarEvent';
-import Alert from '../../components/Alert';
-import Loader from '../../components/Loader';
-import { getLeaves, getHolidays } from '../../api';
-import { isAfterToday } from '../../utils/checkDays';
+import HeaderWrapper from 'components/Header';
+import CalendarAdd from 'containers/Calendar/CalendarAdd';
+import CalendarEvent from 'containers/Calendar/CalendarEvent';
+import Alert from 'components/Alert';
+import Loader from 'components/Loader';
+import CustomToolbar from 'components/Calendar/CustomToolbar';
+import CustomEvent from 'components/Calendar/CustomEvent';
+import CustomEventPropGetter from 'components/Calendar/CustomEventPropGetter';
+import CustomDayPropGetter from 'components/Calendar/CustomDayPropGetter';
+import { getLeaves, getHolidays } from 'api';
+import { isAfterToday } from 'utils/checkDays';
 
-moment().utcOffset(12);
 BigCalendar.momentLocalizer(moment);
 
-let styles = {}
-
-styles.calendarWrapper = {
-  minHeight: '100vh'
+let styles = {
+  calendarWrapper: {
+    minHeight: '100vh'
+  }
 }
 
 class Calendar extends Component {
@@ -37,48 +40,7 @@ class Calendar extends Component {
     toDisplayEvent: {},
   }
 
-  EventCalendar = ({ event }) => {
-    if (event.status === 'Holiday') {
-      return (
-        <span className="text-center">
-          <strong>{event.name} </strong>
-        </span>
-      );
-    }
-    return (
-      <span className="text-center">
-        <strong>{event.name} </strong>
-        <em style={{fontSize: '.8em'}}> {`${moment(event.start).format('h:mm A')} - ${moment(event.end).format('h:mm A')}`}</em>
-      </span>
-    );
-  }
-
-  CustomEventPropGetter = (event) => {
-    if (event.status === 'Approved') {
-      return {
-        style: {
-          backgroundColor: '#015249'
-        }
-      }
-    } else if (event.status === 'Pending') {
-      return {
-        style: {
-          backgroundColor: '#984B43'
-        }
-      }
-    } else return {}
-  }
-
-  CustomDayPropGetter = (date) => {
-    if (date.getDay() === 0 || date.getDay() === 6) {
-      return {
-        style: {
-          backgroundColor: '#f7edef'
-        }
-      }
-    } else return {}
-  }
-
+  /************* ACTIONS START **************/
   fetchEvents = async () => {
     let leaves = await getLeaves();
     let holidays = await getHolidays();
@@ -163,6 +125,7 @@ class Calendar extends Component {
       }
     });
   }
+  /************* ACTIONS END **************/
 
   render() {
     return (
@@ -195,10 +158,11 @@ class Calendar extends Component {
             }}
             views={['month']}
             components={{
-              event: this.EventCalendar
+              event: CustomEvent,
+              toolbar: CustomToolbar
             }}
-            eventPropGetter={this.CustomEventPropGetter}
-            dayPropGetter={this.CustomDayPropGetter}
+            eventPropGetter={CustomEventPropGetter}
+            dayPropGetter={CustomDayPropGetter}
           />
         }
         {this.state.isLoading && <Loader />}

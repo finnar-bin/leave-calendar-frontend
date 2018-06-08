@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import { changeUser } from '../../utils/user';
+import { changeUser } from 'utils/user';
 
 let greetings = [
   'Hey there',
@@ -14,16 +14,15 @@ let greetings = [
 
 let randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
 
-let styles = {}
-
-styles.greeting__text = {
-  color: '#D7CEC7'
-}
-
-styles.greeting__link = {
-  fontSize: '0.8em',
-  cursor: 'pointer',
-  textDecoration: 'underline'
+let styles = {
+  greeting__text: {
+    color: '#D7CEC7'
+  },
+  greeting__link: {
+    fontSize: '0.8em',
+    cursor: 'pointer',
+    textDecoration: 'underline'
+  }
 }
 
 class HeaderGreeting extends Component {

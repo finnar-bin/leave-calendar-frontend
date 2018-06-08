@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-let styles ={};
-
-styles.navbar__url = {
-  color: '#D7CEC7'
+let styles ={
+  navbar__url: {
+    color: '#D7CEC7'
+  }
 };
 
 const HeaderNav = () => {

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Modal from '../../components/Modal';
-import Button from '../../components/Button';
-import RadioButton from '../../components/RadioButton';
-import { addLeave } from '../../api';
-import TimePicker from '../../components/TimePicker';
-import { computeCredit } from '../../utils/computeCredits';
+import Modal from 'components/Modal';
+import Button from 'components/Button';
+import RadioButton from 'components/RadioButton';
+import { addLeave } from 'api';
+import TimePicker from 'components/TimePicker';
+import { computeCredit } from 'utils/computeCredits';
 
 class CalendarAdd extends Component {
   state = {
@@ -17,6 +17,7 @@ class CalendarAdd extends Component {
     timeTo: '06:00 PM'
   }
   
+  /************* ACTIONS START **************/
   handleStatusChange = (e) => {
     this.setState({ status: e.target.value })
   }
@@ -47,10 +48,9 @@ class CalendarAdd extends Component {
       }
       this.props.onSuccess('Leave successfully added', newLeave, 'add');
       this.props.closeModal();
-      // console.log(computeCredit(this.state.timeFrom, this.state.timeTo));
-      
     }
   }
+  /************* ACTIONS END **************/
 
   render() {
     return (

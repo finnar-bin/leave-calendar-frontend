@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import Modal from '../../components/Modal';
-import Button from '../../components/Button';
-import { deleteLeave } from '../../api';
-import { isAfterToday } from '../../utils/checkDays';
-import { computeCredit } from '../../utils/computeCredits';
+import Modal from 'components/Modal';
+import Button from 'components/Button';
+import { deleteLeave } from 'api';
+import { isAfterToday } from 'utils/checkDays';
+import { computeCredit } from 'utils/computeCredits';
 
 const formatDate = (date) => (
   moment(date).format('M/D/YYYY h:mm A')
@@ -25,9 +25,9 @@ class CalendarEvent extends Component {
       this.props.closeModal();
     }
   }
+  
   render() {
     let { event } = this.props;
-
     return (
       <Modal header="Leave Information">
         <div className="mb-4 text-center" >

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TimePicker = ({ changeAction, value, disabled }) => (
+const TimePicker = ({changeAction, value, disabled}) => (
   <select className="form-control" onChange={changeAction} value={value} disabled={disabled}>
     <option>09:00 AM</option>
     <option>09:30 AM</option>
