@@ -11,7 +11,7 @@ import { computeCredit } from 'utils/computeCredits';
 class CalendarAdd extends Component {
   state = {
     status: 'Pending',
-    type: 'Whole Day',
+    type: 'Vacation Leave',
     username: '',
     timeFrom: '09:00 AM',
     timeTo: '06:00 PM'
@@ -20,6 +20,10 @@ class CalendarAdd extends Component {
   /************* ACTIONS START **************/
   handleStatusChange = (e) => {
     this.setState({ status: e.target.value })
+  }
+
+  handleTypeChange = (e) => {
+    this.setState({ type: e.target.value })
   }
 
   handleTimeFrom = (e) => {
@@ -33,8 +37,12 @@ class CalendarAdd extends Component {
   handleSubmit = async () => {
     let from = `${this.props.from} ${this.state.timeFrom}`;
     let to = `${this.props.to} ${this.state.timeTo}`;
-    let toDeduct = computeCredit(from, to);
-    let leave = await addLeave(localStorage.getItem('userId'), this.state.status, from, to, toDeduct);
+
+    // If type is VL then deduct appropriate credits, if LWOP deduct 0
+    let toDeduct = 0;
+    if (this.state.type === 'Vacation Leave') toDeduct = computeCredit(from, to);
+    
+    let leave = await addLeave(localStorage.getItem('userId'), this.state.status, this.state.type, from, to, toDeduct);
     if (leave.error) {
       this.props.onError('Failed to add the leave');
       this.props.closeModal();
@@ -44,7 +52,8 @@ class CalendarAdd extends Component {
         name: localStorage.getItem('name'),
         start: new Date(leave.data.data.start),
         end: new Date(leave.data.data.end),
-        status: leave.data.data.status
+        status: leave.data.data.status,
+        type: leave.data.data.type
       }
       this.props.onSuccess('Leave successfully added', newLeave, 'add');
       this.props.closeModal();
@@ -78,6 +87,27 @@ class CalendarAdd extends Component {
               value={this.state.timeTo}
             />
           </form>
+        </div>
+        <div className="mb-4">
+          <label>Type:</label>
+          <div className="ml-3">
+            <RadioButton
+              id="type-vl"
+              name="type"
+              text="Vacation Leave"
+              checked={this.state.type === 'Vacation Leave' ? true : false}
+              value="Vacation Leave"
+              changeAction={this.handleTypeChange}
+            />
+            <RadioButton
+              id="type-lwop"
+              name="type"
+              text="Leave Without Pay"
+              checked={this.state.type === 'Leave Without Pay' ? true : false}
+              value="Leave Without Pay"
+              changeAction={this.handleTypeChange}
+            />
+          </div>
         </div>
         <div className="mb-4">
           <label>Status:</label>

@@ -111,11 +111,12 @@ export const removeUser = async (id) => {
  * @param {Date} end end of leave to be filed
  * @returns {object} result setn as promise
  */
-export const addLeave = async (userId, status, start, end, toDeduct) => {
+export const addLeave = async (userId, status, type, start, end, toDeduct) => {
   return await resolve(
     axios.post(`${API_URI}/leave`, {
       userId,
       status,
+      type,
       start,
       end,
       toDeduct
@@ -139,11 +140,12 @@ export const getLeaves = async () => {
  * @param {string} id leave id to be deleted
  * @returns {object} result setn as promise
  */
-export const deleteLeave = async (id, toAdd) => {
+export const deleteLeave = async (id, toAdd, userId) => {
   return await resolve(
     axios.delete(`${API_URI}/leave/${id}`, {
       data: {
-        toAdd
+        toAdd,
+        userId
       }
     }).then(response => response.data)
   )

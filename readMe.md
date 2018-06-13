@@ -10,6 +10,8 @@ Leave management calendar's front-end powered by React.js
 - [ ] Update leave status
 - [ ] Add error handler when can't connect to database
 - [ ] Logout current selected username if it's deleted by admin
+- [x] Add option for VL and LWOP
+- [x] Prevent other users from removing leaves filed by others
 - [x] Restructure for more cleaner code
 - [ ] Add animation and transitions
 - [ ] Add remaining number of leave credits on header

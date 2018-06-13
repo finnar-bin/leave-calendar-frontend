@@ -13,10 +13,14 @@ const formatDate = (date) => (
 );
 
 class CalendarEvent extends Component {
-  handleDelete = async (id) => {
+  handleDelete = async (id, type) => {
     let { event } = this.props;
-    let toAdd = computeCredit(formatDate(event.start), formatDate(event.end));
-    let leave = await deleteLeave(id, toAdd);
+
+    // If type is VL then add appropriate credits, if LWOP add 0
+    let toAdd = 0;
+    if (type === 'Vacation Leave') toAdd = computeCredit(formatDate(event.start), formatDate(event.end));
+
+    let leave = await deleteLeave(id, toAdd, localStorage.getItem('userId'));
     if (leave.error) {
       this.props.onError('Failed to remove event');
       this.props.closeModal();
@@ -39,6 +43,10 @@ class CalendarEvent extends Component {
           <h6 className="card-subtitle text-muted">INCLUSIVE DATES</h6>
         </div>
         <div className="mb-4 text-center">
+          <h2 className="card-title">{event.type}</h2>
+          <h6 className="card-subtitle text-muted">TYPE</h6>
+        </div>
+        <div className="mb-4 text-center">
           <h2 className="card-title">{event.status}</h2>
           <h6 className="card-subtitle text-muted">STATUS</h6>
         </div>
@@ -50,13 +58,13 @@ class CalendarEvent extends Component {
             clickAction={this.props.closeModal}
           />
           {
-            isAfterToday(event.start)
+            isAfterToday(event.start) && event.name === localStorage.getItem('name')
             &&
             <Button
               text="Delete"
               kind="danger"
               otherClasses="mx-1"
-              clickAction={() => this.handleDelete(event.id)}
+              clickAction={() => this.handleDelete(event.id, event.type)}
             />
           }
         </div>

@@ -27,7 +27,6 @@ let styles = {
 class Calendar extends Component {
   state = {
     events: [],
-    holidays: [],
     isLoading: true,
     triggerAlertSuccess: false,
     triggerAlertError: false,
@@ -57,7 +56,8 @@ class Calendar extends Component {
           name: leave.userId.fullName,
           start: new Date(leave.start),
           end: new Date(leave.end),
-          status: leave.status
+          status: leave.status,
+          type: leave.type
         }
         return tempArray.push(arr);
       });
