@@ -41,7 +41,7 @@ class CalendarAdd extends Component {
     // If type is VL then deduct appropriate credits, if LWOP deduct 0
     let toDeduct = 0;
     if (this.state.type === 'Vacation Leave') toDeduct = computeCredit(from, to);
-    
+
     let leave = await addLeave(localStorage.getItem('userId'), this.state.status, this.state.type, from, to, toDeduct);
     if (leave.error) {
       this.props.onError('Failed to add the leave');
@@ -64,33 +64,29 @@ class CalendarAdd extends Component {
   render() {
     return (
       <Modal header="Request A Leave">
-        <div className="mb-3" >Name: <strong>{this.state.username}</strong></div>
-        <div className="mb-3" >
-          <span>Inclusive Dates:</span>
-          <div className="ml-3">
-            <span>From: <strong>{this.props.from}</strong></span>
-            <br />
-            <span>To: <strong>{this.props.to}</strong></span>
+        <div className="mb-4 text-center" >
+          <h2 className="card-title">{this.state.username}</h2>
+          <h6 className="card-subtitle text-muted">NAME</h6>
+        </div>
+        <div className="mb-4 text-center">
+          <div className="d-flex justify-content-center mb-2">
+            <form className="form-inline">
+              <label className="mx-2">From</label>
+              <TimePicker
+                changeAction={this.handleTimeFrom}
+                value={this.state.timeFrom}
+              />
+              <label className="mx-2">To</label>
+              <TimePicker
+                changeAction={this.handleTimeTo}
+                value={this.state.timeTo}
+              />
+            </form>
           </div>
+          <h6 className="card-subtitle text-muted">TIME</h6>
         </div>
-        <div className="mb-4">
-          <label>Time:</label>
-          <form className="form-inline ml-3">
-            <label className="mx-2">From</label>
-            <TimePicker
-              changeAction={this.handleTimeFrom}
-              value={this.state.timeFrom}
-            />
-            <label className="mx-2">To</label>
-            <TimePicker
-              changeAction={this.handleTimeTo}
-              value={this.state.timeTo}
-            />
-          </form>
-        </div>
-        <div className="mb-4">
-          <label>Type:</label>
-          <div className="ml-3">
+        <div className="mb-4 text-center">
+          <div className="mb-2">
             <RadioButton
               id="type-vl"
               name="type"
@@ -108,10 +104,10 @@ class CalendarAdd extends Component {
               changeAction={this.handleTypeChange}
             />
           </div>
+          <h6 className="card-subtitle text-muted">TYPE</h6>
         </div>
-        <div className="mb-4">
-          <label>Status:</label>
-          <div className="ml-3">
+        <div className="mb-4 text-center">
+          <div className="mb-2">
             <RadioButton
               id="status-pending"
               name="status"
@@ -129,6 +125,7 @@ class CalendarAdd extends Component {
               changeAction={this.handleStatusChange}
             />
           </div>
+          <h6 className="card-subtitle text-muted">STATUS</h6>
         </div>
         <div className="text-center">
           <Button

@@ -6,7 +6,7 @@ import { isUser } from 'utils/user';
 
 const UserRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (
-    isUser() ? <Component {...props} /> : <Redirect to='/' />
+    isUser() ? <Component {...props} {...rest} /> : <Redirect to='/' />
   )} />
 );
 

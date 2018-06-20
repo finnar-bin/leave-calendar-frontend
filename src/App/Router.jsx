@@ -12,15 +12,26 @@ import AdminLogin from './pages/AdminLogin';
 import Admin from './pages/Admin';
 import New from './pages/Admin/New';
 import Users from './pages/Admin/Users';
+import UIProvider from 'containers/UI/UIProvider';
+import UIContext from 'containers/UI/UIContext';
 
 export const MainRouter = () => (
   <Router>
     <Switch>
       <Route exact path="/" component={SelectUser} />
-      <UserRoute path="/calendar" component={Calendar} />
-      <UserRoute path="/search/:name" component={Search} />
-      <UserRoute path="/admin/signin" component={AdminLogin} />
-      <PrivateRoute path="/admin" component={Admin} />
+      {/* UI Context will only initiate on the links below */}
+      <UIProvider>
+        <UIContext.Consumer>
+          {val => (
+            <Fragment>
+              <UserRoute path="/calendar" component={Calendar} updateUserInfo={val.updateUserInfo} />
+              <UserRoute path="/search/:name" component={Search} />
+              <UserRoute path="/admin/signin" component={AdminLogin} />
+              <PrivateRoute path="/admin" component={Admin} />   
+            </Fragment>
+          )}
+        </UIContext.Consumer>
+      </UIProvider>
     </Switch>
   </Router>
 );

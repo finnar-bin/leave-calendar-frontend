@@ -104,8 +104,9 @@ class Calendar extends Component {
     this.setState({
       triggerAlertSuccess: true,
       events: newArray,
-      messageSuccess: message
+      messageSuccess: message,
     });
+    this.props.updateUserInfo();
   }
 
   setError = (message) => {

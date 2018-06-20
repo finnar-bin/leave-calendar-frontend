@@ -152,11 +152,24 @@ export const deleteLeave = async (id, toAdd, userId) => {
 }
 
 /**
+ * Get all holidays from Google Calendar API
  * @returns {object} result setn as promise
  */
 export const getHolidays = async () => {
   return await resolve(
     axios.get(HOLIDAY_API_URI)
+      .then(response => response.data)
+  )
+}
+
+/**
+ * Get info of a user
+ * @param {string} id user id to be fetched
+ * @returns {object} result setn as promise
+ */
+export const getUser = async (id) => {
+  return await resolve(
+    axios.get(`${API_URI}/user/${id}`)
       .then(response => response.data)
   )
 }

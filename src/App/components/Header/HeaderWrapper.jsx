@@ -13,7 +13,7 @@ const HeaderWrapper = ({ children }) => {
   return (
     <Fragment>
       <div className="nav__wrapper">
-        <Header />
+        <Header/>
       </div>
       <div style={styles.body__wrapper}>
         {children}
@@ -26,7 +26,8 @@ HeaderWrapper.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array
-  ])
+  ]),
+  credits: PropTypes.number
 }
 
 export default HeaderWrapper;
