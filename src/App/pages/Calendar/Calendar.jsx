@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import HeaderWrapper from 'components/Header';
@@ -94,19 +95,13 @@ class Calendar extends Component {
     });
   }
 
-  setSuccess = (message, newLeaveArray, type) => {
-    let newArray = [];
-    if (type === 'add') {
-      newArray = [...this.state.events, newLeaveArray]
-    } else {
-      newArray = _.pull(this.state.events, newLeaveArray)
-    }
+  setSuccess = (message) => {
     this.setState({
       triggerAlertSuccess: true,
-      events: newArray,
       messageSuccess: message,
     });
     this.props.updateUserInfo();
+    this.fetchEvents();
   }
 
   setError = (message) => {
@@ -178,11 +173,10 @@ class Calendar extends Component {
   componentDidMount() {
     this.fetchEvents();
   }
+}
 
-  shouldComponentUpdate(nextState) {
-    const diffState = this.state.events !== nextState.events;
-    return diffState;
-  }
+Calendar.propTypes = {
+  updateUserInfo: PropTypes.func
 }
 
 export default Calendar;

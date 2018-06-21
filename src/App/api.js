@@ -173,3 +173,16 @@ export const getUser = async (id) => {
       .then(response => response.data)
   )
 }
+
+/**
+ * Update leave info
+ * @param {string} id leave id to be updated
+ * @returns {object} promise result
+ */
+export const updateLeave = async (id, status) => {
+  return await resolve(
+    axios.patch(`${API_URI}/leave/${id}`,{
+      status
+    }).then(response => response.data)
+  )
+}

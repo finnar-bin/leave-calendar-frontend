@@ -47,15 +47,7 @@ class CalendarAdd extends Component {
       this.props.onError('Failed to add the leave');
       this.props.closeModal();
     } else {
-      let newLeave = {
-        id: leave.data.data._id,
-        name: localStorage.getItem('name'),
-        start: new Date(leave.data.data.start),
-        end: new Date(leave.data.data.end),
-        status: leave.data.data.status,
-        type: leave.data.data.type
-      }
-      this.props.onSuccess('Leave successfully added', newLeave, 'add');
+      this.props.onSuccess('Leave successfully added');
       this.props.closeModal();
     }
   }

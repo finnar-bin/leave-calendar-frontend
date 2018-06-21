@@ -12,7 +12,7 @@ class UIProvider extends Component {
     } else {
       this.setState({
         fullName: user.data.data.fullName,
-        leaveCredits: user.data.data.leaveCredits
+        leaveCredits: parseFloat(user.data.data.leaveCredits).toPrecision(3)
       })
     }
   }
