@@ -25,6 +25,7 @@ class HeaderForm extends Component {
           placeholder="Find user..."
         />
         <NavLink
+          exact
           to={"/search/" + this.state.formValue}
           onClick={this.resetInputField}
           className="btn btn-outline-success my-2 my-sm-0"

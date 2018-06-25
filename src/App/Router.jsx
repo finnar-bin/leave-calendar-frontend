@@ -16,25 +16,22 @@ import UIProvider from 'containers/UI/UIProvider';
 import UIContext from 'containers/UI/UIContext';
 
 export const MainRouter = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/" component={SelectUser} />
-      <Route exact path="/error/503" component={Error503} />
-      {/* UI Context will only initiate on the links below */}
-      <UIProvider>
-        <UIContext.Consumer>
-          {val => (
-            <Fragment>
-              <UserRoute path="/calendar" component={Calendar} updateUserInfo={val.updateUserInfo} />
-              <UserRoute path="/search/:name" component={Search} />
-              <UserRoute path="/admin/signin" component={AdminLogin} />
-              <PrivateRoute path="/admin" component={Admin} />   
-            </Fragment>
-          )}
-        </UIContext.Consumer>
-      </UIProvider>
-    </Switch>
-  </Router>
+  <UIProvider>
+    <UIContext.Consumer>
+      {val => (
+        <Router>
+          <Switch>
+            <Route exact path="/" component={SelectUser} />
+            <Route path="/error/503" component={Error503} />
+            <UserRoute path="/calendar" component={Calendar} updateUserInfo={val.updateUserInfo} />
+            <UserRoute path="/search/:name" component={Search} />
+            <UserRoute path="/admin/signin" component={AdminLogin} />
+            <PrivateRoute path="/admin" component={Admin} />   
+          </Switch>
+        </Router>
+      )}
+    </UIContext.Consumer>
+  </UIProvider>
 );
 
 export const AdminRouter = (props) => (

@@ -4,24 +4,28 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 import Button from 'components/Button';
 
-let styles = {};
-
-styles.box__approved = {
-  border: '1px solid #ddd',
-  height: '15px',
-  width: '15px',
-  borderRadius: '25%',
-  backgroundColor: '#015249',
-  display: 'inline-block'
-}
-
-styles.box__pending = {
-  border: '1px solid #ddd',
-  height: '15px',
-  width: '15px',
-  borderRadius: '25%',
-  backgroundColor: '#984B43',
-  display: 'inline-block'
+let styles = {
+  box__approved: {
+    border: '1px solid #ddd',
+    height: '15px',
+    width: '15px',
+    borderRadius: '25%',
+    backgroundColor: '#015249',
+    display: 'inline-block'
+  },
+  box__pending: {
+    border: '1px solid #ddd',
+    height: '15px',
+    width: '15px',
+    borderRadius: '25%',
+    backgroundColor: '#984B43',
+    display: 'inline-block'
+  },
+  calendar__label: {
+    fontSize: '2.15rem',
+    fontWeight: '340',
+    lineHeight: '1.2'
+  }
 }
 
 const CustomToolbar = (toolbar) => {
@@ -57,7 +61,7 @@ const CustomToolbar = (toolbar) => {
           size="large"
         />
       </div>
-      <h2 className="my-1">{label()}</h2>
+      <h2 className="my-1" style={styles.calendar__label}>{label()}</h2>
 
       <div>
         <div style={styles.box__approved}></div> <span className="text-muted">Approved</span>

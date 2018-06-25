@@ -22,8 +22,10 @@ class Alert extends Component {
     }
     
     return (
-      <div className={`alert alert-${kind} ${toFloat} ${toDismiss} fade show`} role="alert">
-        <span><strong>{vanityMessage}</strong> {message}.</span>
+      <div className={`alert alert-${kind} ${toFloat} ${toDismiss} fade show text-center`} role="alert">
+        <h4 className="alert-heading">{vanityMessage}</h4>
+        <hr/>
+        <p>{message}.</p>
         {
           dismissible &&
           <button type="button" className="close" onClick={clickAction} aria-label="Close">
