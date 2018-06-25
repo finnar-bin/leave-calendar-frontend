@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import HeaderWrapper from 'components/Header';
@@ -29,6 +29,7 @@ class Calendar extends Component {
   state = {
     events: [],
     isLoading: true,
+    isDbError: false,
     triggerAlertSuccess: false,
     triggerAlertError: false,
     triggerAddModal: false,
@@ -46,9 +47,11 @@ class Calendar extends Component {
     let holidays = await getHolidays();
 
     if (leaves.error) {
-      console.error(leaves.error.data.message);
+      console.error(leaves.error);
+      this.setState({ isDbError: true });
     } else if (holidays.error) {
       console.error(holidays.error.data.error);
+      this.setState({ isDbError: true });
     } else {
       let tempArray = [];
       leaves.data.data.map((leave) => {
@@ -76,7 +79,8 @@ class Calendar extends Component {
 
       this.setState({
         events: tempArray,
-        isLoading: false
+        isLoading: false,
+        isDbError: false
       });
     }
   }
@@ -166,6 +170,7 @@ class Calendar extends Component {
         {this.state.triggerAddModal && <CalendarAdd closeModal={this.handleModalClose} from={this.state.selectedDateFrom} to={this.state.selectedDateTo} onSuccess={this.setSuccess} onError={this.setError} />}
         {this.state.triggerAlertSuccess && <Alert floating={true} kind="success" message={this.state.messageSuccess} clickAction={this.handleAlertClose} />}
         {this.state.triggerAlertError && <Alert floating={true} kind="danger" message={this.state.messageError} clickAction={this.handleAlertClose} />}
+        {this.state.isDbError && <Redirect to="/error/503" />}
       </HeaderWrapper>
     );
   }

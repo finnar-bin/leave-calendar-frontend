@@ -8,12 +8,12 @@ class UIProvider extends Component {
   fetchUser = async () => {
     let user = await getUser(localStorage.getItem('userId'));
     if (user.error) {
-      console.log(user.error.data.message);
+      console.log(user.error.message);
     } else {
       this.setState({
         fullName: user.data.data.fullName,
         leaveCredits: parseFloat(user.data.data.leaveCredits).toPrecision(3)
-      })
+      });
     }
   }
   

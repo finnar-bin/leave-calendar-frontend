@@ -17,7 +17,7 @@ const resolve = async (promise) => {
   try {
     result.data = await promise;
   } catch (error) {
-    result.error = error.response;
+    result.error = error.response ? error.response : error;
   }
 
   return result;

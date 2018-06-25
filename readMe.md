@@ -8,7 +8,7 @@ Leave management calendar's front-end powered by React.js
 - [x] Add capability to add leaves on the calendar
 - [x] Remove leaves from calendar
 - [x] Update leave status
-- [ ] Add error handler when can't connect to database
+- [x] Add error handler when can't connect to database
 - [ ] Logout current selected username if it's deleted by admin
 - [x] Add option for VL and LWOP
 - [x] Prevent other users from removing leaves filed by others
