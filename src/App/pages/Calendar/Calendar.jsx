@@ -16,6 +16,8 @@ import CustomEventPropGetter from 'components/Calendar/CustomEventPropGetter';
 import CustomDayPropGetter from 'components/Calendar/CustomDayPropGetter';
 import { getLeaves, getHolidays } from 'api';
 import { isAfterToday } from 'utils/checkDays';
+import UIProvider from 'containers/UI/UIProvider';
+import UIContext from 'containers/UI/UIContext';
 
 BigCalendar.momentLocalizer(moment);
 
@@ -104,7 +106,7 @@ class Calendar extends Component {
       triggerAlertSuccess: true,
       messageSuccess: message,
     });
-    this.props.updateUserInfo();
+    this.props.update();
     this.fetchEvents();
   }
 
@@ -181,7 +183,7 @@ class Calendar extends Component {
 }
 
 Calendar.propTypes = {
-  updateUserInfo: PropTypes.func
+  update: PropTypes.func
 }
 
 export default Calendar;

@@ -12,10 +12,18 @@ let styles = {
   }
 }
 
-const Header = (props) => (
+const isAdmin = () => {
+  if (window.location.href.indexOf('admin') > -1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const Header = () => (
   <nav className="navbar navbar-light">
     <NavLink exact to="/calendar" className="navbar-brand"><img src={banner} alt="header-banner" style={styles.navbar__brand}/></NavLink>
-    <HeaderGreeting/>
+    {!isAdmin() && <HeaderGreeting/>}
     <HeaderForm />
   </nav>
 );

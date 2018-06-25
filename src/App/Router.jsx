@@ -16,23 +16,23 @@ import UIProvider from 'containers/UI/UIProvider';
 import UIContext from 'containers/UI/UIContext';
 
 export const MainRouter = () => (
-  <UIProvider>
-    <UIContext.Consumer>
-      {val => (
-        <Router>
-          <Switch>
-            <Route exact path="/" component={SelectUser} />
-            <Route path="/error/503" component={Error503} />
-            <UserRoute path="/calendar" component={Calendar} updateUserInfo={val.updateUserInfo} />
-            <UserRoute path="/search/:name" component={Search} />
-            <UserRoute path="/admin/signin" component={AdminLogin} />
-            <PrivateRoute path="/admin" component={Admin} />   
-          </Switch>
-        </Router>
-      )}
-    </UIContext.Consumer>
-  </UIProvider>
-);
+  <Router>
+    <Switch>
+      <Route exact path="/" component={SelectUser} />
+      <Route path="/error/503" component={Error503} />
+      <UserRoute path="/search/:name" component={Search} />
+      <UserRoute path="/admin/signin" component={AdminLogin} />
+      <PrivateRoute path="/admin" component={Admin} />   
+      <UIProvider>
+        <UIContext.Consumer>
+          {val => (
+            <UserRoute path="/calendar" component={Calendar} update={val.updateUserInfo} />
+          )}
+        </UIContext.Consumer>
+      </UIProvider>
+    </Switch>
+  </Router>
+)
 
 export const AdminRouter = (props) => (
   <div className="container">

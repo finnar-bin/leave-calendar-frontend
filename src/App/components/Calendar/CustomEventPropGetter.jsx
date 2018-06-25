@@ -23,7 +23,7 @@ const CustomEventPropGetter = (event) => {
     if (!isAfterToday(event.end)) {
       return {
         style: {
-          backgroundColor: '#015249',
+          backgroundColor: '#984B43',
           opacity: '0.7'
         }
       }
