@@ -21,7 +21,7 @@ class AdminNewForm extends Component {
   }
 
   handleSubmit = async () => {
-    let user = await newUser(clean(this.state.fullName), clean(this.state.leaveCredits));
+    let user = await newUser(clean(this.state.fullName), this.state.leaveCredits);
     if (user.error) {
       this.props.onError(user.error.data.message);
     } else {
