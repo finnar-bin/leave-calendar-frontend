@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import { getUsers } from 'api';
-import Button from 'components/Button';
+import { getUsers } from '../../api';
+import Button from '../../components/Button';
 
 let styles = {
   select__wrapper: {

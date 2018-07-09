@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
-import UserTable from 'containers/Admin/UserTable';
-import Loader from 'components/Loader';
-import { getUsers } from 'api';
+import UserTable from '../../../containers/Admin/UserTable';
+import Loader from '../../../components/Loader';
+import { getUsers } from '../../../api';
 
 class Users extends Component {
   state = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import error from 'assets/gif/error.gif';
+import error from '../../assets/gif/error.gif';
 
 let styles = {
   main__wrapper: {

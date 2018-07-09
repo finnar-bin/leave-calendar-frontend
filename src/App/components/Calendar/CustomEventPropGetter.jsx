@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 import React from 'react';
 
-import { isAfterToday } from 'utils/checkDays';
+import { isAfterToday } from '../../utils/checkDays';
 
 const CustomEventPropGetter = (event) => {
   if (event.status === 'Approved') {

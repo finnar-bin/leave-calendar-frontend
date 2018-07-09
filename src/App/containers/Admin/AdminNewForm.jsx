@@ -1,10 +1,10 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 
-import InputGroup from 'components/InputGroup';
-import Button from 'components/Button';
-import { clean } from 'utils/clean';
-import { newUser } from 'api';
+import InputGroup from '../../components/InputGroup';
+import Button from '../../components/Button';
+import { clean } from '../../utils/clean';
+import { newUser } from '../../api';
 
 class AdminNewForm extends Component {
   state = {

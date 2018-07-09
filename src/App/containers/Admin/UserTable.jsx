@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import AdminUpdate from './AdminUpdate';
 import AdminDelete from './AdminDelete';
-import Alert from 'components/Alert';
-import Button from 'components/Button';
+import Alert from '../../components/Alert';
+import Button from '../../components/Button';
 
 class UserTable extends Component {
   state = {

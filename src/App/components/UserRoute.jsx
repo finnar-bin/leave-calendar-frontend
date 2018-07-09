@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
-import { isUser } from 'utils/user';
+import { isUser } from '../utils/user';
 
 const UserRoute = ({component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (

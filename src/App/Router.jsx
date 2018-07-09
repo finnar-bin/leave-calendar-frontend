@@ -12,8 +12,8 @@ import Admin from './pages/Admin';
 import New from './pages/Admin/New';
 import Users from './pages/Admin/Users';
 import Error503 from './pages/Error';
-import UIProvider from 'containers/UI/UIProvider';
-import UIContext from 'containers/UI/UIContext';
+import UIProvider from './containers/UI/UIProvider';
+import UIContext from './containers/UI/UIContext';
 
 export const MainRouter = () => (
   <Router>

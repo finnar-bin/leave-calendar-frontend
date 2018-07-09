@@ -5,19 +5,17 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import HeaderWrapper from 'components/Header';
-import CalendarAdd from 'containers/Calendar/CalendarAdd';
-import CalendarEvent from 'containers/Calendar/CalendarEvent';
-import Alert from 'components/Alert';
-import Loader from 'components/Loader';
-import CustomToolbar from 'components/Calendar/CustomToolbar';
-import CustomEvent from 'components/Calendar/CustomEvent';
-import CustomEventPropGetter from 'components/Calendar/CustomEventPropGetter';
-import CustomDayPropGetter from 'components/Calendar/CustomDayPropGetter';
-import { getLeaves, getHolidays } from 'api';
-import { isAfterToday } from 'utils/checkDays';
-import UIProvider from 'containers/UI/UIProvider';
-import UIContext from 'containers/UI/UIContext';
+import HeaderWrapper from '../../components/Header';
+import CalendarAdd from '../../containers/Calendar/CalendarAdd';
+import CalendarEvent from '../../containers/Calendar/CalendarEvent';
+import Alert from '../../components/Alert';
+import Loader from '../../components/Loader';
+import CustomToolbar from '../../components/Calendar/CustomToolbar';
+import CustomEvent from '../../components/Calendar/CustomEvent';
+import CustomEventPropGetter from '../../components/Calendar/CustomEventPropGetter';
+import CustomDayPropGetter from '../../components/Calendar/CustomDayPropGetter';
+import { getLeaves, getHolidays } from '../../api';
+import { isAfterToday } from '../../utils/checkDays';
 
 BigCalendar.momentLocalizer(moment);
 

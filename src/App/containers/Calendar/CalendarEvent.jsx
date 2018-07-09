@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
-import Modal from 'components/Modal';
-import Button from 'components/Button';
-import { deleteLeave, updateLeave } from 'api';
-import { isAfterToday } from 'utils/checkDays';
-import { computeCredit } from 'utils/computeCredits';
-import RadioButton from 'components/RadioButton';
+import Modal from '../../components/Modal';
+import Button from '../../components/Button';
+import { deleteLeave, updateLeave } from '../../api';
+import { isAfterToday } from '../../utils/checkDays';
+import { computeCredit } from '../../utils/computeCredits';
+import RadioButton from '../../components/RadioButton';
 
 const formatDate = (date) => (
   moment(date).format('M/D/YYYY h:mm A')

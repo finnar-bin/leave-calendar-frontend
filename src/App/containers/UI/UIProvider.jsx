@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import UIContext from './UIContext';
-import { getUser } from 'api';
+import { getUser } from '../../api';
 
 class UIProvider extends Component {
   fetchUser = async () => {

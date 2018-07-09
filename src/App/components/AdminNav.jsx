@@ -2,8 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import propTypes from 'prop-types';
 
-import { signout } from 'utils/auth';
-import Button from 'components/Button';
+import { signout } from '../utils/auth';
+import Button from '../components/Button';
 
 let styles = {
   button__logout: {
