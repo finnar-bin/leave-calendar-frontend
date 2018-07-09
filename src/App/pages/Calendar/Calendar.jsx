@@ -140,15 +140,15 @@ class Calendar extends Component {
             selectable={true}
             popup={true}
             onSelectSlot={slotInfo => {
-              // if (isAfterToday(slotInfo.start)) {
+              if (isAfterToday(slotInfo.start)) {
                 this.setState({
                   selectedDateFrom: slotInfo.start.toLocaleDateString(),
                   selectedDateTo: slotInfo.end.toLocaleDateString(),
                   triggerAddModal: true
                 });
-              // } else {
-              //   this.setError('You can\'t file a leave on past dates');
-              // }
+              } else {
+                this.setError('You can\'t file a leave on past dates');
+              }
             }}
             onSelectEvent={event => {
               if (event.status !== 'Holiday') {

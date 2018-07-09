@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import _ from 'lodash';
 
 import { getUsers } from '../../api';
 import Button from '../../components/Button';
@@ -51,7 +52,8 @@ class SelectUser extends Component {
   /************* ACTIONS END **************/
 
   render() {
-    let userDropdown = this.state.users.map((data) => {
+    let userList = _.sortBy(this.state.users, [function(user) { return user.fullName}]);
+    let userDropdown = userList.map((data) => {
       return (
         <option
           key={data._id}
