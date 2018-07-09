@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import moment from 'moment';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
-import Button from 'components/Button';
+import Button from '../../components/Button';
 
 let styles = {
   box__approved: {

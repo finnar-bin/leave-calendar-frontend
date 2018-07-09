@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import AdminNewForm from 'containers/Admin/AdminNewForm';
-import Alert from 'components/Alert';
+import AdminNewForm from '../../../containers/Admin/AdminNewForm';
+import Alert from '../../../components/Alert';
 
 class New extends Component {
   state = {

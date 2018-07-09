@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import HeaderWrapper from 'components/Header';
+import HeaderWrapper from '../../components/Header';
 
 const Search = ({ match }) => {
   return (

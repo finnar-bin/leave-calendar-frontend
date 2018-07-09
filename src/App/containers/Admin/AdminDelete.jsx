@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Modal from 'components/Modal';
-import Button from 'components/Button';
-import { removeUser } from 'api';
+import Modal from '../../components/Modal';
+import Button from '../../components/Button';
+import { removeUser } from '../../api';
 
 
 const AdminDelete = (props) => {

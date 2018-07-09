@@ -2,8 +2,8 @@ import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
-import { changeUser } from 'utils/user';
-import UIContext from 'containers/UI/UIContext';
+import { changeUser } from '../../utils/user';
+import UIContext from '../../containers/UI/UIContext';
 
 let greetings = [
   'Hey there',
