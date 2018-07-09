@@ -21,7 +21,7 @@ export const MainRouter = () => (
       <Route exact path="/" component={SelectUser} />
       <Route path="/error/503" component={Error503} />
       <UserRoute path="/search/:name" component={Search} />
-      <UserRoute path="/admin/signin" component={AdminLogin} />
+      <Route path="/admin/signin" component={AdminLogin} />
       <PrivateRoute path="/admin" component={Admin} />   
       <UIProvider>
         <UIContext.Consumer>
