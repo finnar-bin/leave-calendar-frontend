@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
-import UserTable from '../../../containers/Admin/UserTable';
-import Loader from '../../../components/Loader';
-import { getUsers } from '../../../api';
+import UserTable from 'containers/Admin/UserTable';
+import Loader from 'components/Loader';
+import { getUsers } from 'api';
 
 class Users extends Component {
   state = {
@@ -12,10 +12,6 @@ class Users extends Component {
     noResult: false
   }
 
-  /**
-   * Fetch list of users from database
-   * @returns {array} list of all users
-   */
   fetchUsers = async () => {
     let users = await getUsers();
     if (users.error) {

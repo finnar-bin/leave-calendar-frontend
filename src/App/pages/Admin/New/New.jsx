@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import AdminNewForm from '../../../containers/Admin/AdminNewForm';
-import Alert from '../../../components/Alert';
+import AdminNewForm from 'containers/Admin/AdminNewForm';
+import Alert from 'components/Alert';
 
 class New extends Component {
   state = {
@@ -11,6 +11,7 @@ class New extends Component {
     successMessage: ''
   }
 
+  /************* ACTIONS START **************/
   toLoad = (bool) => {
     this.setState({ triggerLoading: bool })
   }
@@ -28,6 +29,7 @@ class New extends Component {
       errorMessage: message
     });
   }
+  /************* ACTIONS END **************/
 
   render() {
     return (

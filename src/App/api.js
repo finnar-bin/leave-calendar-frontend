@@ -17,7 +17,7 @@ const resolve = async (promise) => {
   try {
     result.data = await promise;
   } catch (error) {
-    result.error = error.response;
+    result.error = error.response ? error.response : error;
   }
 
   return result;
@@ -111,11 +111,12 @@ export const removeUser = async (id) => {
  * @param {Date} end end of leave to be filed
  * @returns {object} result setn as promise
  */
-export const addLeave = async (userId, status, start, end, toDeduct) => {
+export const addLeave = async (userId, status, type, start, end, toDeduct) => {
   return await resolve(
     axios.post(`${API_URI}/leave`, {
       userId,
       status,
+      type,
       start,
       end,
       toDeduct
@@ -139,22 +140,49 @@ export const getLeaves = async () => {
  * @param {string} id leave id to be deleted
  * @returns {object} result setn as promise
  */
-export const deleteLeave = async (id, toAdd) => {
+export const deleteLeave = async (id, toAdd, userId) => {
   return await resolve(
     axios.delete(`${API_URI}/leave/${id}`, {
       data: {
-        toAdd
+        toAdd,
+        userId
       }
     }).then(response => response.data)
   )
 }
 
 /**
+ * Get all holidays from Google Calendar API
  * @returns {object} result setn as promise
  */
 export const getHolidays = async () => {
   return await resolve(
     axios.get(HOLIDAY_API_URI)
       .then(response => response.data)
+  )
+}
+
+/**
+ * Get info of a user
+ * @param {string} id user id to be fetched
+ * @returns {object} result setn as promise
+ */
+export const getUser = async (id) => {
+  return await resolve(
+    axios.get(`${API_URI}/user/${id}`)
+      .then(response => response.data)
+  )
+}
+
+/**
+ * Update leave info
+ * @param {string} id leave id to be updated
+ * @returns {object} promise result
+ */
+export const updateLeave = async (id, status) => {
+  return await resolve(
+    axios.patch(`${API_URI}/leave/${id}`,{
+      status
+    }).then(response => response.data)
   )
 }

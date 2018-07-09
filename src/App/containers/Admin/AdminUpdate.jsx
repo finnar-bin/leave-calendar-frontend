@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 
-import { updateUser } from '../../api';
-import { clean } from '../../utils/clean';
-import Modal from '../../components/Modal';
-import Button from '../../components/Button';
-import InputGroup from '../../components/InputGroup';
+import { updateUser } from 'api';
+import { clean } from 'utils/clean';
+import Modal from 'components/Modal';
+import Button from 'components/Button';
+import InputGroup from 'components/InputGroup';
 
 class AdminUpdate extends Component {
   state = {

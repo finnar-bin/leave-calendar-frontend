@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import Alert from '../components/Alert';
-import Button from '../components/Button';
-import InputGroup from '../components/InputGroup';
-import { authenticate } from '../utils/auth';
-import { loginAdmin } from '../api';
+import Alert from 'components/Alert';
+import Button from 'components/Button';
+import InputGroup from 'components/InputGroup';
+import { authenticate } from 'utils/auth';
+import { loginAdmin } from 'api';
 
 class AdminLoginForm extends Component {
   state = {
@@ -15,6 +15,7 @@ class AdminLoginForm extends Component {
     password: ''
   }
 
+  /************* ACTIONS START **************/
   handleUsername = (e) => {
     this.setState({ username: e.target.value });
   }
@@ -38,6 +39,7 @@ class AdminLoginForm extends Component {
       this.props.history.push("/admin/users");
     }
   }
+  /************* ACTIONS END **************/
 
   render() {
     return (

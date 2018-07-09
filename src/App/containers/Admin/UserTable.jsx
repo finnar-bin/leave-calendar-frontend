@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import AdminUpdate from './AdminUpdate';
 import AdminDelete from './AdminDelete';
-import Alert from '../../components/Alert';
-import Button from '../../components/Button';
+import Alert from 'components/Alert';
+import Button from 'components/Button';
 
 class UserTable extends Component {
   state = {
@@ -18,6 +18,7 @@ class UserTable extends Component {
     toDelete: '',
   }
 
+  /********* ACTIONS START **********/
   onEdit = (userdata) => {
     this.setState({
       triggerUpdateModal: true,
@@ -60,6 +61,7 @@ class UserTable extends Component {
       errorMessage: message
     });
   }
+  /********* ACTIONS END **********/
 
   render() {
     let users = this.props.users.map((data) => {

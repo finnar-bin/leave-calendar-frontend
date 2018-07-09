@@ -34,7 +34,10 @@ const Button = ({text, kind, otherClasses, clickAction, outline, size}) => {
 }
 
 Button.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ]),
   kind: PropTypes.string,
   outline: PropTypes.bool,
   otherClasses: PropTypes.string,

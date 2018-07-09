@@ -1,31 +1,37 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import BigCalendar from 'react-big-calendar';
-import _ from 'lodash';
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import HeaderWrapper from '../../components/Header';
-import CalendarAdd from '../../containers/Calendar/CalendarAdd';
-import CalendarEvent from '../../containers/Calendar/CalendarEvent';
-import Alert from '../../components/Alert';
-import Loader from '../../components/Loader';
-import { getLeaves, getHolidays } from '../../api';
-import { isAfterToday } from '../../utils/checkDays';
+import HeaderWrapper from 'components/Header';
+import CalendarAdd from 'containers/Calendar/CalendarAdd';
+import CalendarEvent from 'containers/Calendar/CalendarEvent';
+import Alert from 'components/Alert';
+import Loader from 'components/Loader';
+import CustomToolbar from 'components/Calendar/CustomToolbar';
+import CustomEvent from 'components/Calendar/CustomEvent';
+import CustomEventPropGetter from 'components/Calendar/CustomEventPropGetter';
+import CustomDayPropGetter from 'components/Calendar/CustomDayPropGetter';
+import { getLeaves, getHolidays } from 'api';
+import { isAfterToday } from 'utils/checkDays';
+import UIProvider from 'containers/UI/UIProvider';
+import UIContext from 'containers/UI/UIContext';
 
-moment().utcOffset(12);
 BigCalendar.momentLocalizer(moment);
 
-let styles = {}
-
-styles.calendarWrapper = {
-  minHeight: '100vh'
+let styles = {
+  calendarWrapper: {
+    minHeight: '100vh'
+  }
 }
 
 class Calendar extends Component {
   state = {
     events: [],
-    holidays: [],
     isLoading: true,
+    isDbError: false,
     triggerAlertSuccess: false,
     triggerAlertError: false,
     triggerAddModal: false,
@@ -37,56 +43,17 @@ class Calendar extends Component {
     toDisplayEvent: {},
   }
 
-  EventCalendar = ({ event }) => {
-    if (event.status === 'Holiday') {
-      return (
-        <span className="text-center">
-          <strong>{event.name} </strong>
-        </span>
-      );
-    }
-    return (
-      <span className="text-center">
-        <strong>{event.name} </strong>
-        <em style={{fontSize: '.8em'}}> {`${moment(event.start).format('h:mm A')} - ${moment(event.end).format('h:mm A')}`}</em>
-      </span>
-    );
-  }
-
-  CustomEventPropGetter = (event) => {
-    if (event.status === 'Approved') {
-      return {
-        style: {
-          backgroundColor: '#015249'
-        }
-      }
-    } else if (event.status === 'Pending') {
-      return {
-        style: {
-          backgroundColor: '#984B43'
-        }
-      }
-    } else return {}
-  }
-
-  CustomDayPropGetter = (date) => {
-    if (date.getDay() === 0 || date.getDay() === 6) {
-      return {
-        style: {
-          backgroundColor: '#f7edef'
-        }
-      }
-    } else return {}
-  }
-
+  /************* ACTIONS START **************/
   fetchEvents = async () => {
     let leaves = await getLeaves();
     let holidays = await getHolidays();
 
     if (leaves.error) {
-      console.error(leaves.error.data.message);
+      console.error(leaves.error);
+      this.setState({ isDbError: true });
     } else if (holidays.error) {
       console.error(holidays.error.data.error);
+      this.setState({ isDbError: true });
     } else {
       let tempArray = [];
       leaves.data.data.map((leave) => {
@@ -95,7 +62,8 @@ class Calendar extends Component {
           name: leave.userId.fullName,
           start: new Date(leave.start),
           end: new Date(leave.end),
-          status: leave.status
+          status: leave.status,
+          type: leave.type
         }
         return tempArray.push(arr);
       });
@@ -113,7 +81,8 @@ class Calendar extends Component {
 
       this.setState({
         events: tempArray,
-        isLoading: false
+        isLoading: false,
+        isDbError: false
       });
     }
   }
@@ -132,18 +101,13 @@ class Calendar extends Component {
     });
   }
 
-  setSuccess = (message, newLeaveArray, type) => {
-    let newArray = [];
-    if (type === 'add') {
-      newArray = [...this.state.events, newLeaveArray]
-    } else {
-      newArray = _.pull(this.state.events, newLeaveArray)
-    }
+  setSuccess = (message) => {
     this.setState({
       triggerAlertSuccess: true,
-      events: newArray,
-      messageSuccess: message
+      messageSuccess: message,
     });
+    this.props.update();
+    this.fetchEvents();
   }
 
   setError = (message) => {
@@ -163,6 +127,7 @@ class Calendar extends Component {
       }
     });
   }
+  /************* ACTIONS END **************/
 
   render() {
     return (
@@ -195,10 +160,11 @@ class Calendar extends Component {
             }}
             views={['month']}
             components={{
-              event: this.EventCalendar
+              event: CustomEvent,
+              toolbar: CustomToolbar
             }}
-            eventPropGetter={this.CustomEventPropGetter}
-            dayPropGetter={this.CustomDayPropGetter}
+            eventPropGetter={CustomEventPropGetter}
+            dayPropGetter={CustomDayPropGetter}
           />
         }
         {this.state.isLoading && <Loader />}
@@ -206,6 +172,7 @@ class Calendar extends Component {
         {this.state.triggerAddModal && <CalendarAdd closeModal={this.handleModalClose} from={this.state.selectedDateFrom} to={this.state.selectedDateTo} onSuccess={this.setSuccess} onError={this.setError} />}
         {this.state.triggerAlertSuccess && <Alert floating={true} kind="success" message={this.state.messageSuccess} clickAction={this.handleAlertClose} />}
         {this.state.triggerAlertError && <Alert floating={true} kind="danger" message={this.state.messageError} clickAction={this.handleAlertClose} />}
+        {this.state.isDbError && <Redirect to="/error/503" />}
       </HeaderWrapper>
     );
   }
@@ -213,11 +180,10 @@ class Calendar extends Component {
   componentDidMount() {
     this.fetchEvents();
   }
+}
 
-  shouldComponentUpdate(nextState) {
-    const diffState = this.state.events !== nextState.events;
-    return diffState;
-  }
+Calendar.propTypes = {
+  update: PropTypes.func
 }
 
 export default Calendar;

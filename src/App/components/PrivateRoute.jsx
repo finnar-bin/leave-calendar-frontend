@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { authenticate } from '../utils/auth';
-import { isUser } from '../utils/user';
+import { authenticate } from 'utils/auth';
+import { isUser } from 'utils/user';
 
 const PrivateRoute = ({ component: Component, ...rest}) => (
   <Route {...rest} render={(props) => (

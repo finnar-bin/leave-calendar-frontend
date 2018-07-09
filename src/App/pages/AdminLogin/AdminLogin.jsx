@@ -1,7 +1,7 @@
 import React from 'react';
 
-import AdminLoginForm from '../../containers/AdminLoginForm';
-import HeaderWrapper from '../../components/Header';
+import AdminLoginForm from 'containers/AdminLoginForm';
+import HeaderWrapper from 'components/Header';
 
 const AdminLogin = (props) => {
   return (

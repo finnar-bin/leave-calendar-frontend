@@ -2,19 +2,18 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import propTypes from 'prop-types';
 
-import { signout } from '../utils/auth';
-import Button from '../components/Button';
+import { signout } from 'utils/auth';
+import Button from 'components/Button';
 
-let styles = {}
-
-styles.button__logout = {
-  cursor: 'pointer',
-  color: '#fff',
-  marginLeft: '73%'
-}
-
-styles.button__navItem = {
-  color: '#495057',
+let styles = {
+  button__logout: {
+    cursor: 'pointer',
+    color: '#fff',
+    marginLeft: '73%'
+  },
+  button__navItem: {
+    color: '#495057',
+  }
 }
 
 const AdminNav = (props) => {
