@@ -5,13 +5,14 @@ import _ from 'lodash';
 
 import { getUsers } from '../../api';
 import Button from '../../components/Button';
+import banner from '../../assets/img/banner.png';
 
 let styles = {
   select__wrapper: {
     position: 'absolute',
-    top: '50%',
+    top: '30%',
     left: '50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -30%)'
   }
 }
 
@@ -67,7 +68,9 @@ class SelectUser extends Component {
     return (
       <Fragment>
         <div className="text-center" style={styles.select__wrapper}>
-          <h1>Find your name below</h1>
+          <img src={banner} alt="banner" className="py-3"/>
+          <h1>Welcome, Stranger!</h1>
+          <p className="text-muted">Introduce yourself by picking your name below.</p>
           <hr/>
           <select className="form-control form-control-lg mb-3" value={this.state.selectedId} onChange={this.setSelect} >
             <option disabled value="default">Choose here...</option>
@@ -79,10 +82,10 @@ class SelectUser extends Component {
             size="large"
             outline={true}
             clickAction={this.handleSelect}
+            disabled={this.state.selectedId === 'default' ? true : false}
           />
         </div>
         {this.state.isDbError && <Redirect to="/error/503" />}
-
       </Fragment>
     );
   }

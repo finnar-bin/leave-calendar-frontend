@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({text, kind, otherClasses, clickAction, outline, size}) => {
+const Button = ({text, kind, otherClasses, clickAction, outline, size, disabled}) => {
   let style, btnSize;
 
   if (outline) {
@@ -27,6 +27,7 @@ const Button = ({text, kind, otherClasses, clickAction, outline, size}) => {
     <button
       className={`btn ${style} ${btnSize} ${otherClasses}`}
       onClick={clickAction}
+      disabled={disabled}
     >
       {text}
     </button>
@@ -42,12 +43,14 @@ Button.propTypes = {
   outline: PropTypes.bool,
   otherClasses: PropTypes.string,
   clickAction: PropTypes.func,
-  size: PropTypes.oneOf(['large', 'small'])
+  size: PropTypes.oneOf(['large', 'small']),
+  disabled: PropTypes.bool
 }
 
 Button.defaultProps = {
   kind: 'primary',
   outline: false,
+  disabled: false
 }
 
 export default Button;
