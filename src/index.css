@@ -14,6 +14,7 @@ body {
   background-image: url(./App/assets/img/nav_bg.jpg);
   height: 150px;
   padding: 15px;
+  border-radius: .25rem .25rem 0 0;
 }
 
 .card {
@@ -157,7 +158,7 @@ div.card {
   justify-content: center;
   position: fixed !important;
   top: 15%;
-  right: 40%;
+  right: 45%;
   /* transform: translate(-15%, -50%); */
   opacity: 1;
   animation: slideDown 300ms ease-in-out;

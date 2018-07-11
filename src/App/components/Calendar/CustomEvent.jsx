@@ -1,7 +1,6 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 let styles = {
   badge: {
@@ -30,18 +29,16 @@ const CustomEvent = ({event}) => {
     );
   }
   return (
-    <div className="container">
-      <div className="row justify-content-between">
+    <div className="container" data-toggle="tooltip" data-placement="top" title="Click for more info">
+      <div className="row justify-content-center">
         <div className="col-md-auto p-0">
           <strong>{splitString(event.name)}</strong>
         </div>
-        <div className="col-md-auto p-0">
-          <em style={{fontSize: '.8em'}}> {`${moment(event.start).format('h:mm A')} - ${moment(event.end).format('h:mm A')}`}</em>
+        <div className="col-md-auto px-2" style={{opacity: '0.4'}}>
+          <strong>|</strong>
         </div>
         <div className="col-md-auto p-0">
-          <span style={styles.badge}>
-            <FontAwesomeIcon icon={event.status === 'Approved' ? "check-circle" : "hourglass-half"} />
-          </span>
+          <em style={{fontSize: '.8em'}}> {`${moment(event.start).format('h:mm A')} - ${moment(event.end).format('h:mm A')}`}</em>
         </div>
       </div>
     </div>
