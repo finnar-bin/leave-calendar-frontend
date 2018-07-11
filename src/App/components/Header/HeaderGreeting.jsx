@@ -31,7 +31,7 @@ const UserInfo = () => (
     {val => (
       <Fragment>
         <span>{randomGreeting}, <strong>{val.fullName}</strong>!</span>
-        <span>You have {val.leaveCredits} leaves remaining.</span>
+        <span>You have <span className="badge badge-warning">{val.leaveCredits}</span> leaves remaining.</span>
       </Fragment>
     )}
   </UIContext.Consumer>

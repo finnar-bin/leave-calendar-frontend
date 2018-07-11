@@ -74,6 +74,7 @@ class CalendarEvent extends Component {
     let { event } = this.props;
     return (
       <Modal header="Leave Information">
+        <div className="text-center mb-3"><FontAwesomeIcon icon="user-circle" size="7x"/></div>
         <div className="mb-4 text-center" >
           <h2 className="card-title">{event.name}</h2>
           <h6 className="card-subtitle text-muted">NAME</h6>

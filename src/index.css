@@ -136,6 +136,19 @@ body {
   }
 }
 
+div.card-header {
+  background-color: #4B294E;
+  box-shadow: 0px 4px 9px -2px rgba(0,0,0,1);
+}
+
+.card-header > p {
+  color: #fff;
+}
+
+div.card {
+  border: 1px solid #4B294E;
+}
+
 /* Floating alerts */
 .alert-floating {
   display: block;
