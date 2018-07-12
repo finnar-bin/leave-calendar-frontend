@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
 
 let styles = {
   badge: {
@@ -23,13 +24,17 @@ const splitString = (string) => {
 const CustomEvent = ({event}) => {
   if (event.status === 'Holiday') {
     return (
-      <div className="text-center">
+      <div className="text-center" data-tip={event.name}>
+      <ReactTooltip />
         <strong>{event.name}</strong>
       </div>
     );
   }
   return (
-    <div className="container" data-toggle="tooltip" data-placement="top" title="Click for more info">
+    <div className="container" data-tip data-for="eventDataTip">
+      <ReactTooltip id="eventDataTip">
+        <span>Click for more info</span>
+      </ReactTooltip>
       <div className="row justify-content-center">
         <div className="col-md-auto p-0">
           <strong>{splitString(event.name)}</strong>

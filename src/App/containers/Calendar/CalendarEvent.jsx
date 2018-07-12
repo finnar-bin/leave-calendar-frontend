@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import ReactTooltip from 'react-tooltip';
 
 import Modal from '../../components/Modal';
 import Button from '../../components/Button';
@@ -117,7 +118,7 @@ class CalendarEvent extends Component {
           <h6 className="card-subtitle text-muted">
             STATUS
             &nbsp;
-            {validateEvent(event.start, event.name) && this.state.showStatusForm === false ? <a onClick={this.openStatusForm} style={{'cursor' : 'pointer'}}><FontAwesomeIcon icon="edit" /></a> : ''}
+            {validateEvent(event.start, event.name) && this.state.showStatusForm === false ? <a onClick={this.openStatusForm} style={{'cursor' : 'pointer'}} data-tip="Click to update leave status"><FontAwesomeIcon icon="edit" /><ReactTooltip /></a> : ''}
           </h6>
         </div>
 

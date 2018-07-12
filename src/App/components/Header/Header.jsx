@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
 
 import HeaderForm from '../../containers/HeaderForm';
 import HeaderGreeting from './HeaderGreeting';
@@ -22,7 +23,12 @@ const showGreeting = () => {
 
 const Header = () => (
   <nav className="navbar navbar-light">
-    <NavLink exact to="/calendar" className="navbar-brand"><img src={banner} alt="header-banner" style={styles.navbar__brand}/></NavLink>
+    <NavLink exact to="/calendar" className="navbar-brand">
+      <img src={banner} alt="header-banner" style={styles.navbar__brand} data-tip data-for="headerLogo"/>
+      <ReactTooltip delayShow={1000} id="headerLogo">
+        <span>Home</span>
+      </ReactTooltip>
+    </NavLink>
     {showGreeting() && <HeaderGreeting/>}
     <HeaderForm />
   </nav>
