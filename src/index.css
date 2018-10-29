@@ -6,7 +6,7 @@ body {
 
 #root {
   background: #7f83ab;
-  padding: 2%;
+  padding: 1.5%;
   min-height: 100vh;
 }
 
@@ -14,11 +14,11 @@ body {
   background-image: url(./App/assets/img/nav_bg.jpg);
   height: 150px;
   padding: 15px;
-  border-radius: .25rem .25rem 0 0;
+  border-radius: 0.25rem 0.25rem 0 0;
 }
 
 .card {
-  border: 1px solid rgba(0,0,0,0);
+  border: 1px solid rgba(0, 0, 0, 0);
   min-height: 93vh;
 }
 
@@ -94,7 +94,8 @@ body {
 }
 
 @keyframes lds-grid {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -118,7 +119,7 @@ body {
   opacity: 1;
   animation: show 500ms ease-in-out;
   overflow-x: hidden;
-  overflow-y: auto
+  overflow-y: auto;
 }
 
 @keyframes show {
@@ -138,8 +139,8 @@ body {
 }
 
 div.card-header {
-  background-color: #4B294E;
-  box-shadow: 0px 4px 9px -2px rgba(0,0,0,1);
+  background-color: #4b294e;
+  box-shadow: 0px 4px 9px -2px rgba(0, 0, 0, 1);
 }
 
 .card-header > p {
@@ -147,7 +148,7 @@ div.card-header {
 }
 
 div.card {
-  border: 1px solid #4B294E;
+  border: 1px solid #4b294e;
 }
 
 /* Floating alerts */

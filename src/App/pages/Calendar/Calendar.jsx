@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import BigCalendar from 'react-big-calendar';
-import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import React, { Component } from "react";
+import moment from "moment";
+import BigCalendar from "react-big-calendar";
+import PropTypes from "prop-types";
+import { Redirect } from "react-router-dom";
 
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import HeaderWrapper from '../../components/Header';
-import CalendarAdd from '../../containers/Calendar/CalendarAdd';
-import CalendarEvent from '../../containers/Calendar/CalendarEvent';
-import Alert from '../../components/Alert';
-import Loader from '../../components/Loader';
-import CustomToolbar from '../../components/Calendar/CustomToolbar';
-import CustomEvent from '../../components/Calendar/CustomEvent';
-import CustomEventPropGetter from '../../components/Calendar/CustomEventPropGetter';
-import CustomDayPropGetter from '../../components/Calendar/CustomDayPropGetter';
-import { getLeaves, getHolidays } from '../../api';
-import { isAfterToday } from '../../utils/checkDays';
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import HeaderWrapper from "../../components/Header";
+import CalendarAdd from "../../containers/Calendar/CalendarAdd";
+import CalendarEvent from "../../containers/Calendar/CalendarEvent";
+import Alert from "../../components/Alert";
+import Loader from "../../components/Loader";
+import CustomToolbar from "../../components/Calendar/CustomToolbar";
+import CustomEvent from "../../components/Calendar/CustomEvent";
+import CustomEventPropGetter from "../../components/Calendar/CustomEventPropGetter";
+import CustomDayPropGetter from "../../components/Calendar/CustomDayPropGetter";
+import { getLeaves, getHolidays } from "../../api";
+import { isAfterToday } from "../../utils/checkDays";
 
 BigCalendar.momentLocalizer(moment);
 
 let styles = {
   calendarWrapper: {
-    minHeight: '100vh'
+    minHeight: "70vh"
   }
-}
+};
 
 class Calendar extends Component {
   state = {
@@ -34,12 +34,12 @@ class Calendar extends Component {
     triggerAlertError: false,
     triggerAddModal: false,
     triggerEventModal: false,
-    selectedDateFrom: '',
-    selectedDateTo: '',
-    messageError: '',
-    messageSuccess: '',
-    toDisplayEvent: {},
-  }
+    selectedDateFrom: "",
+    selectedDateTo: "",
+    messageError: "",
+    messageSuccess: "",
+    toDisplayEvent: {}
+  };
 
   /************* ACTIONS START **************/
   fetchEvents = async () => {
@@ -54,7 +54,7 @@ class Calendar extends Component {
       this.setState({ isDbError: true });
     } else {
       let tempArray = [];
-      leaves.data.data.map((leave) => {
+      leaves.data.data.map(leave => {
         let arr = {
           id: leave._id,
           name: leave.userId.fullName,
@@ -62,18 +62,18 @@ class Calendar extends Component {
           end: new Date(leave.end),
           status: leave.status,
           type: leave.type
-        }
+        };
         return tempArray.push(arr);
       });
 
-      holidays.data.items.map((holiday) => {
+      holidays.data.items.map(holiday => {
         let arr = {
           id: holiday.id,
           name: holiday.summary,
           start: new Date(`${holiday.start.date} 12:00 AM`),
           end: new Date(`${holiday.end.date} 12:00 AM`),
-          status: 'Holiday'
-        }
+          status: "Holiday"
+        };
         return tempArray.push(arr);
       });
 
@@ -83,56 +83,54 @@ class Calendar extends Component {
         isDbError: false
       });
     }
-  }
+  };
 
   handleModalClose = () => {
     this.setState({
       triggerAddModal: false,
       triggerEventModal: false
     });
-  }
+  };
 
   handleAlertClose = () => {
     this.setState({
       triggerAlertError: false,
       triggerAlertSuccess: false
     });
-  }
+  };
 
-  setSuccess = (message) => {
+  setSuccess = message => {
     this.setState({
       triggerAlertSuccess: true,
-      messageSuccess: message,
+      messageSuccess: message
     });
     this.props.update();
     this.fetchEvents();
-  }
+  };
 
-  setError = (message) => {
+  setError = message => {
     this.setState({
       triggerAlertError: true,
       messageError: message
     });
-  }
+  };
 
-  displayLeaveInfo = (eventId) => {
+  displayLeaveInfo = eventId => {
     // eslint-disable-next-line
-    this.state.events.map((event) => {
+    this.state.events.map(event => {
       if (eventId === event.id) {
         this.setState({
           toDisplayEvent: event
-        })
+        });
       }
     });
-  }
+  };
   /************* ACTIONS END **************/
 
   render() {
     return (
       <HeaderWrapper>
-        {
-          !this.state.isLoading
-          &&
+        {!this.state.isLoading && (
           <BigCalendar
             defaultDate={new Date()}
             style={styles.calendarWrapper}
@@ -147,16 +145,16 @@ class Calendar extends Component {
                   triggerAddModal: true
                 });
               } else {
-                this.setError('You can\'t file a leave on past dates');
+                this.setError("You can't file a leave on past dates");
               }
             }}
             onSelectEvent={event => {
-              if (event.status !== 'Holiday') {
+              if (event.status !== "Holiday") {
                 this.displayLeaveInfo(event.id);
-                this.setState({ triggerEventModal: true })
+                this.setState({ triggerEventModal: true });
               }
             }}
-            views={['month']}
+            views={["month"]}
             components={{
               event: CustomEvent,
               toolbar: CustomToolbar
@@ -164,12 +162,43 @@ class Calendar extends Component {
             eventPropGetter={CustomEventPropGetter}
             dayPropGetter={CustomDayPropGetter}
           />
-        }
+        )}
         {this.state.isLoading && <Loader />}
-        {this.state.triggerEventModal && <CalendarEvent event={this.state.toDisplayEvent} closeModal={this.handleModalClose} onSuccess={this.setSuccess} onError={this.setError} />}
-        {this.state.triggerAddModal && <CalendarAdd closeModal={this.handleModalClose} from={this.state.selectedDateFrom} to={this.state.selectedDateTo} onSuccess={this.setSuccess} onError={this.setError} />}
-        {this.state.triggerAlertSuccess && <Alert floating={true} kind="success" message={this.state.messageSuccess} clickAction={this.handleAlertClose} dismissible={false}/>}
-        {this.state.triggerAlertError && <Alert floating={true} kind="danger" message={this.state.messageError} clickAction={this.handleAlertClose} dismissible={false}/>}
+        {this.state.triggerEventModal && (
+          <CalendarEvent
+            event={this.state.toDisplayEvent}
+            closeModal={this.handleModalClose}
+            onSuccess={this.setSuccess}
+            onError={this.setError}
+          />
+        )}
+        {this.state.triggerAddModal && (
+          <CalendarAdd
+            closeModal={this.handleModalClose}
+            from={this.state.selectedDateFrom}
+            to={this.state.selectedDateTo}
+            onSuccess={this.setSuccess}
+            onError={this.setError}
+          />
+        )}
+        {this.state.triggerAlertSuccess && (
+          <Alert
+            floating={true}
+            kind="success"
+            message={this.state.messageSuccess}
+            clickAction={this.handleAlertClose}
+            dismissible={false}
+          />
+        )}
+        {this.state.triggerAlertError && (
+          <Alert
+            floating={true}
+            kind="danger"
+            message={this.state.messageError}
+            clickAction={this.handleAlertClose}
+            dismissible={false}
+          />
+        )}
         {this.state.isDbError && <Redirect to="/error/503" />}
       </HeaderWrapper>
     );
@@ -182,6 +211,6 @@ class Calendar extends Component {
 
 Calendar.propTypes = {
   update: PropTypes.func
-}
+};
 
 export default Calendar;
