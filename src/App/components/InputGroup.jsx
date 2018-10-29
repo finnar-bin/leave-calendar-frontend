@@ -1,19 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-const InputGroup = ({prependText, size, type, otherClasses, changeAction, focus, value}) => {
+const InputGroup = ({
+  prependText,
+  size,
+  type,
+  otherClasses,
+  changeAction,
+  focus,
+  value,
+  name,
+  placeholder
+}) => {
   let inputSize, toFocus;
   switch (size) {
-    case 'large':
-    inputSize = 'input-group-lg';
+    case "large":
+      inputSize = "input-group-lg";
       break;
-    
-    case 'small':
-    inputSize = 'input-group-sm';
+
+    case "small":
+      inputSize = "input-group-sm";
       break;
 
     default:
-      inputSize = 'input-group'
+      inputSize = "input-group";
       break;
   }
 
@@ -26,27 +36,34 @@ const InputGroup = ({prependText, size, type, otherClasses, changeAction, focus,
       <div className="input-group-prepend">
         <span className="input-group-text">{prependText}</span>
       </div>
-      <input onChange={changeAction} type={type} value={value} className="form-control" autoFocus={toFocus}/>
+      <input
+        onChange={changeAction}
+        type={type}
+        value={value}
+        className="form-control"
+        autoFocus={toFocus}
+        name={name}
+        placeholder={placeholder}
+      />
     </div>
   );
 };
 
 InputGroup.propTypes = {
   prependText: PropTypes.string,
-  size: PropTypes.oneOf(['large', 'small']),
+  size: PropTypes.oneOf(["large", "small"]),
   type: PropTypes.string,
   otherClasses: PropTypes.string,
   changeAction: PropTypes.func,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]),
-  focus: PropTypes.bool
-}
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  focus: PropTypes.bool,
+  name: PropTypes.string,
+  placeholder: PropTypes.string
+};
 
 InputGroup.defaultProps = {
-  type: 'text',
+  type: "text",
   focus: false
-}
+};
 
 export default InputGroup;

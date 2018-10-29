@@ -1,18 +1,20 @@
-import axios from 'axios';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+import axios from "axios";
+axios.defaults.headers.post["Content-Type"] = "application/json";
 const API_URI = process.env.REACT_APP_API_GATEWAY;
-const HOLIDAY_API_URI = `https://www.googleapis.com/calendar/v3/calendars/en.philippines%23holiday%40group.v.calendar.google.com/events?key=${process.env.REACT_APP_CALENDAR_API_KEY}`;
+const HOLIDAY_API_URI = `https://www.googleapis.com/calendar/v3/calendars/en.philippines%23holiday%40group.v.calendar.google.com/events?key=${
+  process.env.REACT_APP_CALENDAR_API_KEY
+}`;
 
 /**
  * Helper function to properly resolve promises returned by axios
  * @param {Object} promise
  * @returns {Object} parsed promise result
  */
-const resolve = async (promise) => {
+const resolve = async promise => {
   let result = {
     data: null,
     error: null
-  }
+  };
 
   try {
     result.data = await promise;
@@ -21,7 +23,7 @@ const resolve = async (promise) => {
   }
 
   return result;
-}
+};
 
 /**
  * Fetch list of users from database
@@ -29,30 +31,37 @@ const resolve = async (promise) => {
  */
 export const getUsers = async () => {
   return await resolve(
-    axios.get(`${API_URI}/user`)
-      .then(response => response.data)
+    axios.get(`${API_URI}/user`).then(response => response.data)
   );
-}
+};
 
 /**
  * Update user info
  * @param {string} id user id to be updated
- * @param {string} fullName updated user full name
+ * @param {string} firstName updated user first name
+ * @param {string} lastName updated user first name
  * @param {number} leaveCredits updated user leave credits
  * @returns {object} result sent as promise
  */
-export const updateUser = async (id, fullName, leaveCredits) => {
+export const updateUser = async (id, firstName, lastName, leaveCredits) => {
   return await resolve(
-    axios.patch(`${API_URI}/user/${id}`, {
-      fullName,
-      leaveCredits
-    }, {
-      headers: {
-        'x-auth': localStorage.getItem('token')
-      }
-    }).then(response => response.data)
+    axios
+      .patch(
+        `${API_URI}/user/${id}`,
+        {
+          firstName,
+          lastName,
+          leaveCredits
+        },
+        {
+          headers: {
+            "x-auth": localStorage.getItem("token")
+          }
+        }
+      )
+      .then(response => response.data)
   );
-}
+};
 
 /**
  * Log in as Admin
@@ -60,48 +69,60 @@ export const updateUser = async (id, fullName, leaveCredits) => {
  * @param {string} password admin password
  * @returns {object} result sent as promise
  */
-export const loginAdmin = async (userName, password) => {
+export const loginAdmin = async (username, password) => {
   return await resolve(
-    axios.post(`${API_URI}/admin/signin`, {
-      userName,
-      password
-    }).then(response => response.data)
+    axios
+      .post(`${API_URI}/admin/signin`, {
+        username,
+        password
+      })
+      .then(response => response.data)
   );
-}
+};
 
 /**
  * Add new user
- * @param {string} fullName new user full name
+ * @param {string} firstName new user full name
+ * @param {string} lastName new user full name
  * @param {number} leaveCredits new user leave credits
  * @returns {object} result setn as promise
  */
-export const newUser = async (fullName, leaveCredits) => {
+export const newUser = async (firstName, lastName, leaveCredits) => {
   return await resolve(
-    axios.post(`${API_URI}/user`, {
-      fullName,
-      leaveCredits
-    }, {
-      headers: {
-        'x-auth': localStorage.getItem('token')
-      }
-    }).then(response => response.data)
+    axios
+      .post(
+        `${API_URI}/user`,
+        {
+          firstName,
+          lastName,
+          leaveCredits
+        },
+        {
+          headers: {
+            "x-auth": localStorage.getItem("token")
+          }
+        }
+      )
+      .then(response => response.data)
   );
-}
+};
 
 /**
  * Delete user
  * @param {string} id user id to be deleted
  * @returns {object} result setn as promise
  */
-export const removeUser = async (id) => {
+export const removeUser = async id => {
   return await resolve(
-    axios.delete(`${API_URI}/user/${id}`, {
-      headers: {
-        'x-auth': localStorage.getItem('token')
-      }
-    }).then(response => response.data)
+    axios
+      .delete(`${API_URI}/user/${id}`, {
+        headers: {
+          "x-auth": localStorage.getItem("token")
+        }
+      })
+      .then(response => response.data)
   );
-}
+};
 
 /**
  * Add a leave
@@ -113,16 +134,18 @@ export const removeUser = async (id) => {
  */
 export const addLeave = async (userId, status, type, start, end, toDeduct) => {
   return await resolve(
-    axios.post(`${API_URI}/leave`, {
-      userId,
-      status,
-      type,
-      start,
-      end,
-      toDeduct
-    }).then(response => response.data)
+    axios
+      .post(`${API_URI}/leave`, {
+        userId,
+        status,
+        type,
+        start,
+        end,
+        toDeduct
+      })
+      .then(response => response.data)
   );
-}
+};
 
 /**
  * Get all leaves
@@ -130,10 +153,9 @@ export const addLeave = async (userId, status, type, start, end, toDeduct) => {
  */
 export const getLeaves = async () => {
   return await resolve(
-    axios.get(`${API_URI}/leave`)
-      .then(response => response.data)
+    axios.get(`${API_URI}/leave`).then(response => response.data)
   );
-}
+};
 
 /**
  * Delete a leave
@@ -142,14 +164,16 @@ export const getLeaves = async () => {
  */
 export const deleteLeave = async (id, toAdd, userId) => {
   return await resolve(
-    axios.delete(`${API_URI}/leave/${id}`, {
-      data: {
-        toAdd,
-        userId
-      }
-    }).then(response => response.data)
-  )
-}
+    axios
+      .delete(`${API_URI}/leave/${id}`, {
+        data: {
+          toAdd,
+          userId
+        }
+      })
+      .then(response => response.data)
+  );
+};
 
 /**
  * Get all holidays from Google Calendar API
@@ -157,22 +181,20 @@ export const deleteLeave = async (id, toAdd, userId) => {
  */
 export const getHolidays = async () => {
   return await resolve(
-    axios.get(HOLIDAY_API_URI)
-      .then(response => response.data)
-  )
-}
+    axios.get(HOLIDAY_API_URI).then(response => response.data)
+  );
+};
 
 /**
  * Get info of a user
  * @param {string} id user id to be fetched
  * @returns {object} result setn as promise
  */
-export const getUser = async (id) => {
+export const getUser = async id => {
   return await resolve(
-    axios.get(`${API_URI}/user/${id}`)
-      .then(response => response.data)
-  )
-}
+    axios.get(`${API_URI}/user/${id}`).then(response => response.data)
+  );
+};
 
 /**
  * Update leave info
@@ -181,8 +203,10 @@ export const getUser = async (id) => {
  */
 export const updateLeave = async (id, status) => {
   return await resolve(
-    axios.patch(`${API_URI}/leave/${id}`,{
-      status
-    }).then(response => response.data)
-  )
-}
+    axios
+      .patch(`${API_URI}/leave/${id}`, {
+        status
+      })
+      .then(response => response.data)
+  );
+};
