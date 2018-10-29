@@ -2,22 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactTooltip from "react-tooltip";
 
-let styles = {
-  badge: {
-    display: "inline-block",
-    padding: ".25em .4em",
-    lineHeight: "1",
-    whiteSpace: "nowrap",
-    verticalAlign: "baseline",
-    borderRadius: ".25rem",
-    color: "#fff",
-    backgroundColor: "#f8f9fa38"
-  }
-};
-
 const splitString = string => {
   let split = string.split(" ");
-  return split[0];
+  return `${split[0].charAt(0)}. ${split[split.length - 1]}`;
 };
 
 const CustomEvent = ({ event }) => {

@@ -57,7 +57,7 @@ class Calendar extends Component {
       leaves.data.data.map(leave => {
         let arr = {
           id: leave._id,
-          name: leave.userId.fullName,
+          name: `${leave.userId.firstName} ${leave.userId.lastName}`,
           start: new Date(leave.start),
           end: new Date(leave.end),
           status: leave.status,

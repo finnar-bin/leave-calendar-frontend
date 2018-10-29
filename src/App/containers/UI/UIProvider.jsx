@@ -1,28 +1,28 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import UIContext from './UIContext';
-import { getUser } from '../../api';
+import UIContext from "./UIContext";
+import { getUser } from "../../api";
 
 class UIProvider extends Component {
   fetchUser = async () => {
-    let user = await getUser(localStorage.getItem('userId'));
+    let user = await getUser(localStorage.getItem("userId"));
     if (user.error) {
       console.log(user.error.message);
     } else {
       this.setState({
-        fullName: user.data.data.fullName,
+        fullName: `${user.data.data.firstName} ${user.data.data.lastName} `,
         leaveCredits: parseFloat(user.data.data.leaveCredits).toPrecision(3)
       });
     }
-  }
-  
+  };
+
   state = {
     leaveCredits: 0,
-    fullName: 'placeholder',
+    fullName: "placeholder",
     updateUserInfo: this.fetchUser
-  }
-  
+  };
+
   render() {
     return (
       <UIContext.Provider value={this.state}>
@@ -38,6 +38,6 @@ class UIProvider extends Component {
 
 UIProvider.propTypes = {
   children: PropTypes.element
-}
+};
 
 export default UIProvider;
