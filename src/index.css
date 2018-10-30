@@ -200,3 +200,8 @@ div.card {
   padding: 3px;
   font-size: 1.1em;
 }
+
+.rbc-event:hover {
+  box-shadow: 0 0 10px #000;
+  transition: 200ms ease-in-out;
+}

@@ -67,11 +67,13 @@ class Calendar extends Component {
       });
 
       holidays.data.items.map(holiday => {
+        let startD = new Date(holiday.start.date).toDateString();
+        let endD = new Date(holiday.start.date).toDateString();
         let arr = {
           id: holiday.id,
           name: holiday.summary,
-          start: new Date(`${holiday.start.date} 12:00 AM`),
-          end: new Date(`${holiday.end.date} 12:00 AM`),
+          start: new Date(`${startD} 12:00 AM`),
+          end: new Date(`${endD} 12:00 AM`),
           status: "Holiday"
         };
         return tempArray.push(arr);
@@ -83,6 +85,8 @@ class Calendar extends Component {
         isDbError: false
       });
     }
+
+    console.log(this.state.events);
   };
 
   handleModalClose = () => {

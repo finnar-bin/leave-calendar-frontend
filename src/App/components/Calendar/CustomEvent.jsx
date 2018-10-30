@@ -8,6 +8,7 @@ const splitString = string => {
 };
 
 const CustomEvent = ({ event }) => {
+  // console.log(event);
   if (event.status === "Holiday") {
     return (
       <div className="text-center" data-tip={event.name}>
