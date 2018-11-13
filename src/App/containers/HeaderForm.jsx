@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 
 class HeaderForm extends Component {
   state = {
-    formValue: ''
-  }
+    formValue: ""
+  };
 
-  handleChange = (e) => {
-    this.setState({ formValue: e.target.value })
-  }
+  handleChange = e => {
+    this.setState({ formValue: e.target.value });
+  };
 
   resetInputField = () => {
-    this.setState({ formValue: '' })
-  }
-  
+    this.setState({ formValue: "" });
+  };
+
   render() {
     return (
       <form className="form-inline">
