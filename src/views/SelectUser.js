@@ -36,7 +36,7 @@ class SelectUser extends Component {
             <img src={banner} alt="banner" className={classes.logo} />
           </Grid>
           <Grid item sm={6}>
-            <InputArea />
+            <InputArea history={this.props.history} />
           </Grid>
         </Grid>
       </div>

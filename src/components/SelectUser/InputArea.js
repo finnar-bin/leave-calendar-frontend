@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import _ from "lodash";
 
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
@@ -41,14 +42,24 @@ class InputArea extends Component {
   }
 
   handleChange = e => {
-    console.log(e);
     this.setState({
       selectedId: e.target.value
     });
   };
 
-  handleClick = e => {
-    alert(this.state.selectedId);
+  handleClick = () => {
+    localStorage.setItem("userId", this.state.selectedId);
+    this.props.history.push("/calendar");
+  };
+
+  // helper function to render user dropdown list
+  userList = users => {
+    const sortedUsers = _.sortBy(users, [user => user.lastName]);
+    return sortedUsers.map(user => (
+      <MenuItem key={user._id} value={user._id}>
+        {user.firstName} {user.lastName}
+      </MenuItem>
+    ));
   };
 
   render() {
@@ -68,8 +79,7 @@ class InputArea extends Component {
             <MenuItem value={0} disabled>
               <em>Choose here</em>
             </MenuItem>
-            <MenuItem value={5}>Susan Boyle</MenuItem>
-            <MenuItem value={1050}>Jack Sparrow</MenuItem>
+            {this.userList(this.props.users)}
           </Select>
           <FormHelperText>Required*</FormHelperText>
         </FormControl>
