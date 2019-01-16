@@ -63,7 +63,7 @@ class InputArea extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, users } = this.props;
     return (
       <Paper elevation={10} className={classes.root}>
         <Typography variant="h4" gutterBottom>
@@ -79,7 +79,7 @@ class InputArea extends Component {
             <MenuItem value={0} disabled>
               <em>Choose here</em>
             </MenuItem>
-            {this.userList(this.props.users)}
+            {this.userList(users)}
           </Select>
           <FormHelperText>Required*</FormHelperText>
         </FormControl>

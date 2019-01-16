@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 
+import Header from "../components/Calendar/Header";
+
 class Calendar extends Component {
   render() {
     return (
       <div>
-        <h1>Calendar area</h1>
+        <Header />
       </div>
     );
   }
