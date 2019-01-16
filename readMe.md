@@ -1,7 +1,15 @@
 # Leave Calendar Front-end
+
 Leave management calendar's front-end powered by React.js
 
+---
+
+## Version 2 Work In Progress
+
+To find out more about the progress, please switch over the the [version-2 branch](https://github.com/theofficialnar/leave-calendar-frontend/tree/version-2).
+
 ## Task List
+
 - [x] Floating error handler
 - [x] Add user
 - [x] Remove user
