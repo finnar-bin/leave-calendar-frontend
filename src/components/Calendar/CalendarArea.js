@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { fetchHolidays } from "../../store/actions/calendarAction";
+import { fetchHolidays, fetchLeaves } from "../../store/actions/calendarAction";
 
 // Big Calendar Date Localizer setup
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -24,6 +24,7 @@ const styles = theme => ({
 class CalendarArea extends Component {
   componentDidMount() {
     this.props.fetchHolidays();
+    this.props.fetchLeaves();
   }
 
   render() {
@@ -35,7 +36,7 @@ class CalendarArea extends Component {
           localizer={localizer}
           defaultDate={new Date()}
           views={["month"]}
-          events={this.props.events}
+          events={[...this.props.holidays.dates, ...this.props.leaves.dates]}
         />
       </Paper>
     );
@@ -43,12 +44,13 @@ class CalendarArea extends Component {
 }
 
 const mapStateToProps = state => ({
-  events: state.events.events,
-  error: state.events.error
+  holidays: state.events.holidays,
+  leaves: state.events.leaves
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchHolidays: () => dispatch(fetchHolidays())
+  fetchHolidays: () => dispatch(fetchHolidays()),
+  fetchLeaves: () => dispatch(fetchLeaves())
 });
 
 export default connect(

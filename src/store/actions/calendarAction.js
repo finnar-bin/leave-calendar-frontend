@@ -18,3 +18,22 @@ export const fetchHolidays = () => {
     }
   };
 };
+
+export const fetchLeaves = () => {
+  return async dispatch => {
+    const leaves = await getLeaves();
+    if (leaves.error) {
+      dispatch({
+        type: "FETCH_LEAVES_ERROR",
+        error: true,
+        leaves: []
+      });
+    } else {
+      dispatch({
+        type: "FETCH_LEAVES_SUCCESS",
+        error: false,
+        leaves: leaves.data.data
+      });
+    }
+  };
+};

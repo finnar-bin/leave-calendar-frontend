@@ -1,6 +1,12 @@
 const initState = {
-  events: [],
-  error: false
+  holidays: {
+    dates: [],
+    error: false
+  },
+  leaves: {
+    dates: [],
+    error: false
+  }
 };
 
 const calendarReducer = (state = initState, action) => {
@@ -24,13 +30,50 @@ const calendarReducer = (state = initState, action) => {
         return holidays.push(item);
       });
       return Object.assign({}, state, {
-        events: [...state.events, ...holidays],
-        error: action.error
+        holidays: {
+          dates: holidays,
+          error: action.error
+        }
       });
 
-    case "FETCH_USERS_ERROR":
+    case "FETCH_HOLIDAYS_ERROR":
       console.log(action);
-      return state;
+      return Object.assign({}, state, {
+        holidays: {
+          dates: [],
+          error: action.error
+        }
+      });
+
+    case "FETCH_LEAVES_SUCCESS":
+      console.log(action);
+      let leaves = [];
+      action.leaves.map(leave => {
+        const item = {
+          id: leave._id,
+          title: `${leave.userId.firstName} ${leave.userId.lastName}`,
+          start: new Date(leave.start),
+          end: new Date(leave.end),
+          status: leave.status,
+          type: leave.type
+        };
+        return leaves.push(item);
+      });
+      return Object.assign({}, state, {
+        leaves: {
+          dates: leaves,
+          error: action.error
+        }
+      });
+
+    case "FETCH_LEAVES_ERROR":
+      console.log(action);
+      return Object.assign({}, state, {
+        leaves: {
+          dates: [],
+          error: action.error
+        }
+      });
 
     default:
       return state;
