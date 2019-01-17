@@ -6,7 +6,7 @@ const initState = {
 const calendarReducer = (state = initState, action) => {
   switch (action.type) {
     case "FETCH_HOLIDAYS_SUCCESS":
-      // console.log(action);
+      console.log(action);
       let holidays = [];
       action.holidays.map(holiday => {
         // both set to holiday.start
@@ -16,7 +16,7 @@ const calendarReducer = (state = initState, action) => {
         const end = new Date(holiday.start.date).toDateString();
         const item = {
           id: holiday.id,
-          name: holiday.summary,
+          title: holiday.summary,
           start: new Date(`${start} 12:00 AM`),
           end: new Date(`${end} 12:00 AM`),
           status: "Holiday"
