@@ -16,7 +16,7 @@ const styles = {
 
 class Calendar extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     return (
       <Fragment>
         <Header />
@@ -33,7 +33,7 @@ class Calendar extends Component {
             </Grid>
             <Grid item xs={12} sm={4}>
               <Grid container spacing={16}>
-                <Info />
+                <Info history={history} />
                 <Updates />
               </Grid>
             </Grid>
