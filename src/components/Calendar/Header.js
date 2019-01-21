@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 import banner from "../../assets/banner.png";
@@ -14,7 +13,8 @@ const styles = theme => ({
   },
   container: {
     backgroundColor: "#ADADBC",
-    padding: `${theme.spacing.unit * 1}px ${theme.spacing.unit * 5}px`
+    paddingLeft: theme.spacing.unit * 5,
+    paddingRight: theme.spacing.unit * 5
   },
   logo: {
     width: "100%"
@@ -36,19 +36,19 @@ class Header extends Component {
           justify="space-between"
           alignItems="center"
         >
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Grid container direction="row">
               <Grid item sm={3}>
                 <img src={banner} alt="logo" className={classes.logo} />
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Search />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          {/* <Grid item xs={12} sm={4}>
             <UserInfo />
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     );

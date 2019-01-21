@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 
 import Header from "../components/Calendar/Header";
 import CalendarArea from "../components/Calendar/CalendarArea";
+import Info from "../components/Calendar/Info";
 import Updates from "../components/Calendar/Updates";
 import Footer from "../components/Footer/Footer";
 
@@ -25,14 +26,16 @@ class Calendar extends Component {
             spacing={16}
             container
             direction="row"
-            alignItems="center"
             justify="center"
           >
             <Grid item xs={12} sm={8}>
               <CalendarArea />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <Updates />
+              <Grid container spacing={16}>
+                <Info />
+                <Updates />
+              </Grid>
             </Grid>
           </Grid>
         </div>
