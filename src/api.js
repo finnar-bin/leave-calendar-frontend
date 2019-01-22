@@ -128,8 +128,10 @@ export const removeUser = async id => {
  * Add a leave
  * @param {string} userId user id of person filing the leave
  * @param {string} status status of leave
+ * @param {string} type type of leave
  * @param {Date} start start of leave to be filed
  * @param {Date} end end of leave to be filed
+ * @param {number} toDeduct number of leave credits to be deducted
  * @returns {object} result setn as promise
  */
 export const addLeave = async (userId, status, type, start, end, toDeduct) => {

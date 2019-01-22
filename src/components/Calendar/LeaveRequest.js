@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import EventIcon from "@material-ui/icons/Event";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -11,6 +12,9 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
+
+import { computeDeduction, getTime, getType } from "../../utils/leaveHelpers";
+import { fileLeave } from "../../store/actions/leavesAction";
 
 // used for the Dialog menu
 const Transition = props => <Slide direction="up" {...props} />;
@@ -89,12 +93,43 @@ class LeaveRequest extends Component {
     type: 0
   };
 
-  componentDidMount() {}
-
   handleChange = name => e => {
     this.setState({
       [name]: e.target.value
     });
+  };
+
+  handleSubmit = async () => {
+    const name = `${this.props.currentUser.firstName} ${
+      this.props.currentUser.lastName
+    }`;
+    // Get start and end times
+    let time = getTime(this.state.time);
+
+    // Get start and end dates
+    let date = {
+      start: `${this.props.start} ${time.start}`,
+      end: `${this.props.end} ${time.end}`
+    };
+
+    // Get Leave Type
+    let type = getType(this.state.type);
+
+    // Compute leave credits to be deducted
+    const deduction = computeDeduction(
+      this.state.type,
+      this.state.time,
+      this.props.start,
+      this.props.end
+    );
+
+    // send leave to backend
+    this.props.addLeave(name, type, date.start, date.end, deduction);
+    this.setState({
+      time: 0,
+      type: 0
+    });
+    this.props.handleClose();
   };
 
   render() {
@@ -136,7 +171,9 @@ class LeaveRequest extends Component {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button color="primary">Submit</Button>
+          <Button color="primary" onClick={this.handleSubmit}>
+            Submit
+          </Button>
           <Button color="secondary" onClick={() => handleClose()}>
             Cancel
           </Button>
@@ -146,4 +183,16 @@ class LeaveRequest extends Component {
   }
 }
 
-export default withStyles(styles)(LeaveRequest);
+const mapStateToProps = state => ({
+  currentUser: state.currentUser.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  addLeave: (name, type, start, end, deduction) =>
+    dispatch(fileLeave(name, type, start, end, deduction))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(LeaveRequest));

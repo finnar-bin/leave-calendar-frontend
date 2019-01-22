@@ -2,11 +2,13 @@ import { combineReducers } from "redux";
 
 import usersReducer from "./usersReducer";
 import currentUserReducer from "./currentUserReducer";
-import calendarReducer from "./calendarReducer";
+import holidaysReducer from "./holidaysReducer";
+import leavesReducer from "./leavesReducer";
 
 const rootReducer = combineReducers({
   users: usersReducer,
-  events: calendarReducer,
+  holidays: holidaysReducer,
+  leaves: leavesReducer,
   currentUser: currentUserReducer
 });
 

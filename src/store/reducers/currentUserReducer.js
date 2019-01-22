@@ -9,22 +9,13 @@ const initState = {
 
 const currentUserReducer = (state = initState, action) => {
   switch (action.type) {
-    case "SET_USER_SUCCESS":
-      console.log(action);
+    case "SET_USER":
       return Object.assign({}, state, {
         user: action.user,
         error: action.error
       });
 
-    case "SET_USER_ERROR":
-      console.log(action);
-      return Object.assign({}, state, {
-        user: action.user,
-        error: action.user
-      });
-
     case "UNSET_USER":
-      console.log(action);
       return Object.assign({}, state, {
         user: action.user,
         error: action.error

@@ -1,20 +1,19 @@
 import { getUsers } from "../../api";
+import { FETCH_USERS } from "./actionTypes";
 
 export const fetchUsers = () => {
   return async dispatch => {
     const users = await getUsers();
+    let action = {
+      type: FETCH_USERS,
+      error: false,
+      users: []
+    };
     if (users.error) {
-      dispatch({
-        type: "FETCH_USERS_ERROR",
-        error: true,
-        users: []
-      });
+      action.error = true;
     } else {
-      dispatch({
-        type: "FETCH_USERS_SUCCESS",
-        error: false,
-        users: users.data.data
-      });
+      action.users = users.data.data;
     }
+    dispatch(action);
   };
 };

@@ -7,7 +7,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import LeaveRequest from "./LeaveRequest";
-import { fetchHolidays, fetchLeaves } from "../../store/actions/calendarAction";
+import { fetchLeaves } from "../../store/actions/leavesAction";
+import { fetchHolidays } from "../../store/actions/holidaysAction";
 
 // Big Calendar Date Localizer setup
 const localizer = BigCalendar.momentLocalizer(moment);
@@ -40,7 +41,6 @@ class CalendarArea extends Component {
       end: info.end.toLocaleDateString(),
       open: true
     });
-    console.log(moment(this.state.start).format("YYYY-MM-DD"));
   };
 
   handleClose = () => {
@@ -81,8 +81,8 @@ class CalendarArea extends Component {
 }
 
 const mapStateToProps = state => ({
-  holidays: state.events.holidays,
-  leaves: state.events.leaves
+  holidays: state.holidays,
+  leaves: state.leaves
 });
 
 const mapDispatchToProps = dispatch => ({
