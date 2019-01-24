@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import banner from "../../assets/banner.png";
 import Search from "./Header/Search";
-import UserInfo from "./Header/UserInfo";
+// import UserInfo from "./Header/UserInfo";
 
 const styles = theme => ({
   root: {

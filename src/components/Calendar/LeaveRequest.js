@@ -53,7 +53,11 @@ const types = [
 ];
 
 // Helper function to generate readonly textfields
-const readOnly = (id, label, value) => (
+const readOnly = (id, label, value) => {
+  if (value === null) {
+    value = ""
+  }
+  return (
   <TextField
     id={id}
     label={label}
@@ -63,7 +67,7 @@ const readOnly = (id, label, value) => (
     InputProps={{ readOnly: true }}
     InputLabelProps={{ shrink: true }}
   />
-);
+)};
 
 // Helper function to generate select textfields
 const select = (id, label, value, onChange, menuItems) => (
@@ -152,7 +156,8 @@ class LeaveRequest extends Component {
           <DialogContentText id="leave-dialog-slide-description">
             Note: Please make sure to NOT include dates that fall on the
             weekend.
-            <Grid container spacing={8}>
+          </DialogContentText>
+          <Grid container spacing={8}>
               <Grid item xs={12} sm={6}>
                 {readOnly("start-date", "Start Date", start)}
               </Grid>
@@ -168,7 +173,6 @@ class LeaveRequest extends Component {
                 {select("type", "Type", type, this.handleChange("type"), types)}
               </Grid>
             </Grid>
-          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button color="primary" onClick={this.handleSubmit}>

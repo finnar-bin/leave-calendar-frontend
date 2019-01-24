@@ -4,3 +4,4 @@ export const FETCH_LEAVES = "FETCH_LEAVES";
 export const ADD_LEAVE = "ADD_LEAVE";
 export const SET_USER = "SET_USER";
 export const UNSET_USER = "UNSET_USER";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO"
