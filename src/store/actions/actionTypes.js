@@ -2,6 +2,7 @@ export const FETCH_USERS = "FETCH_USERS";
 export const FETCH_HOLIDAYS = "FETCH_HOLIDAYS";
 export const FETCH_LEAVES = "FETCH_LEAVES";
 export const ADD_LEAVE = "ADD_LEAVE";
+export const DELETE_LEAVE = "DELETE_LEAVE";
 export const FETCH_LEAVE_INFO = "FETCH_LEAVE_INFO";
 export const SET_USER = "SET_USER";
 export const UNSET_USER = "UNSET_USER";

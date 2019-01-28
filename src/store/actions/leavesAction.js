@@ -1,5 +1,10 @@
-import { getLeaves, addLeave } from "../../api";
-import { FETCH_LEAVES, ADD_LEAVE, FETCH_LEAVE_INFO } from "./actionTypes";
+import { getLeaves, addLeave, deleteLeave } from "../../api";
+import {
+  FETCH_LEAVES,
+  ADD_LEAVE,
+  FETCH_LEAVE_INFO,
+  DELETE_LEAVE
+} from "./actionTypes";
 
 export const fetchLeaves = () => {
   return async dispatch => {
@@ -52,4 +57,8 @@ export const fetchLeaveInfo = id => {
     type: FETCH_LEAVE_INFO,
     id
   };
+};
+
+export const removeLeave = (id, toAdd) => {
+  return async dispatch => {};
 };

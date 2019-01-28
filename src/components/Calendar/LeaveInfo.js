@@ -10,6 +10,8 @@ import Slide from "@material-ui/core/Slide";
 import StarBorderRounded from "@material-ui/icons/StarBorderRounded";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
 
 import { fetchLeaveInfo } from "../../store/actions/leavesAction";
 
@@ -41,6 +43,10 @@ const styles = theme => ({
   dialogContent: {
     padding: theme.spacing.unit * 3
   },
+  dialogActions: {
+    paddingRight: theme.spacing.unit * 1.5,
+    paddingLeft: theme.spacing.unit * 1.5
+  },
   body: {
     textAlign: "center",
     border: "2px solid #000",
@@ -70,6 +76,12 @@ const styles = theme => ({
   },
   pending: {
     backgroundColor: "#f50057"
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
   }
 });
 
@@ -112,6 +124,25 @@ const DialogBody = ({ leaveInfo, classes }) => (
   </Grid>
 );
 
+const DialogButtons = ({ leaveInfo, classes, currentUser, deleteClick }) => {
+  const { firstName, lastName } = currentUser;
+  const username = `${firstName} ${lastName}`;
+  if (username === leaveInfo.title) {
+    return (
+      <Button
+        color="secondary"
+        className={classes.button}
+        onClick={() => deleteClick()}
+      >
+        Delete
+        <DeleteRoundedIcon className={classes.rightIcon} />
+      </Button>
+    );
+  } else {
+    return "";
+  }
+};
+
 class LeaveInfo extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.eventId !== prevProps.eventId) {
@@ -119,8 +150,12 @@ class LeaveInfo extends Component {
     }
   }
 
+  handleclick = () => {
+    alert("Delete button clicked.");
+  };
+
   render() {
-    const { handleClose, open, leaveInfo, classes } = this.props;
+    const { handleClose, open, classes } = this.props;
 
     return (
       <Dialog
@@ -134,16 +169,22 @@ class LeaveInfo extends Component {
           <StarBorderRounded className={classes.icon} /> Leave Details
         </DialogTitle>
         <DialogContent className={classes.dialogContent}>
-          <DialogBody leaveInfo={leaveInfo} classes={classes} />
+          <DialogBody {...this.props} />
         </DialogContent>
-        <DialogActions>text</DialogActions>
+        <DialogActions className={classes.dialogActions}>
+          <DialogButtons
+            {...this.props}
+            deleteClick={() => this.handleclick()}
+          />
+        </DialogActions>
       </Dialog>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  leaveInfo: state.leaves.leaveInfo
+  leaveInfo: state.leaves.leaveInfo,
+  currentUser: state.currentUser.user
 });
 
 const mapDispatchToProps = dispatch => ({
