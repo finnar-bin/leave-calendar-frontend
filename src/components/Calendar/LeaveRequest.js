@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import EventIcon from "@material-ui/icons/Event";
+import EventRounded from "@material-ui/icons/EventRounded";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -55,19 +55,20 @@ const types = [
 // Helper function to generate readonly textfields
 const readOnly = (id, label, value) => {
   if (value === null) {
-    value = ""
+    value = "";
   }
   return (
-  <TextField
-    id={id}
-    label={label}
-    value={value}
-    margin="normal"
-    fullWidth
-    InputProps={{ readOnly: true }}
-    InputLabelProps={{ shrink: true }}
-  />
-)};
+    <TextField
+      id={id}
+      label={label}
+      value={value}
+      margin="normal"
+      fullWidth
+      InputProps={{ readOnly: true }}
+      InputLabelProps={{ shrink: true }}
+    />
+  );
+};
 
 // Helper function to generate select textfields
 const select = (id, label, value, onChange, menuItems) => (
@@ -146,33 +147,33 @@ class LeaveRequest extends Component {
         TransitionComponent={Transition}
         keepMounted
         onClose={handleClose}
-        aria-labelledby="leave-dialog-slide-title"
-        aria-describedby="leave-dialog-slide-description"
+        aria-labelledby="new-leave-dialog-slide-title"
+        aria-describedby="new-leave-dialog-slide-description"
       >
-        <DialogTitle id="leave-dialog-slide-title">
-          <EventIcon className={classes.icon} /> File a leave?
+        <DialogTitle id="new-leave-dialog-slide-title">
+          <EventRounded className={classes.icon} /> File a leave?
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="leave-dialog-slide-description">
+          <DialogContentText id="new-leave-dialog-slide-description">
             Note: Please make sure to NOT include dates that fall on the
             weekend.
           </DialogContentText>
           <Grid container spacing={8}>
-              <Grid item xs={12} sm={6}>
-                {readOnly("start-date", "Start Date", start)}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                {readOnly("end-date", "End Date", end)}
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              {readOnly("start-date", "Start Date", start)}
             </Grid>
-            <Grid container spacing={8}>
-              <Grid item xs={12} sm={6}>
-                {select("time", "Time", time, this.handleChange("time"), times)}
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                {select("type", "Type", type, this.handleChange("type"), types)}
-              </Grid>
+            <Grid item xs={12} sm={6}>
+              {readOnly("end-date", "End Date", end)}
             </Grid>
+          </Grid>
+          <Grid container spacing={8}>
+            <Grid item xs={12} sm={6}>
+              {select("time", "Time", time, this.handleChange("time"), times)}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              {select("type", "Type", type, this.handleChange("type"), types)}
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button color="primary" onClick={this.handleSubmit}>

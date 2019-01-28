@@ -1,5 +1,5 @@
 import { getLeaves, addLeave } from "../../api";
-import { FETCH_LEAVES, ADD_LEAVE } from "./actionTypes";
+import { FETCH_LEAVES, ADD_LEAVE, FETCH_LEAVE_INFO } from "./actionTypes";
 
 export const fetchLeaves = () => {
   return async dispatch => {
@@ -44,5 +44,12 @@ export const fileLeave = (name, type, start, end, deduction) => {
       };
     }
     dispatch(action);
+  };
+};
+
+export const fetchLeaveInfo = id => {
+  return {
+    type: FETCH_LEAVE_INFO,
+    id
   };
 };

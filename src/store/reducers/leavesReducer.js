@@ -1,7 +1,12 @@
-import { FETCH_LEAVES, ADD_LEAVE } from "../actions/actionTypes";
+import {
+  FETCH_LEAVES,
+  ADD_LEAVE,
+  FETCH_LEAVE_INFO
+} from "../actions/actionTypes";
 
 const initState = {
   dates: [],
+  leaveInfo: {},
   error: false
 };
 
@@ -45,6 +50,11 @@ const leavesReducer = (state = initState, action) => {
             type: action.data.type
           }
         ]
+      });
+
+    case FETCH_LEAVE_INFO:
+      return Object.assign({}, state, {
+        leaveInfo: state.dates.find(date => date.id === action.id)
       });
 
     default:

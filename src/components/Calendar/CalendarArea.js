@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import LeaveRequest from "./LeaveRequest";
+import LeaveInfo from "./LeaveInfo";
 import { fetchLeaves } from "../../store/actions/leavesAction";
 import { fetchHolidays } from "../../store/actions/holidaysAction";
 import Toolbar from "../Calendar/CustomTemplates/Toolbar";
@@ -32,7 +33,9 @@ class CalendarArea extends Component {
   state = {
     start: null,
     end: null,
-    open: false
+    selectedEventId: null,
+    openFileLeave: false,
+    openLeaveInfo: false
   };
 
   componentDidMount() {
@@ -44,21 +47,34 @@ class CalendarArea extends Component {
     this.setState({
       start: info.start.toLocaleDateString(),
       end: info.end.toLocaleDateString(),
-      open: true
+      openFileLeave: true
     });
   };
 
-  handleClose = () => {
+  handleSelectEvent = info => {
+    this.setState({
+      openLeaveInfo: true,
+      selectedEventId: info.id
+    });
+  };
+
+  handleClose = modalName => {
     this.setState({
       start: null,
       end: null,
-      open: false
+      [modalName]: false
     });
   };
 
   render() {
     const { classes, holidays, leaves } = this.props;
-    const { open, start, end } = this.state;
+    const {
+      openFileLeave,
+      openLeaveInfo,
+      start,
+      end,
+      selectedEventId
+    } = this.state;
 
     return (
       <Fragment>
@@ -72,15 +88,23 @@ class CalendarArea extends Component {
             selectable
             popup
             onSelectSlot={info => this.handleSelectSlot(info)}
+            onSelectEvent={info => {
+              if (info.status !== "Holiday") this.handleSelectEvent(info);
+            }}
             components={components}
             eventPropGetter={EventPropGetter}
           />
         </Paper>
         <LeaveRequest
-          open={open}
-          handleClose={this.handleClose}
+          open={openFileLeave}
+          handleClose={() => this.handleClose("openFileLeave")}
           start={start}
           end={end}
+        />
+        <LeaveInfo
+          open={openLeaveInfo}
+          handleClose={() => this.handleClose("openLeaveInfo")}
+          eventId={selectedEventId}
         />
       </Fragment>
     );
