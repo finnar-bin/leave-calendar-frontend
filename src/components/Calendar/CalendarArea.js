@@ -9,9 +9,14 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import LeaveRequest from "./LeaveRequest";
 import { fetchLeaves } from "../../store/actions/leavesAction";
 import { fetchHolidays } from "../../store/actions/holidaysAction";
+import Toolbar from "../Calendar/CustomTemplates/Toolbar";
+import EventPropGetter from "../Calendar/CustomTemplates/EventPropGetter";
 
 // Big Calendar Date Localizer setup
 const localizer = BigCalendar.momentLocalizer(moment);
+const components = {
+  toolbar: Toolbar
+};
 
 const styles = theme => ({
   root: {
@@ -67,6 +72,8 @@ class CalendarArea extends Component {
             selectable
             popup
             onSelectSlot={info => this.handleSelectSlot(info)}
+            components={components}
+            eventPropGetter={EventPropGetter}
           />
         </Paper>
         <LeaveRequest
