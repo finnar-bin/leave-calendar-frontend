@@ -5,10 +5,6 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 const styles = {
   root: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
     textAlign: "center"
   }
 };

@@ -8,11 +8,18 @@ import Info from "../components/Calendar/Info";
 import Updates from "../components/Calendar/Updates";
 import Footer from "../components/Footer/Footer";
 
-const styles = {
+const styles = theme => ({
   root: {
     flexGrow: 1
+  },
+  content: {
+    padding: theme.spacing.unit,
+    flex: "1 0 auto"
+  },
+  footer: {
+    flexShrink: 0
   }
-};
+});
 
 class Calendar extends Component {
   render() {
@@ -20,7 +27,7 @@ class Calendar extends Component {
     return (
       <Fragment>
         <Header />
-        <div style={{ padding: 8 }}>
+        <div className={classes.content}>
           <Grid
             className={classes.root}
             spacing={16}
@@ -39,7 +46,7 @@ class Calendar extends Component {
             </Grid>
           </Grid>
         </div>
-        <Footer />
+        <Footer className={classes.footer} />
       </Fragment>
     );
   }
