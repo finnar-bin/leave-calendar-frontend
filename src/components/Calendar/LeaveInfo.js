@@ -13,7 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
 
-import { fetchLeaveInfo } from "../../store/actions/leavesAction";
+import { fetchLeaveInfo, removeLeave } from "../../store/actions/leavesAction";
+import { computeCredits } from "../../utils/leaveHelpers";
 
 // Dialog transition settings
 const Transition = props => <Slide direction="up" {...props} />;
@@ -127,12 +128,20 @@ const DialogBody = ({ leaveInfo, classes }) => (
 const DialogButtons = ({ leaveInfo, classes, currentUser, deleteClick }) => {
   const { firstName, lastName } = currentUser;
   const username = `${firstName} ${lastName}`;
+
   if (username === leaveInfo.title) {
     return (
       <Button
         color="secondary"
         className={classes.button}
-        onClick={() => deleteClick()}
+        onClick={(id, type, start, end) =>
+          deleteClick(
+            leaveInfo.id,
+            leaveInfo.type,
+            leaveInfo.start,
+            leaveInfo.end
+          )
+        }
       >
         Delete
         <DeleteRoundedIcon className={classes.rightIcon} />
@@ -150,8 +159,49 @@ class LeaveInfo extends Component {
     }
   }
 
-  handleclick = () => {
-    alert("Delete button clicked.");
+  handleSubmit = (id, type, start, end) => {
+    // extract times from date string
+    const startTime = moment(start).format("h:mm A");
+    const endTime = moment(end).format("h:mm A");
+
+    // extract dates from date string
+    let leaveStart = moment(start).format("M/D/YYYY");
+    let leaveEnd = moment(end).format("M/D/YYYY");
+
+    // prepare values for the credit computation
+    let leaveType = null;
+    let leaveTime = null;
+
+    switch (type) {
+      case "Vacation Leave":
+        leaveType = 0;
+        break;
+
+      case "Leave Without Pay":
+        leaveType = 1;
+        break;
+
+      default:
+        break;
+    }
+
+    if (startTime === "9:00 AM" && endTime === "6:00 PM") {
+      leaveTime = 0;
+    } else {
+      leaveTime = 1;
+    }
+
+    // compute credits to be refunded
+    const creditsToAdd = computeCredits(
+      leaveType,
+      leaveTime,
+      leaveStart,
+      leaveEnd
+    );
+
+    // send to action for processing
+    this.props.removeLeave(id, creditsToAdd);
+    this.props.handleClose();
   };
 
   render() {
@@ -174,7 +224,9 @@ class LeaveInfo extends Component {
         <DialogActions className={classes.dialogActions}>
           <DialogButtons
             {...this.props}
-            deleteClick={() => this.handleclick()}
+            deleteClick={(id, type, start, end) =>
+              this.handleSubmit(id, type, start, end)
+            }
           />
         </DialogActions>
       </Dialog>
@@ -188,7 +240,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchLeaveInfo: id => dispatch(fetchLeaveInfo(id))
+  fetchLeaveInfo: id => dispatch(fetchLeaveInfo(id)),
+  removeLeave: (id, creditsToAdd) => dispatch(removeLeave(id, creditsToAdd))
 });
 
 export default connect(

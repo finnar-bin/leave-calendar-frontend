@@ -1,7 +1,8 @@
 import {
   FETCH_LEAVES,
   ADD_LEAVE,
-  FETCH_LEAVE_INFO
+  FETCH_LEAVE_INFO,
+  DELETE_LEAVE
 } from "../actions/actionTypes";
 
 const initState = {
@@ -56,6 +57,18 @@ const leavesReducer = (state = initState, action) => {
       return Object.assign({}, state, {
         leaveInfo: state.dates.find(date => date.id === action.id)
       });
+
+    case DELETE_LEAVE:
+      if (action.error) {
+        return Object.assign({}, state, {
+          error: true
+        });
+      } else {
+        return Object.assign({}, state, {
+          dates: state.dates.filter(date => date.id !== action.id),
+          error: action.error
+        });
+      }
 
     default:
       return state;

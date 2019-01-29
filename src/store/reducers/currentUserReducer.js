@@ -1,4 +1,9 @@
-import { SET_USER, UNSET_USER, ADD_LEAVE } from '../actions/actionTypes';
+import {
+  SET_USER,
+  UNSET_USER,
+  ADD_LEAVE,
+  DELETE_LEAVE
+} from "../actions/actionTypes";
 
 const initState = {
   user: {
@@ -24,13 +29,14 @@ const currentUserReducer = (state = initState, action) => {
       });
 
     case ADD_LEAVE:
+    case DELETE_LEAVE:
       return Object.assign({}, state, {
         user: {
           firstName: state.user.firstName,
           lastName: state.user.lastName,
           credits: action.credits
         }
-      })
+      });
 
     default:
       return state;

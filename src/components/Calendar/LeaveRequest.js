@@ -13,7 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 
-import { computeDeduction, getTime, getType } from "../../utils/leaveHelpers";
+import { computeCredits, getTime, getType } from "../../utils/leaveHelpers";
 import { fileLeave } from "../../store/actions/leavesAction";
 
 // used for the Dialog menu
@@ -121,7 +121,7 @@ class LeaveRequest extends Component {
     let type = getType(this.state.type);
 
     // Compute leave credits to be deducted
-    const deduction = computeDeduction(
+    const deduction = computeCredits(
       this.state.type,
       this.state.time,
       this.props.start,
@@ -193,8 +193,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addLeave: (name, type, start, end, deduction) =>
-    dispatch(fileLeave(name, type, start, end, deduction))
+  addLeave: (name, type, start, end, creditsToDeduct) =>
+    dispatch(fileLeave(name, type, start, end, creditsToDeduct))
 });
 
 export default connect(

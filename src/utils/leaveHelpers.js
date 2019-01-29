@@ -8,7 +8,7 @@ import moment from "moment";
  * @param {string} endDate end date
  * @returns {number} leave credits to be deducted
  */
-export const computeDeduction = (type, time, startDate, endDate) => {
+export const computeCredits = (type, time, startDate, endDate) => {
   // Compute the number of days
   // Adding 1 to make sure that result for same days aren't 0
   const days = moment(endDate).diff(moment(startDate), "days") + 1;

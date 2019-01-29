@@ -23,7 +23,7 @@ export const fetchLeaves = () => {
   };
 };
 
-export const fileLeave = (name, type, start, end, deduction) => {
+export const fileLeave = (name, type, start, end, creditsToDeduct) => {
   return async dispatch => {
     const leave = await addLeave(
       localStorage.getItem("userId"),
@@ -31,7 +31,7 @@ export const fileLeave = (name, type, start, end, deduction) => {
       type,
       start,
       end,
-      deduction
+      creditsToDeduct
     );
     let action = {
       type: ADD_LEAVE,
@@ -59,6 +59,25 @@ export const fetchLeaveInfo = id => {
   };
 };
 
-export const removeLeave = (id, toAdd) => {
-  return async dispatch => {};
+export const removeLeave = (id, creditsToAdd) => {
+  return async dispatch => {
+    const leave = await deleteLeave(
+      id,
+      creditsToAdd,
+      localStorage.getItem("userId")
+    );
+    let action = {
+      type: DELETE_LEAVE,
+      error: false,
+      credits: 0,
+      id: null
+    };
+    if (leave.error) {
+      action.error = true;
+    } else {
+      action.credits = leave.data.leaveCredits;
+      action.id = id;
+    }
+    dispatch(action);
+  };
 };
