@@ -3,7 +3,8 @@ import {
   FETCH_LEAVES,
   ADD_LEAVE,
   FETCH_LEAVE_INFO,
-  DELETE_LEAVE
+  DELETE_LEAVE,
+  FETCH_CURRENT_USER_LEAVES
 } from "./actionTypes";
 
 export const fetchLeaves = () => {
@@ -79,5 +80,12 @@ export const removeLeave = (id, creditsToAdd) => {
       action.id = id;
     }
     dispatch(action);
+  };
+};
+
+export const fetchCurrentUserLeaves = name => {
+  return {
+    type: FETCH_CURRENT_USER_LEAVES,
+    name
   };
 };

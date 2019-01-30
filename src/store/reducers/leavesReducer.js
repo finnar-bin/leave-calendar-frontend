@@ -2,11 +2,13 @@ import {
   FETCH_LEAVES,
   ADD_LEAVE,
   FETCH_LEAVE_INFO,
-  DELETE_LEAVE
+  DELETE_LEAVE,
+  FETCH_CURRENT_USER_LEAVES
 } from "../actions/actionTypes";
 
 const initState = {
   dates: [],
+  currentUserLeaves: [],
   leaveInfo: {},
   error: false
 };
@@ -69,6 +71,14 @@ const leavesReducer = (state = initState, action) => {
           error: action.error
         });
       }
+
+    case FETCH_CURRENT_USER_LEAVES:
+      // const name = `${action.user.firstName} ${action.user.lastName}`;
+      return Object.assign({}, state, {
+        currentUserLeaves: state.dates.filter(
+          date => date.title === action.name
+        )
+      });
 
     default:
       return state;

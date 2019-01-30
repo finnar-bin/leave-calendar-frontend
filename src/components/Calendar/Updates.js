@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+
+import { fetchCurrentUserLeaves } from "../../store/actions/leavesAction";
 
 const styles = theme => ({
   root: {
@@ -13,6 +16,15 @@ const styles = theme => ({
 });
 
 class Updates extends Component {
+  componentDidMount() {
+    setTimeout(() => {
+      const name = `${this.props.currentUser.firstName} ${
+        this.props.currentUser.lastName
+      }`;
+      this.props.fetchCurrentUserLeaves(name);
+    }, 3000);
+  }
+
   render() {
     const { classes } = this.props;
     return (
@@ -31,4 +43,17 @@ class Updates extends Component {
   }
 }
 
-export default withStyles(styles)(Updates);
+const mapStateToProps = state => ({
+  leaves: state.leaves.dates,
+  currentUserLeaves: state.leaves.currentUserLeaves,
+  currentUser: state.currentUser.user
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchCurrentUserLeaves: name => dispatch(fetchCurrentUserLeaves(name))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Updates));
