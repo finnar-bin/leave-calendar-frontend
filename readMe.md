@@ -14,7 +14,7 @@ The whole page's layout will be migrated over to [Material UI](https://material-
 - [ ] Add admin panel
 - [ ] Create working Upcoming Leaves Tab
 - [ ] Create Search user functionality
-- [ ] Update User Info panel to show # of upcoming and pending leaves
+- [x] Setup upcoming leaves panel
 - [x] Update calendar styling for approved and pending leaves
 - [x] Fixed footer positioning
 - [ ] Add alerts

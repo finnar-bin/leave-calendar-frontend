@@ -8,30 +8,15 @@ import ChevronRightRoundedIcon from "@material-ui/icons/ChevronRightRounded";
 import TodayRoundedIcon from "@material-ui/icons/TodayRounded";
 import { withStyles } from "@material-ui/core/styles";
 
+import { getLegendClass } from "../../../utils/styling";
+
 const styles = theme => ({
+  root: {
+    marginBottom: theme.spacing.unit
+  },
   legendLabel: {
     textAlign: "center",
     lineHeight: 2
-  },
-  legends: {
-    color: "#fff",
-    paddingLeft: theme.spacing.unit * 0.5,
-    paddingRight: theme.spacing.unit * 0.5,
-    borderRadius: "5px",
-    display: "inline-block",
-    lineHeight: 2,
-    marginLeft: theme.spacing.unit * 0.5,
-    marginRight: theme.spacing.unit * 0.5,
-    marginBottom: theme.spacing.unit * 0.5
-  },
-  approved: {
-    backgroundColor: "#3f51b5"
-  },
-  pending: {
-    backgroundColor: "#f50057"
-  },
-  holiday: {
-    backgroundColor: "#F05223"
   }
 });
 
@@ -60,22 +45,13 @@ const Legends = ({ classes }) => (
     <Typography variant="overline" className={classes.legendLabel}>
       Legends:
     </Typography>
-    <Typography
-      variant="overline"
-      className={[classes.legends, classes.approved]}
-    >
+    <Typography variant="overline" className={getLegendClass("Approved")}>
       Approved
     </Typography>
-    <Typography
-      variant="overline"
-      className={[classes.legends, classes.pending]}
-    >
+    <Typography variant="overline" className={getLegendClass("Pending")}>
       Pending
     </Typography>
-    <Typography
-      variant="overline"
-      className={[classes.legends, classes.holiday]}
-    >
+    <Typography variant="overline" className={getLegendClass("Holiday")}>
       Holiday
     </Typography>
   </Fragment>
@@ -91,6 +67,7 @@ class Toolbar extends Component {
         direction="row"
         justify="space-between"
         alignItems="center"
+        className={classes.root}
       >
         <Grid item>
           <NavButtons onNavigate={onNavigate} />

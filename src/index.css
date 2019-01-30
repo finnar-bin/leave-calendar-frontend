@@ -19,3 +19,25 @@ Times New Roman
 div.rbc-calendar {
   font-family: "Roboto";
 }
+
+/* Legends CSS */
+span.legend {
+  color: #fff;
+  padding: 0 5px;
+  margin: 0 4px;
+  border-radius: 5px;
+  line-height: 2;
+  display: inline-block;
+}
+
+span.pending {
+  background-color: #f50057;
+}
+
+span.approved {
+  background-color: #3f51b5;
+}
+
+span.holiday {
+  background-color: #f05223;
+}

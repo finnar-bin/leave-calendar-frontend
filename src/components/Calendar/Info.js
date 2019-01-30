@@ -64,12 +64,6 @@ class Info extends Component {
           <Typography variant="subtitle1">
             You have {credits} leave credit(s) remaining.
           </Typography>
-          <Typography variant="subtitle1">
-            You have X upcoming leave(s).
-          </Typography>
-          <Typography variant="subtitle1">
-            You have X pending leave(s).
-          </Typography>
         </Paper>
       </Grid>
     );

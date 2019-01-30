@@ -15,26 +15,13 @@ import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
 
 import { fetchLeaveInfo, removeLeave } from "../../store/actions/leavesAction";
 import { computeCredits } from "../../utils/leaveHelpers";
+import { getLegendClass } from "../../utils/styling";
 
 // Dialog transition settings
 const Transition = props => <Slide direction="up" {...props} />;
 
 // helper function to format dates for display
 const formatDate = dateObject => moment(dateObject).format("MMM D h:mm A");
-
-// get legend class
-const getLegendClass = (type, classes) => {
-  switch (type) {
-    case "Approved":
-      return [classes.legends, classes.approved];
-
-    case "Pending":
-      return [classes.legends, classes.pending];
-
-    default:
-      break;
-  }
-};
 
 const styles = theme => ({
   icon: {
@@ -65,19 +52,6 @@ const styles = theme => ({
     backgroundColor: "#fff",
     padding: theme.spacing.unit
   },
-  legends: {
-    color: "#fff",
-    paddingLeft: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    borderRadius: "5px",
-    lineHeight: 2
-  },
-  approved: {
-    backgroundColor: "#3f51b5"
-  },
-  pending: {
-    backgroundColor: "#f50057"
-  },
   button: {
     margin: theme.spacing.unit
   },
@@ -103,7 +77,7 @@ const DialogBody = ({ leaveInfo, classes }) => (
         <Grid item>
           <Typography
             variant="overline"
-            className={getLegendClass(leaveInfo.status, classes)}
+            className={getLegendClass(leaveInfo.status)}
           >
             {leaveInfo.status}
           </Typography>
