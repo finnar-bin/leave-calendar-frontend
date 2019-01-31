@@ -13,7 +13,10 @@ import {
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unit
+    paddingRight: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing.unit * 4,
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit
   },
   switchUser: {
     float: "right"
@@ -62,7 +65,7 @@ class Info extends Component {
             </Grid>
           </Grid>
           <Typography variant="subtitle1">
-            You have {credits} leave credit(s) remaining.
+            You have <strong>{credits}</strong> leave credit(s) remaining.
           </Typography>
         </Paper>
       </Grid>

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import moment from "moment";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -7,12 +6,15 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 
-import { fetchCurrentUserLeaves } from "../../store/actions/leavesAction";
 import { getLegendClass } from "../../utils/styling";
+import { formatDate, isAfterToday } from "../../utils/dateHelpers";
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unit
+    paddingRight: theme.spacing.unit * 4,
+    paddingLeft: theme.spacing.unit * 4,
+    paddingTop: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit
   },
   leavesContainer: {
     height: "65.8vh",
@@ -24,12 +26,16 @@ const styles = theme => ({
   }
 });
 
-const ListLeaves = ({ leaves, classes }) => {
-  return leaves.map(leave => {
-    const startDate = moment(leave.start).format("ddd, D MMM YYYY");
-    const endDate = moment(leave.end).format("ddd, D MMM YYYY");
-    const startTime = moment(leave.start).format("h:mm A");
-    const endTime = moment(leave.end).format("h:mm A");
+const ListLeaves = ({ leaves, classes, currentUser }) => {
+  const name = `${currentUser.firstName} ${currentUser.lastName}`;
+  const userLeaves = leaves.filter(
+    leave => leave.title === name && isAfterToday(leave.start)
+  );
+  return userLeaves.map(leave => {
+    const startDate = formatDate(leave.start, "ddd, D MMM YYYY");
+    const endDate = formatDate(leave.end, "ddd, D MMM YYYY");
+    const startTime = formatDate(leave.start, "h:mm A");
+    const endTime = formatDate(leave.end, "h:mm A");
     let date = "";
 
     if (startDate === endDate) {
@@ -47,7 +53,9 @@ const ListLeaves = ({ leaves, classes }) => {
           alignItems="center"
         >
           <Grid item>
-            <Typography variant="h6">{date}</Typography>
+            <Typography variant="subtitle1">
+              <strong>{date}</strong>
+            </Typography>
           </Grid>
           <Grid item>
             <Typography
@@ -70,30 +78,21 @@ const ListLeaves = ({ leaves, classes }) => {
 };
 
 class Updates extends Component {
-  componentDidMount() {
-    setTimeout(() => {
-      const name = `${this.props.currentUser.firstName} ${
-        this.props.currentUser.lastName
-      }`;
-      this.props.fetchCurrentUserLeaves(name);
-    }, 3000);
-  }
-
   render() {
-    const { classes, currentUserLeaves } = this.props;
+    const { classes } = this.props;
     return (
       <Grid item xs={12}>
         <Paper className={classes.root}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h6" gutterBottom>
             Your Upcoming Leaves
           </Typography>
           <Divider />
           <Grid
             container
-            directiontion="column"
+            alignContent="flex-start"
             className={classes.leavesContainer}
           >
-            <ListLeaves leaves={currentUserLeaves} {...this.props} />
+            <ListLeaves {...this.props} />
           </Grid>
         </Paper>
       </Grid>
@@ -102,15 +101,11 @@ class Updates extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUserLeaves: state.leaves.currentUserLeaves,
+  leaves: state.leaves.dates,
   currentUser: state.currentUser.user
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchCurrentUserLeaves: name => dispatch(fetchCurrentUserLeaves(name))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(withStyles(styles)(Updates));

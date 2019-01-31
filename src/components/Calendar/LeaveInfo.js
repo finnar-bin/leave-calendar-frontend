@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import moment from "moment";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
@@ -16,12 +15,10 @@ import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
 import { fetchLeaveInfo, removeLeave } from "../../store/actions/leavesAction";
 import { computeCredits } from "../../utils/leaveHelpers";
 import { getLegendClass } from "../../utils/styling";
+import { formatDate } from "../../utils/dateHelpers";
 
 // Dialog transition settings
 const Transition = props => <Slide direction="up" {...props} />;
-
-// helper function to format dates for display
-const formatDate = dateObject => moment(dateObject).format("MMM D h:mm A");
 
 const styles = theme => ({
   icon: {
@@ -85,11 +82,15 @@ const DialogBody = ({ leaveInfo, classes }) => (
       </Grid>
     </Grid>
     <Grid item xs={12} sm={6}>
-      <Typography variant="h5">{formatDate(leaveInfo.start)}</Typography>
+      <Typography variant="h5">
+        {formatDate(leaveInfo.start, "MMM D h:mm A")}
+      </Typography>
       <Typography variant="caption">Start Date</Typography>
     </Grid>
     <Grid item xs={12} sm={6}>
-      <Typography variant="h5">{formatDate(leaveInfo.end)}</Typography>
+      <Typography variant="h5">
+        {formatDate(leaveInfo.end, "MMM D h:mm A")}
+      </Typography>
       <Typography variant="caption">End Date</Typography>
     </Grid>
     <Grid item xs={12}>
@@ -135,12 +136,12 @@ class LeaveInfo extends Component {
 
   handleSubmit = (id, type, start, end) => {
     // extract times from date string
-    const startTime = moment(start).format("h:mm A");
-    const endTime = moment(end).format("h:mm A");
+    const startTime = formatDate(start, "h:mm A");
+    const endTime = formatDate(end, "h:mm A");
 
     // extract dates from date string
-    let leaveStart = moment(start).format("M/D/YYYY");
-    let leaveEnd = moment(end).format("M/D/YYYY");
+    let leaveStart = formatDate(start, "M/D/YYYY");
+    let leaveEnd = formatDate(end, "M/D/YYYY");
 
     // prepare values for the credit computation
     let leaveType = null;
