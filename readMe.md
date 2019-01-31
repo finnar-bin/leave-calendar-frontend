@@ -12,7 +12,7 @@ The whole page's layout will be migrated over to [Material UI](https://material-
 - [ ] Calendar data fetch error handling
 - [x] Add CRUD functionality to calendar
 - [ ] Add admin panel
-- [ ] Create working Upcoming Leaves Tab
+- [x] Create working Upcoming Leaves Tab
 - [ ] Create Search user functionality
 - [x] Setup upcoming leaves panel
 - [x] Update calendar styling for approved and pending leaves
