@@ -18,3 +18,4 @@ The whole page's layout will be migrated over to [Material UI](https://material-
 - [x] Update calendar styling for approved and pending leaves
 - [x] Fixed footer positioning
 - [ ] Add alerts
+- [ ] Add page doesn't exist view for non-existing routes
