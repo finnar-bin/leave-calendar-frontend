@@ -1,10 +1,5 @@
-import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink
-} from "react-router-dom";
+import React, { Component, Fragment } from "react";
+import { Route, NavLink } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -108,12 +103,12 @@ const styles = theme => ({
 });
 
 const AdminRoutes = ({ match }) => (
-  <Switch>
+  <Fragment>
     <Route exact path={match.path} component={Home} />
     <Route path={`${match.path}/login`} component={Login} />
     <Route path={`${match.path}/users`} component={Users} />
     <Route path={`${match.path}/leaves`} component={Leaves} />
-  </Switch>
+  </Fragment>
 );
 
 class Admin extends Component {
@@ -130,7 +125,8 @@ class Admin extends Component {
   };
 
   handleSignout = () => {
-    alert("Logging Out");
+    alert("FUCKING LOG OUT");
+    this.props.history.push(`${this.props.match.path}/login`);
   };
 
   renderLink = itemProps => <NavLink to="#" {...itemProps} />;
@@ -139,82 +135,80 @@ class Admin extends Component {
     const { classes, theme, match } = this.props;
 
     return (
-      <Router>
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar
-            position="fixed"
-            className={classNames(classes.appBar, {
-              [classes.appBarShift]: this.state.open
-            })}
-          >
-            <Toolbar disableGutters={!this.state.open}>
-              <IconButton
-                color="inherit"
-                aria-label="Open Drawer"
-                onClick={this.handleDrawerOpen}
-                className={classNames(classes.menuButton, {
-                  [classes.hide]: this.state.open
-                })}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit" noWrap>
-                Admin Panel
-              </Typography>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            variant="permanent"
-            className={classNames(classes.drawer, {
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar
+          position="fixed"
+          className={classNames(classes.appBar, {
+            [classes.appBarShift]: this.state.open
+          })}
+        >
+          <Toolbar disableGutters={!this.state.open}>
+            <IconButton
+              color="inherit"
+              aria-label="Open Drawer"
+              onClick={this.handleDrawerOpen}
+              className={classNames(classes.menuButton, {
+                [classes.hide]: this.state.open
+              })}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" noWrap>
+              Admin Panel
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          className={classNames(classes.drawer, {
+            [classes.drawerOpen]: this.state.open,
+            [classes.drawerClose]: !this.state.open
+          })}
+          classes={{
+            paper: classNames({
               [classes.drawerOpen]: this.state.open,
               [classes.drawerClose]: !this.state.open
-            })}
-            classes={{
-              paper: classNames({
-                [classes.drawerOpen]: this.state.open,
-                [classes.drawerClose]: !this.state.open
-              })
-            }}
-            open={this.state.open}
-          >
-            <div className={classes.toolbar}>
-              <IconButton onClick={this.handleDrawerClose}>
-                {theme.direction === "rtl" ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </div>
-            <Divider />
-            <List>
-              {menuItems.map(item => (
-                <ListItem
-                  button
-                  key={item.name}
-                  to={`${match.path}/${item.to}`}
-                  component={this.renderLink}
-                >
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.name} />
-                </ListItem>
-              ))}
-              <Divider />
-              <ListItem button onClick={this.handleSignout}>
-                <ListItemIcon>
-                  <ExitToAppRoundedIcon />
-                </ListItemIcon>
-                <ListItemText primary="Sign Out" />
+            })
+          }}
+          open={this.state.open}
+        >
+          <div className={classes.toolbar}>
+            <IconButton onClick={this.handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {menuItems.map(item => (
+              <ListItem
+                button
+                key={item.name}
+                to={`${match.path}/${item.to}`}
+                component={this.renderLink}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.name} />
               </ListItem>
-            </List>
-          </Drawer>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            <AdminRoutes {...this.props} />
-          </main>
-        </div>
-      </Router>
+            ))}
+            <Divider />
+            <ListItem button onClick={this.handleSignout}>
+              <ListItemIcon>
+                <ExitToAppRoundedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sign Out" />
+            </ListItem>
+          </List>
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <AdminRoutes {...this.props} />
+        </main>
+      </div>
     );
   }
 }
