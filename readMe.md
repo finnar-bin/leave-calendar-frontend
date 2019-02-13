@@ -8,14 +8,4 @@ The whole page's layout will be migrated over to [Material UI](https://material-
 
 ## Task List
 
-- [x] Create proper user session handling
-- [ ] Calendar data fetch error handling
-- [x] Add CRUD functionality to calendar
-- [ ] Add admin panel
-- [x] Create working Upcoming Leaves Tab
-- [ ] Create Search user functionality
-- [x] Setup upcoming leaves panel
-- [x] Update calendar styling for approved and pending leaves
-- [x] Fixed footer positioning
-- [ ] Add alerts
-- [ ] Add page doesn't exist view for non-existing routes
+This has been migrated over to a public [Trello board](https://trello.com/b/Sl7jcCg2/creatives-leave-calendar).

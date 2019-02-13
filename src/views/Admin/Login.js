@@ -1,10 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
+
+import { setAdminUser } from "../../store/actions/currentUserAction";
+import CustomSnackbar from "../../components/CustomSnackbar";
 
 const styles = theme => ({
   root: {
@@ -35,7 +39,7 @@ class Login extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    console.log(this.state.username, this.state.password);
+    this.props.setAdminUser(this.state.username, this.state.password);
   };
 
   redirectToHome = () => {
@@ -43,78 +47,93 @@ class Login extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, error } = this.props;
 
     return (
-      <Grid
-        container
-        direction="row"
-        justify="space-around"
-        alignItems="center"
-        className={classes.root}
-      >
-        <Grid item>
-          <Paper className={classes.container}>
-            <Typography
-              variant="h2"
-              gutterBottom
-              className={classes.textCenter}
-            >
-              Admin Login
-            </Typography>
-            <form onSubmit={this.onSubmit}>
-              <Grid container>
-                <Grid item xs={12}>
-                  <TextField
-                    className={classes.textField}
-                    required
-                    label="Username"
-                    variant="outlined"
-                    name="username"
-                    fullWidth
-                    onChange={this.onChange}
-                    value={this.state.username}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    className={classes.textField}
-                    required
-                    label="Password"
-                    variant="outlined"
-                    name="password"
-                    type="password"
-                    fullWidth
-                    onChange={this.onChange}
-                    value={this.state.password}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Grid container justify="space-between" alignItems="center">
-                    <Grid item>
-                      <Button onClick={this.redirectToHome}>
-                        Back to Calendar
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        variant="contained"
-                        size="large"
-                        color="primary"
-                        type="submit"
-                      >
-                        Log In
-                      </Button>
+      <Fragment>
+        <Grid
+          container
+          direction="row"
+          justify="space-around"
+          alignItems="center"
+          className={classes.root}
+        >
+          <Grid item>
+            <Paper className={classes.container}>
+              <Typography
+                variant="h2"
+                gutterBottom
+                className={classes.textCenter}
+              >
+                Admin Login
+              </Typography>
+              <form onSubmit={this.onSubmit}>
+                <Grid container>
+                  <Grid item xs={12}>
+                    <TextField
+                      className={classes.textField}
+                      required
+                      label="Username"
+                      variant="outlined"
+                      name="username"
+                      fullWidth
+                      onChange={this.onChange}
+                      value={this.state.username}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      className={classes.textField}
+                      required
+                      label="Password"
+                      variant="outlined"
+                      name="password"
+                      type="password"
+                      fullWidth
+                      onChange={this.onChange}
+                      value={this.state.password}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Grid container justify="space-between" alignItems="center">
+                      <Grid item>
+                        <Button onClick={this.redirectToHome}>
+                          Back to Calendar
+                        </Button>
+                      </Grid>
+                      <Grid item>
+                        <Button
+                          variant="contained"
+                          size="large"
+                          color="primary"
+                          type="submit"
+                        >
+                          Log In
+                        </Button>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </form>
-          </Paper>
+              </form>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+        <CustomSnackbar variant="error" message={error.message} open={error} />
+      </Fragment>
     );
   }
 }
 
-export default withStyles(styles)(Login);
+const mapStateToProps = state => ({
+  error: state.errors.admin
+});
+
+const mapDispatchToProps = dispatch => ({
+  setAdminUser: (username, password) =>
+    dispatch(setAdminUser(username, password))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Login));

@@ -4,12 +4,14 @@ import usersReducer from "./usersReducer";
 import currentUserReducer from "./currentUserReducer";
 import holidaysReducer from "./holidaysReducer";
 import leavesReducer from "./leavesReducer";
+import errorsReducer from "./errorsReducer";
 
 const rootReducer = combineReducers({
   users: usersReducer,
   holidays: holidaysReducer,
   leaves: leavesReducer,
-  currentUser: currentUserReducer
+  currentUser: currentUserReducer,
+  errors: errorsReducer
 });
 
 export default rootReducer;

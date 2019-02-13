@@ -11,7 +11,8 @@ const initState = {
     lastName: "Wick",
     credits: 100
   },
-  error: false
+  error: false,
+  errorMessage: null
 };
 
 const currentUserReducer = (state = initState, action) => {

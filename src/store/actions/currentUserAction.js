@@ -1,5 +1,5 @@
-import { getUser } from "../../api";
-import { UNSET_USER, SET_USER } from "./actionTypes";
+import { getUser, loginAdmin } from "../../api";
+import { UNSET_USER, SET_USER, LOGIN_ADMIN_USER } from "./actionTypes";
 
 export const setCurrentUser = id => {
   return async dispatch => {
@@ -37,5 +37,24 @@ export const unsetCurrentUser = () => {
       lastName: "Wick",
       credits: 100
     }
+  };
+};
+
+export const setAdminUser = (username, password) => {
+  return async dispatch => {
+    const login = await loginAdmin(username, password);
+    let action = {
+      type: LOGIN_ADMIN_USER,
+      error: false,
+      errorMessage: null
+    };
+
+    if (login.error) {
+      action.error = true;
+      action.errorMessage = "Error logging in.";
+    } else {
+      localStorage.setItem("token", login.data.token);
+    }
+    dispatch(action);
   };
 };
