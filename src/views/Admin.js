@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { Route, NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -20,10 +21,12 @@ import PeopleRoundedIcon from "@material-ui/icons/PeopleRounded";
 import ExitToAppRoundedIcon from "@material-ui/icons/ExitToAppRounded";
 import classNames from "classnames";
 
-import Home from "./Admin/Home";
 import Login from "./Admin/Login";
 import Users from "./Admin/Users";
 import Leaves from "./Admin/Leaves";
+import { isAdmin } from "../utils/authentication";
+import PrivateRoute from "../components/PrivateRoute";
+import { unsetAdmin } from "../store/actions/adminAction";
 
 const drawerWidth = 240;
 
@@ -31,7 +34,7 @@ const menuItems = [
   {
     name: "Leaves",
     icon: <DateRangeRoundedIcon />,
-    to: "leaves"
+    to: ""
   },
   {
     name: "Users",
@@ -104,10 +107,9 @@ const styles = theme => ({
 
 const AdminRoutes = ({ match }) => (
   <Fragment>
-    <Route exact path={match.path} component={Home} />
+    <PrivateRoute exact path={match.path} component={Leaves} />
+    <PrivateRoute path={`${match.path}/users`} component={Users} />
     <Route path={`${match.path}/login`} component={Login} />
-    <Route path={`${match.path}/users`} component={Users} />
-    <Route path={`${match.path}/leaves`} component={Leaves} />
   </Fragment>
 );
 
@@ -125,7 +127,7 @@ class Admin extends Component {
   };
 
   handleSignout = () => {
-    alert("FUCKING LOG OUT");
+    this.props.unsetAdmin();
     this.props.history.push(`${this.props.match.path}/login`);
   };
 
@@ -140,7 +142,8 @@ class Admin extends Component {
         <AppBar
           position="fixed"
           className={classNames(classes.appBar, {
-            [classes.appBarShift]: this.state.open
+            [classes.appBarShift]: this.state.open,
+            [classes.hide]: !isAdmin()
           })}
         >
           <Toolbar disableGutters={!this.state.open}>
@@ -163,7 +166,8 @@ class Admin extends Component {
           variant="permanent"
           className={classNames(classes.drawer, {
             [classes.drawerOpen]: this.state.open,
-            [classes.drawerClose]: !this.state.open
+            [classes.drawerClose]: !this.state.open,
+            [classes.hide]: !isAdmin()
           })}
           classes={{
             paper: classNames({
@@ -213,4 +217,11 @@ class Admin extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Admin);
+const mapDispatchToProps = dispatch => ({
+  unsetAdmin: () => dispatch(unsetAdmin())
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(Admin));

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Leaves = () => {
-  return <div>Leaves</div>;
-};
+class Leaves extends Component {
+  render() {
+    return <div>Leaves</div>;
+  }
+}
 
 export default Leaves;

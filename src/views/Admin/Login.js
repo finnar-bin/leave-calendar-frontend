@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 
-import { setAdminUser } from "../../store/actions/currentUserAction";
+import { setAdmin } from "../../store/actions/adminAction";
 import CustomSnackbar from "../../components/CustomSnackbar";
 
 const styles = theme => ({
@@ -31,6 +31,14 @@ class Login extends Component {
     password: ""
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.admin.success !== this.props.admin.success) {
+      if (this.props.admin.success) {
+        this.props.history.push("/admin");
+      }
+    }
+  }
+
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -39,7 +47,7 @@ class Login extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    this.props.setAdminUser(this.state.username, this.state.password);
+    this.props.setAdmin(this.state.username, this.state.password);
   };
 
   redirectToHome = () => {
@@ -47,7 +55,7 @@ class Login extends Component {
   };
 
   render() {
-    const { classes, error } = this.props;
+    const { classes, admin } = this.props;
 
     return (
       <Fragment>
@@ -118,19 +126,22 @@ class Login extends Component {
             </Paper>
           </Grid>
         </Grid>
-        <CustomSnackbar variant="error" message={error.message} open={error} />
+        <CustomSnackbar
+          variant="error"
+          message={admin.message}
+          open={admin.error}
+        />
       </Fragment>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  error: state.errors.admin
+  admin: state.admin
 });
 
 const mapDispatchToProps = dispatch => ({
-  setAdminUser: (username, password) =>
-    dispatch(setAdminUser(username, password))
+  setAdmin: (username, password) => dispatch(setAdmin(username, password))
 });
 
 export default connect(
