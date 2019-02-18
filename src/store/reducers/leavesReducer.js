@@ -25,6 +25,7 @@ const leavesReducer = (state = initState, action) => {
           const item = {
             id: leave._id,
             title: `${leave.userId.firstName} ${leave.userId.lastName}`,
+            user: leave.userId,
             start: new Date(leave.start),
             end: new Date(leave.end),
             status: leave.status,
