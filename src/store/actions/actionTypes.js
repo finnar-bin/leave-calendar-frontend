@@ -1,5 +1,8 @@
-// Calendar
+// Users
 export const FETCH_USERS = "FETCH_USERS";
+export const ADD_USER = "ADD_USER";
+
+// Calendar
 export const FETCH_HOLIDAYS = "FETCH_HOLIDAYS";
 export const FETCH_LEAVES = "FETCH_LEAVES";
 export const ADD_LEAVE = "ADD_LEAVE";

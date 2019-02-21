@@ -1,8 +1,9 @@
-import { FETCH_USERS } from "../actions/actionTypes";
+import { FETCH_USERS, ADD_USER } from "../actions/actionTypes";
 
 const initState = {
   users: [],
-  error: false
+  status: "",
+  message: ""
 };
 
 const usersReducer = (state = initState, action) => {
@@ -10,7 +11,15 @@ const usersReducer = (state = initState, action) => {
     case FETCH_USERS:
       return Object.assign({}, state, {
         users: action.users,
-        error: action.error
+        status: action.status,
+        message: action.message
+      });
+
+    case ADD_USER:
+      return Object.assign({}, state, {
+        users: [...state.users, action.user],
+        status: action.status,
+        message: action.message
       });
 
     default:

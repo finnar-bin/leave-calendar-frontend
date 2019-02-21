@@ -13,12 +13,18 @@ const styles = theme => ({
   }
 });
 
-const tableHeaders = ["Name", "Team", "Brand", "Inclusive Dates", "Actions"];
+const tableHeaders = [
+  "Name",
+  "Team",
+  "Brand",
+  "Inclusive Dates",
+  "Status",
+  "Actions"
+];
 
 class Leaves extends Component {
   componentDidMount() {
     this.props.fetchLeaves();
-    console.log(this.props.leaves);
   }
 
   render() {
@@ -29,7 +35,7 @@ class Leaves extends Component {
         <Typography variant="h2">Leaves</Typography>
         <PaginatedTable
           tableHeaders={tableHeaders}
-          leaves={leaves}
+          data={leaves}
           type="leaves"
         />
       </Paper>

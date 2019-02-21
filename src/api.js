@@ -87,7 +87,13 @@ export const loginAdmin = async (username, password) => {
  * @param {number} leaveCredits new user leave credits
  * @returns {object} result setn as promise
  */
-export const newUser = async (firstName, lastName, leaveCredits) => {
+export const newUser = async (
+  firstName,
+  lastName,
+  team,
+  brand,
+  leaveCredits
+) => {
   return await resolve(
     axios
       .post(
@@ -95,6 +101,8 @@ export const newUser = async (firstName, lastName, leaveCredits) => {
         {
           firstName,
           lastName,
+          team,
+          brand,
           leaveCredits
         },
         {

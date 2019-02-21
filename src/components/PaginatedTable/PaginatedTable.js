@@ -7,9 +7,12 @@ import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import TableHead from "@material-ui/core/TableHead";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
 import TableActions from "./TableActions";
 import { formatDate } from "../../utils/dateHelpers";
+import { getLegendClass } from "../../utils/styling";
 
 const styles = theme => ({
   root: {
@@ -27,7 +30,7 @@ const styles = theme => ({
 class PaginatedTable extends Component {
   state = {
     page: 0,
-    rowsPerPage: 5
+    rowsPerPage: 10
   };
 
   handleChangePage = (e, page) => {
@@ -39,24 +42,58 @@ class PaginatedTable extends Component {
   };
 
   render() {
-    const { classes, leaves, tableHeaders, type } = this.props;
+    const { classes, data, tableHeaders, type } = this.props;
     const { rowsPerPage, page } = this.state;
     const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, leaves.length - page * rowsPerPage);
+      rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     const tableBody = row => {
       if (type === "leaves") {
         return (
           <TableRow key={row.id}>
-            <TableCell component="th" scope="row">
+            <TableCell component="th" scope="row" align="center">
               {row.title}
             </TableCell>
-            <TableCell>{row.user.team}</TableCell>
-            <TableCell>{row.user.brand}</TableCell>
-            <TableCell>{`${formatDate(
+            <TableCell align="center">{row.user.team}</TableCell>
+            <TableCell align="center">{row.user.brand}</TableCell>
+            <TableCell align="center">{`${formatDate(
               row.start,
               "MMM D h:mm A"
             )} - ${formatDate(row.end, "MMM D h:mm A")}`}</TableCell>
-            <TableCell>Actions</TableCell>
+            <TableCell align="center">
+              <Typography
+                variant="outline"
+                className={getLegendClass(row.status)}
+              >
+                {row.status}
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Button size="small" color="primary">
+                Approve
+              </Button>
+              <Button size="small" color="secondary">
+                Reject
+              </Button>
+            </TableCell>
+          </TableRow>
+        );
+      } else if (type === "users") {
+        return (
+          <TableRow key={row._id}>
+            <TableCell component="th" scope="row" align="center">
+              {row.firstName} {row.lastName}
+            </TableCell>
+            <TableCell align="center">{row.team}</TableCell>
+            <TableCell align="center">{row.brand}</TableCell>
+            <TableCell align="center">{row.leaveCredits}</TableCell>
+            <TableCell align="center">
+              <Button size="small" color="primary">
+                Edit
+              </Button>
+              <Button size="small" color="secondary">
+                Delete
+              </Button>
+            </TableCell>
           </TableRow>
         );
       }
@@ -67,13 +104,15 @@ class PaginatedTable extends Component {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              {tableHeaders.map(header => (
-                <TableCell>{header}</TableCell>
+              {tableHeaders.map((header, index) => (
+                <TableCell key={index} align="center">
+                  {header}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {leaves
+            {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(row => tableBody(row))}
             {emptyRows > 0 && (
@@ -85,9 +124,9 @@ class PaginatedTable extends Component {
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
+                rowsPerPageOptions={[10, 25]}
                 colSpan={tableHeaders.length}
-                count={leaves.length}
+                count={data.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
