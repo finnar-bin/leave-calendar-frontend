@@ -115,7 +115,7 @@ const AdminRoutes = ({ match }) => (
 
 class Admin extends Component {
   state = {
-    open: false
+    open: true
   };
 
   handleDrawerOpen = () => {
