@@ -22,6 +22,10 @@ class Users extends Component {
     this.props.fetchUsers();
   }
 
+  handleRemoveUser = id => {
+    alert(`Deleting user id: ${id}!!`);
+  };
+
   render() {
     const { classes, users } = this.props;
 
@@ -34,6 +38,7 @@ class Users extends Component {
               tableHeaders={tableHeaders}
               data={users}
               type="users"
+              removeUser={id => this.handleRemoveUser(id)}
             />
           </Paper>
         </Grid>

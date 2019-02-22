@@ -90,7 +90,11 @@ class PaginatedTable extends Component {
               <Button size="small" color="primary">
                 Edit
               </Button>
-              <Button size="small" color="secondary">
+              <Button
+                size="small"
+                color="secondary"
+                onClick={() => this.props.removeUser(row._id)}
+              >
                 Delete
               </Button>
             </TableCell>
