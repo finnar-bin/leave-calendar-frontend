@@ -1,4 +1,4 @@
-import { FETCH_USERS, ADD_USER } from "../actions/actionTypes";
+import { FETCH_USERS, ADD_USER, DELETE_USER } from "../actions/actionTypes";
 
 const initState = {
   users: [],
@@ -21,6 +21,23 @@ const usersReducer = (state = initState, action) => {
         status: action.status,
         message: action.message
       });
+
+    case DELETE_USER:
+      if (action.status === "success") {
+        return Object.assign({}, state, {
+          users: state.users.filter(user => user._id !== action.id),
+          status: action.status,
+          message: action.message
+        });
+      } else if (action.status === "error") {
+        return Object.assign({}, state, {
+          users: state.users,
+          status: action.status,
+          message: action.message
+        });
+      } else {
+        return state;
+      }
 
     default:
       return state;

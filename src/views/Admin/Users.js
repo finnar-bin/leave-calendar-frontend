@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 
 import PaginatedTable from "../../components/PaginatedTable/PaginatedTable";
 import AddUser from "../../components/Admin/Users/AddUser";
-import { fetchUsers } from "../../store/actions/usersAction";
+import { fetchUsers, deleteUser } from "../../store/actions/usersAction";
 
 const styles = theme => ({
   root: {
@@ -23,7 +23,7 @@ class Users extends Component {
   }
 
   handleRemoveUser = id => {
-    alert(`Deleting user id: ${id}!!`);
+    this.props.deleteUser(id);
   };
 
   render() {
@@ -60,7 +60,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUsers: () => dispatch(fetchUsers())
+  fetchUsers: () => dispatch(fetchUsers()),
+  deleteUser: id => dispatch(deleteUser(id))
 });
 
 export default connect(
