@@ -1,15 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import fontawesome from '@fortawesome/fontawesome';
-import brands from '@fortawesome/fontawesome-free-brands';
-import { faChevronLeft, faChevronRight, faEdit, faCheckCircle, faHourglassHalf } from '@fortawesome/fontawesome-free-solid';
-import { faCalendarCheck, faUserCircle } from '@fortawesome/fontawesome-free-regular';
+import React from "react";
+import ReactDOM from "react-dom";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 
-fontawesome.library.add(faChevronLeft, faChevronRight, faCalendarCheck, faEdit, faCheckCircle, faHourglassHalf, faUserCircle);
+import App from "./App";
+import "./index.css";
+import * as serviceWorker from "./serviceWorker";
+import rootReducer from "./store/reducers/rootReducer";
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+// Redux setup
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();
