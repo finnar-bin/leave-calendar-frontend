@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import TableActions from "./TableActions";
 import { formatDate } from "../../utils/dateHelpers";
 import { getLegendClass } from "../../utils/styling";
+import EditUser from "../Admin/Users/EditUser";
 
 const styles = theme => ({
   root: {
@@ -30,7 +31,8 @@ const styles = theme => ({
 class PaginatedTable extends Component {
   state = {
     page: 0,
-    rowsPerPage: 10
+    rowsPerPage: 10,
+    editUserId: null
   };
 
   handleChangePage = (e, page) => {
@@ -39,6 +41,14 @@ class PaginatedTable extends Component {
 
   handleChangeRowsPerPage = e => {
     this.setState({ page: 0, rowsPerPage: e.target.value });
+  };
+
+  handleEditUser = id => {
+    this.setState({ editUserId: id });
+  };
+
+  handleCancelEdit = () => {
+    this.setState({ editUserId: null });
   };
 
   render() {
@@ -80,24 +90,34 @@ class PaginatedTable extends Component {
       } else if (type === "users") {
         return (
           <TableRow key={row._id}>
-            <TableCell component="th" scope="row" align="center">
-              {row.firstName} {row.lastName}
-            </TableCell>
-            <TableCell align="center">{row.team}</TableCell>
-            <TableCell align="center">{row.brand}</TableCell>
-            <TableCell align="center">{row.leaveCredits}</TableCell>
-            <TableCell align="center">
-              <Button size="small" color="primary">
-                Edit
-              </Button>
-              <Button
-                size="small"
-                color="secondary"
-                onClick={() => this.props.removeUser(row._id)}
-              >
-                Delete
-              </Button>
-            </TableCell>
+            {this.state.editUserId === row._id ? (
+              <EditUser row={row} cancelEdit={this.handleCancelEdit} />
+            ) : (
+              <Fragment>
+                <TableCell component="th" scope="row" align="center">
+                  {row.firstName} {row.lastName}
+                </TableCell>
+                <TableCell align="center">{row.team}</TableCell>
+                <TableCell align="center">{row.brand}</TableCell>
+                <TableCell align="center">{row.leaveCredits}</TableCell>
+                <TableCell align="center">
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => this.handleEditUser(row._id)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    size="small"
+                    color="secondary"
+                    onClick={() => this.props.removeUser(row._id)}
+                  >
+                    Delete
+                  </Button>
+                </TableCell>
+              </Fragment>
+            )}
           </TableRow>
         );
       }
