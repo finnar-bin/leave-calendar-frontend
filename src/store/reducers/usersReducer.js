@@ -1,4 +1,9 @@
-import { FETCH_USERS, ADD_USER, DELETE_USER } from "../actions/actionTypes";
+import {
+  FETCH_USERS,
+  ADD_USER,
+  DELETE_USER,
+  EDIT_USER
+} from "../actions/actionTypes";
 
 const initState = {
   users: [],
@@ -38,6 +43,19 @@ const usersReducer = (state = initState, action) => {
       } else {
         return state;
       }
+
+    case EDIT_USER:
+      return Object.assign({}, state, {
+        users: state.users.map(user => {
+          if (user._id === action.user._id) {
+            return (user = action.user);
+          } else {
+            return user;
+          }
+        }),
+        status: action.status,
+        message: action.message
+      });
 
     default:
       return state;

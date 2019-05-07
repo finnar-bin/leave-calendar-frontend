@@ -43,7 +43,14 @@ export const getUsers = async () => {
  * @param {number} leaveCredits updated user leave credits
  * @returns {object} result sent as promise
  */
-export const updateUser = async (id, firstName, lastName, leaveCredits) => {
+export const updateUser = async (
+  id,
+  firstName,
+  lastName,
+  team,
+  brand,
+  leaveCredits
+) => {
   return await resolve(
     axios
       .patch(
@@ -51,6 +58,8 @@ export const updateUser = async (id, firstName, lastName, leaveCredits) => {
         {
           firstName,
           lastName,
+          team,
+          brand,
           leaveCredits
         },
         {

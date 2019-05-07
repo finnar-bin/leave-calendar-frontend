@@ -1,5 +1,5 @@
-import { getUsers, newUser, removeUser } from "../../api";
-import { FETCH_USERS, ADD_USER, DELETE_USER } from "./actionTypes";
+import { getUsers, newUser, removeUser, updateUser } from "../../api";
+import { FETCH_USERS, ADD_USER, DELETE_USER, EDIT_USER } from "./actionTypes";
 
 export const fetchUsers = () => {
   return async dispatch => {
@@ -59,6 +59,34 @@ export const deleteUser = id => {
       action.status = "success";
       action.message = "Removed user successfully";
       action.id = id;
+    }
+    dispatch(action);
+  };
+};
+
+export const editUser = (id, firstName, lastName, team, brand, credits) => {
+  return async dispatch => {
+    const user = await updateUser(
+      id,
+      firstName,
+      lastName,
+      team,
+      brand,
+      credits
+    );
+    let action = {
+      type: EDIT_USER,
+      status: "",
+      message: "",
+      user: {}
+    };
+    if (user.error) {
+      action.status = "error";
+      action.message = user.error.data.message;
+    } else {
+      action.status = "success";
+      action.message = "User has been updated";
+      action.user = user.data.data;
     }
     dispatch(action);
   };
